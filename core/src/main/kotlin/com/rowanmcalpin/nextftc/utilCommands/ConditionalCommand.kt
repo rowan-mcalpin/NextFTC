@@ -1,7 +1,5 @@
 package com.rowanmcalpin.nextftc.utilCommands
 
-import com.rowanmcalpin.nextftc.Command
-
 class ConditionalCommand(
     private val condition: () -> Boolean,
     private val trueOperation: () -> Unit,
