@@ -1,7 +1,9 @@
-# CFLib
-CFLib is a free, open source, and easy-to-use library that is designed for FTC (First Tech Challenge). 
+# NextFTC
+NextFTC is an advanced and open-source toolkit designed specifically for the First Tech Challenge (FTC) robotics 
+competition. This library provides a comprehensive suite of functionalities that facilitate the development of robust 
+and efficient robot control systems. It aims to simplify the coding process for FTC participants by offering reusable 
+components and intuitive interfaces, making it easier to implement complex robotic behaviors.
 
-If you'd like to find out more about CFLib, or need help with a challenge you're facing, check out our [documentation website](https://docs.atomicrobotics3805.org)
-or join our [discord server](https://discord.com/invite/PjP9Ze6fkX).
-
-To contribute to CFLib, check out [CONTRIBUTING.md](CONTRIBUTING.md). 
+NextFTC is built with Kotlin and leverages modern software practices to ensure high performance and reliability.
+By integrating NextFTC, teams can enhance their robots' capabilities, streamline their development workflows, and focus 
+more on innovation and strategic planning for the competition.
