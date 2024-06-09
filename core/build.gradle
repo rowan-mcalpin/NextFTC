@@ -7,7 +7,7 @@ plugins {
 apply from: '../build.common.gradle'
 
 android {
-    namespace = 'org.atomicrobotics3805.cflib.core'
+    namespace = 'com.rowanmcalpin.nextftc'
 }
 
 dependencies {
@@ -28,9 +28,9 @@ afterEvaluate {
             release(MavenPublication) {
                 from components.release
 
-                groupId = 'org.atomicrobotics3805'
-                artifactId = 'cflib'
-                version = '2.0.2'
+                groupId = 'com.rowanmcalpin'
+                artifactId = 'nextftc'
+                version = '0.0.0.1'
             }
         }
     }
