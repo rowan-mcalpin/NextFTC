@@ -1,0 +1,27 @@
+android {
+    compileSdkVersion 32
+
+    defaultConfig {
+        minSdkVersion 23
+        targetSdkVersion 28
+        versionCode 1
+        versionName "1.0"
+    }
+}
+
+dependencies {
+    compileOnly 'org.firstinspires.ftc:RobotCore:8.0.0'
+    compileOnly 'org.firstinspires.ftc:Hardware:8.0.0'
+    compileOnly 'org.firstinspires.ftc:FtcCommon:8.0.0'
+    compileOnly 'org.firstinspires.ftc:RobotServer:8.0.0'
+    compileOnly 'org.firstinspires.ftc:OnBotJava:8.0.0'
+    implementation 'org.tensorflow:tensorflow-lite-task-vision:0.2.0'
+    implementation 'androidx.appcompat:appcompat:1.2.0'
+    compileOnly 'org.firstinspires.ftc:gameAssets-PowerPlay:1.0.0'
+
+    implementation('com.acmerobotics.dashboard:dashboard:0.4.6') {
+        exclude group: 'org.firstinspires.ftc'
+    }
+}
+
+project.gradle.startParameter.excludedTaskNames.add('installDebugAndroidTest')
