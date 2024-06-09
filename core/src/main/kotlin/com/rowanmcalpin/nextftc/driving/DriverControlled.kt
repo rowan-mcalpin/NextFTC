@@ -29,7 +29,7 @@ class DriverControlled(
     private val reverseStrafe: Boolean = true,
     private val reverseStraight: Boolean = false,
     private val reverseTurn: Boolean = true
-) : com.rowanmcalpin.nextftc.Command() {
+) : Command() {
 
     enum class POV {
         ROBOT_CENTRIC,

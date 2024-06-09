@@ -14,7 +14,7 @@ import com.rowanmcalpin.nextftc.Command
  * @param displacement the distance the robot needs to travel along its current trajectory in inches
  */
 @Suppress("Unused")
-class DisplacementDelay(private val displacement: Double): com.rowanmcalpin.nextftc.Command() {
+class DisplacementDelay(private val displacement: Double): Command() {
 
     override val _isDone: Boolean
         get() = displacementToTime(drive.follower.trajectory.profile, displacement) < drive.follower.elapsedTime()

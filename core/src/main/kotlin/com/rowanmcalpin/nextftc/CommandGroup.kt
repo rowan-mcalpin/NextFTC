@@ -9,8 +9,8 @@ package com.rowanmcalpin.nextftc
  *     }
  * @param block the list of commands in the group
  */
-fun sequential(block: com.rowanmcalpin.nextftc.SequentialCommandGroup.() -> Unit): com.rowanmcalpin.nextftc.SequentialCommandGroup {
-    return com.rowanmcalpin.nextftc.SequentialCommandGroup().apply(block)
+fun sequential(block: SequentialCommandGroup.() -> Unit): SequentialCommandGroup {
+    return SequentialCommandGroup().apply(block)
 }
 
 /**
@@ -22,17 +22,17 @@ fun sequential(block: com.rowanmcalpin.nextftc.SequentialCommandGroup.() -> Unit
  *     }
  * @param block the list of commands in the group
  */
-fun parallel(block: com.rowanmcalpin.nextftc.ParallelCommandGroup.() -> Unit): com.rowanmcalpin.nextftc.ParallelCommandGroup {
-    return com.rowanmcalpin.nextftc.ParallelCommandGroup().apply(block)
+fun parallel(block: ParallelCommandGroup.() -> Unit): ParallelCommandGroup {
+    return ParallelCommandGroup().apply(block)
 }
 
 /**
  * Represents a command that contains and manages other commands. Used by SequentialCommandGroup and
  * ParallelCommandGroup.
  */
-abstract class CommandGroup: com.rowanmcalpin.nextftc.Command() {
+abstract class CommandGroup: Command() {
 
-    val commands: MutableList<com.rowanmcalpin.nextftc.Command> = mutableListOf()
+    val commands: MutableList<Command> = mutableListOf()
     override val _isDone: Boolean
         get() = commands.isEmpty()
 
@@ -40,7 +40,7 @@ abstract class CommandGroup: com.rowanmcalpin.nextftc.Command() {
      * Allows people to add commands using myCommandGroup += MyCommand()
      * @param command the command being added
      */
-    operator fun plusAssign(command: com.rowanmcalpin.nextftc.Command) {
+    operator fun plusAssign(command: Command) {
         commands += command
     }
 
@@ -51,7 +51,7 @@ abstract class CommandGroup: com.rowanmcalpin.nextftc.Command() {
      *     +SecondCommand()
      * }
      */
-    operator fun com.rowanmcalpin.nextftc.Command.unaryPlus() = commands.add(this)
+    operator fun Command.unaryPlus() = commands.add(this)
 
     /**
      * If this command group is ended forcefully, this function forcefully ends each of the commands
@@ -67,7 +67,7 @@ abstract class CommandGroup: com.rowanmcalpin.nextftc.Command() {
 /**
  * Runs a group of commands one at a time.
  */
-class SequentialCommandGroup: com.rowanmcalpin.nextftc.CommandGroup() {
+class SequentialCommandGroup: CommandGroup() {
 
     /**
      * Starts the first command in the list.
@@ -117,8 +117,8 @@ class SequentialCommandGroup: com.rowanmcalpin.nextftc.CommandGroup() {
  * then run both FirstParallelCommand and SecondParallelCommand at the same time until they are both
  * finished.
  */
-class ParallelCommandGroup: com.rowanmcalpin.nextftc.CommandGroup() {
-    private val commandsToCancel: MutableMap<com.rowanmcalpin.nextftc.Command, Boolean> = mutableMapOf()
+class ParallelCommandGroup: CommandGroup() {
+    private val commandsToCancel: MutableMap<Command, Boolean> = mutableMapOf()
 
     /**
      * Starts each command in the list.
@@ -157,7 +157,7 @@ class ParallelCommandGroup: com.rowanmcalpin.nextftc.CommandGroup() {
      */
     private fun clearCommands() {
         for (pair in commandsToCancel) {
-            val command: com.rowanmcalpin.nextftc.Command = pair.key
+            val command: Command = pair.key
             val interrupted: Boolean = pair.value
             command.end(interrupted)
             commands -= command

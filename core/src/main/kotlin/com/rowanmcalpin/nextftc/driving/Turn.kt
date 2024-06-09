@@ -30,7 +30,7 @@ open class Turn(
     private val turnType: TurnType,
     override val requirements: List<Subsystem> = arrayListOf(),
     override val interruptible: Boolean = true
-) : com.rowanmcalpin.nextftc.Command() {
+) : Command() {
 
     enum class TurnType {
         ABSOLUTE,

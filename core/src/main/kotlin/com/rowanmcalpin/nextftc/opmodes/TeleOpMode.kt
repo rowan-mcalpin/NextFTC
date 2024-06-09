@@ -32,8 +32,8 @@ import com.rowanmcalpin.nextftc.trajectories.TrajectoryFactory
 abstract class TeleOpMode(private val controls: Controls,
                           private val color: Constants.Color = Constants.Color.UNKNOWN,
                           private val trajectoryFactory: TrajectoryFactory? = null,
-                          private val mainRoutine: (() -> com.rowanmcalpin.nextftc.Command)? = null,
-                          private val initRoutine: (() -> com.rowanmcalpin.nextftc.Command)? = null,
+                          private val mainRoutine: (() -> Command)? = null,
+                          private val initRoutine: (() -> Command)? = null,
                           private val drive: Driver,
                           private vararg val subsystems: Subsystem
 ) : LinearOpMode() {

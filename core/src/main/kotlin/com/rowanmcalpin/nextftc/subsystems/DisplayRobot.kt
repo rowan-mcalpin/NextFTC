@@ -17,7 +17,7 @@ import kotlin.math.sin
 class DisplayRobot(
     val width: Double = 18.0, val length: Double = 18.0,
     val headingLineLength: Double = 80.0, val poseHistoryLimit: Int = 100
-) : com.rowanmcalpin.nextftc.Command() {
+) : Command() {
 
     override val _isDone = false
     override val interruptible = false

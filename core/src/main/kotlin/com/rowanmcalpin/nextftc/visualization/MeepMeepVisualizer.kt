@@ -50,13 +50,13 @@ object MeepMeepVisualizer {
         robots.add(robot)
     }
 
-    private fun routineToSegmentList(routine: com.rowanmcalpin.nextftc.CommandGroup): List<SequenceSegment> {
+    private fun routineToSegmentList(routine: CommandGroup): List<SequenceSegment> {
         val trajectories = arrayListOf<SequenceSegment>()
         for (command in routine.commands) {
             if (command is FollowTrajectory) {
                 trajectories.add(TrajectorySegment(command.trajectory.trajectory))
             }
-            if (command is com.rowanmcalpin.nextftc.CommandGroup) {
+            if (command is CommandGroup) {
                 trajectories.addAll(routineToSegmentList(command))
             }
         }

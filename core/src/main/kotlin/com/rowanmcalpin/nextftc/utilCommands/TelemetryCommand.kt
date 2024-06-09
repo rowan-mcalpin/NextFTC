@@ -12,7 +12,7 @@ import com.rowanmcalpin.nextftc.TelemetryController
  *                { motor.currentPosition.toString() }
  */
 @SuppressWarnings("unused")
-class TelemetryCommand(private val time: Double, private val message: () -> String) : com.rowanmcalpin.nextftc.Command() {
+class TelemetryCommand(private val time: Double, private val message: () -> String) : Command() {
 
     val timer = ElapsedTime()
     override val _isDone: Boolean

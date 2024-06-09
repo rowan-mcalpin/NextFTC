@@ -21,7 +21,7 @@ class PowerMotor(
     override val requirements: List<Subsystem> = arrayListOf(),
     override val interruptible: Boolean = true,
     private val logData: Boolean = false
-) : com.rowanmcalpin.nextftc.Command() {
+) : Command() {
 
     override fun start() {
         if (mode != null) {

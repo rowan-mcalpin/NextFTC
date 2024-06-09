@@ -54,7 +54,7 @@ class TankDrive(constants: TankDriveConstants,
      * Allows the drivers to control the drivetrain using a gamepad
      * @param gamepad the gamepad that controls the drivetrain
      */
-    override fun driverControlled(gamepad: Gamepad): com.rowanmcalpin.nextftc.Command = DriverControlled(gamepad, listOf(this), true)
+    override fun driverControlled(gamepad: Gamepad): Command = DriverControlled(gamepad, listOf(this), true)
 
     /**
      * Initializes the drivetrain. This includes initializing the IMU, motor, and the battery

@@ -35,7 +35,7 @@ open class MotorToPosition(
     protected val minError: Int = 15,
     protected val kP: Double = 0.005,
     protected val logData: Boolean = false
-) : com.rowanmcalpin.nextftc.Command() {
+) : Command() {
 
     protected val timer = ElapsedTime()
     protected val positions: MutableList<Int> = mutableListOf()

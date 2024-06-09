@@ -10,9 +10,9 @@ import com.rowanmcalpin.nextftc.utilCommands.TelemetryCommand
 @Suppress("MemberVisibilityCanBePrivate", "unused")
 object CommandScheduler {
 
-    private val runningCommands = mutableListOf<com.rowanmcalpin.nextftc.Command>()
-    private val commandsToSchedule = mutableListOf<com.rowanmcalpin.nextftc.Command>()
-    private val commandsToCancel = mutableMapOf<com.rowanmcalpin.nextftc.Command, Boolean>()
+    private val runningCommands = mutableListOf<Command>()
+    private val commandsToSchedule = mutableListOf<Command>()
+    private val commandsToCancel = mutableMapOf<Command, Boolean>()
     private val gamepads = mutableListOf<GamepadEx>()
     private val subsystems = mutableListOf<Subsystem>()
 
@@ -54,7 +54,7 @@ object CommandScheduler {
      * Schedules a command. When multiple commands are scheduled, each of them run in parallel.
      * @param command the command to be scheduled
      */
-    fun scheduleCommand(command: com.rowanmcalpin.nextftc.Command) {
+    fun scheduleCommand(command: Command) {
         commandsToSchedule += command
     }
 
@@ -133,7 +133,7 @@ object CommandScheduler {
      * and adds it to the list of runningCommands.
      * @param command the new command being initialized
      */
-    private fun initCommand(command: com.rowanmcalpin.nextftc.Command) {
+    private fun initCommand(command: Command) {
         for (requirement in command.requirements) {
             val conflicts = findCommands({ it.requirements.contains(requirement) }).toMutableList()
             if (conflicts.contains(command)) {
@@ -163,7 +163,7 @@ object CommandScheduler {
      * @param interrupted whether or not that command was interrupted, such as the OpMode is stopped
      *                    prematurely
      */
-    private fun cancel(command: com.rowanmcalpin.nextftc.Command, interrupted: Boolean = false) {
+    private fun cancel(command: Command, interrupted: Boolean = false) {
         try {
             command.end(interrupted)
         } catch (e: RuntimeException) {
@@ -209,7 +209,7 @@ object CommandScheduler {
      * @param check the lambda used to determine what kind of command should be found
      * @param commands the list of commands to scan, uses runningCommands by default
      */
-    private fun findCommand(check: (com.rowanmcalpin.nextftc.Command) -> Boolean, commands : List<com.rowanmcalpin.nextftc.Command> = runningCommands) =
+    private fun findCommand(check: (Command) -> Boolean, commands : List<Command> = runningCommands) =
         findCommands(check, commands).firstOrNull()
 
     /**
@@ -218,13 +218,13 @@ object CommandScheduler {
      * @param check the lambda used to determine what kind of commands should be found
      * @param commands the list of commands to scan, uses runningCommands by default
      */
-    private fun findCommands(check: (com.rowanmcalpin.nextftc.Command) -> Boolean, commands : List<com.rowanmcalpin.nextftc.Command> = runningCommands):
-            List<com.rowanmcalpin.nextftc.Command> {
-        val foundCommands = mutableListOf<com.rowanmcalpin.nextftc.Command>()
+    private fun findCommands(check: (Command) -> Boolean, commands : List<Command> = runningCommands):
+            List<Command> {
+        val foundCommands = mutableListOf<Command>()
         for (command in commands) {
             if (check.invoke(command))
                 foundCommands.add(command)
-            if (command is com.rowanmcalpin.nextftc.CommandGroup) {
+            if (command is CommandGroup) {
                 val c = findCommand(check, command.commands)
                 if (c != null) foundCommands.add(c)
             }

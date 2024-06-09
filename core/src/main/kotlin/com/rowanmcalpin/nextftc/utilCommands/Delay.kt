@@ -9,7 +9,7 @@ import com.rowanmcalpin.nextftc.Command
  * command group will accomplish nothing except taking up memory on the device.
  */
 @SuppressWarnings("unused")
-class Delay(private val time: Double): com.rowanmcalpin.nextftc.Command() {
+class Delay(private val time: Double): Command() {
     override val _isDone: Boolean
         get() = timer.seconds() > time
 

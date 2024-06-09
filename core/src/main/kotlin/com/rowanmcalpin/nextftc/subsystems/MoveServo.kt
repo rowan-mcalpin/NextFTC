@@ -21,7 +21,7 @@ class MoveServo(private val servo: ServoEx,
                 private val position: Double,
                 private val maxTime: Double,
                 override val requirements: List<Subsystem> = arrayListOf(),
-                override val interruptible: Boolean = true) : com.rowanmcalpin.nextftc.Command() {
+                override val interruptible: Boolean = true) : Command() {
 
     private var positionDif = 0.0
     private val timer = ElapsedTime()

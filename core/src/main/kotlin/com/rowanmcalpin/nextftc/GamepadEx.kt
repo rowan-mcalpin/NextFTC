@@ -94,9 +94,9 @@ class GamepadEx(private val gamepad: Gamepad) {
         var pressed = false
         var released = false
         var toggleState = 0
-        var pressedCommand: (() -> com.rowanmcalpin.nextftc.Command)? = null
-        var releasedCommand: (() -> com.rowanmcalpin.nextftc.Command)? = null
-        var toggleCommands: List<() -> com.rowanmcalpin.nextftc.Command>? = null
+        var pressedCommand: (() -> Command)? = null
+        var releasedCommand: (() -> Command)? = null
+        var toggleCommands: List<() -> Command>? = null
 
         /**
          * Updates whether the trigger was just pressed, just released, and whether it's being held
@@ -154,9 +154,9 @@ class GamepadEx(private val gamepad: Gamepad) {
         var released = false
         var amount = 0.0f
         var toggleState = 0
-        var pressedCommand: (() -> com.rowanmcalpin.nextftc.Command)? = null
-        var releasedCommand: (() -> com.rowanmcalpin.nextftc.Command)? = null
-        var toggleCommands: List<() -> com.rowanmcalpin.nextftc.Command>? = null
+        var pressedCommand: (() -> Command)? = null
+        var releasedCommand: (() -> Command)? = null
+        var toggleCommands: List<() -> Command>? = null
 
         /**
          * Updates whether the trigger was just pressed, just released, and how much it's being held
@@ -263,7 +263,7 @@ class GamepadEx(private val gamepad: Gamepad) {
                 .addStep(1.0, 1.0, 500)  //  Rumble both motors 100% for 500 mSec
                 .build()
         }
-    ): com.rowanmcalpin.nextftc.Command() {
+    ): Command() {
         override val _isDone = true
         override val interruptible = true
 

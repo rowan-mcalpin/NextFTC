@@ -18,7 +18,7 @@ class FollowTrajectory(
     val trajectory: ParallelTrajectory,
     override val requirements: List<Subsystem> = arrayListOf(),
     override val interruptible: Boolean = true
-) : com.rowanmcalpin.nextftc.Command() {
+) : Command() {
 
     override val _isDone: Boolean
         get() = !drive.follower.isFollowing()

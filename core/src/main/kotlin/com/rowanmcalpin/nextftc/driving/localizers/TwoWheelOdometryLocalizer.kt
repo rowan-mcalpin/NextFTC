@@ -44,15 +44,15 @@ class TwoWheelOdometryLocalizer(val constants: TwoWheelOdometryConstants) : TwoT
      * @return the heading in radians
      */
     override fun getHeading(): Double {
-        return Constants.drive.rawExternalHeading
+        return drive.rawExternalHeading
     }
 
     /**
      * Returns the drive heading velocity since this localizer only uses two wheels
      * @return the radian/sec heading velocity
      */
-    override fun getHeadingVelocity(): Double? {
-        return Constants.drive.externalHeadingVelocity
+    override fun getHeadingVelocity(): Double {
+        return drive.externalHeadingVelocity
     }
 
     /**

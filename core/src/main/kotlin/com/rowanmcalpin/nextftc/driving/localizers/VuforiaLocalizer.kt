@@ -27,7 +27,7 @@ class VuforiaLocalizer(val constants: VuforiaConstants) : SubsystemLocalizer {
             .multiplied(Orientation.getRotationMatrix(AxesReference.EXTRINSIC, AxesOrder.XZY, AngleUnit.DEGREES, 90f, 90f, 0f))
 
     override var poseEstimate: Pose2d
-        get() = lastLocation?.let { Pose2d(it) } ?: Pose2d() + offset
+        get() = lastLocation?.let { Pose2d(it) } ?: (Pose2d() + offset)
         // set should almost never be used
         set(value) {
             offset = value - poseEstimate

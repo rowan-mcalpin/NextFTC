@@ -90,11 +90,11 @@ abstract class Driver(
      * Allows the drivers to control the drivetrain using a gamepad
      * @param gamepad the gamepad that controls the drivetrain
      */
-    abstract fun driverControlled(gamepad: Gamepad): com.rowanmcalpin.nextftc.Command
+    abstract fun driverControlled(gamepad: Gamepad): Command
     /**
      * Switches TeleOp speeds, also known as slow mode
      */
-    fun switchSpeed(): com.rowanmcalpin.nextftc.Command = CustomCommand(_start = {
+    fun switchSpeed(): Command = CustomCommand(_start = {
         driverSpeedIndex++
         if (driverSpeedIndex >= constants.DRIVER_SPEEDS.size)
             driverSpeedIndex = 0
@@ -104,14 +104,14 @@ abstract class Driver(
      * Drives the robot along a pre-built trajectory
      * @param trajectory the trajectory to follow, use trajectoryBuilder() to get this
      */
-    fun followTrajectory(trajectory: ParallelTrajectory): com.rowanmcalpin.nextftc.Command =
+    fun followTrajectory(trajectory: ParallelTrajectory): Command =
         FollowTrajectory(trajectory, listOf(this), true)
     /**
      * Turns the robot either to a set angle or to an angle relative to its current
      * @param angle the angle to turn to
      * @param turnType whether the turn should be relative to current position or relative to field
      */
-    fun turn(angle: Double, turnType: Turn.TurnType): com.rowanmcalpin.nextftc.Command =
+    fun turn(angle: Double, turnType: Turn.TurnType): Command =
         Turn(angle, constants.MAX_ACCEL, constants.MAX_VEL, turnType, listOf(this), true)
 
     /**

@@ -6,13 +6,13 @@ import com.rowanmcalpin.nextftc.CommandScheduler
 class OptionCommand(
     private val value: () -> Any,
     private vararg val outcomes: Pair<Any, () -> Unit>
-) : com.rowanmcalpin.nextftc.Command() {
+) : Command() {
     constructor(
         differentSignature: Any,
         value: () -> Any,
-        vararg outcomes: Pair<Any, com.rowanmcalpin.nextftc.Command>) : this(value, *split(outcomes).toTypedArray())
+        vararg outcomes: Pair<Any, Command>) : this(value, *split(outcomes).toTypedArray())
     companion object {
-        private fun split(before: Array<out Pair<Any, com.rowanmcalpin.nextftc.Command>>) : List<Pair<Any, () -> Unit>> {
+        private fun split(before: Array<out Pair<Any, Command>>) : List<Pair<Any, () -> Unit>> {
             val newList: MutableList<Pair<Any, () -> Unit>> = mutableListOf()
 
             before.forEach {

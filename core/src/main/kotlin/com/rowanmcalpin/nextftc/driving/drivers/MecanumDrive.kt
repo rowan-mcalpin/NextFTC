@@ -60,7 +60,7 @@ class MecanumDrive(val mecanumDriveConstants: MecanumDriveConstants,
      * Allows the drivers to control the drivetrain using a gamepad
      * @param gamepad the gamepad that controls the drivetrain
      */
-    override fun driverControlled(gamepad: Gamepad): com.rowanmcalpin.nextftc.Command = DriverControlled(
+    override fun driverControlled(gamepad: Gamepad): Command = DriverControlled(
         gamepad, listOf(this), true, (constants as MecanumDriveConstants).POV,
         constants.REVERSE_STRAFE, constants.REVERSE_STRAIGHT, constants.REVERSE_TURN)
 

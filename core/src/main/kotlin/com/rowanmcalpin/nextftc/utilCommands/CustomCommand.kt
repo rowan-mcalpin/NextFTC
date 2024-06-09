@@ -29,7 +29,7 @@ open class CustomCommand(
     private val endTime: Double = 0.0,
     override val requirements: List<Subsystem> = arrayListOf(),
     override val interruptible: Boolean = true
-): com.rowanmcalpin.nextftc.Command() {
+): Command() {
 
     private val timer = ElapsedTime()
     override val _isDone: Boolean

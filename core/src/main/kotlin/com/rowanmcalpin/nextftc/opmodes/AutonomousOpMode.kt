@@ -28,8 +28,8 @@ import com.rowanmcalpin.nextftc.trajectories.TrajectoryFactory
 @Suppress("unused")
 abstract class AutonomousOpMode(private val color: Constants.Color,
                                 private val trajectoryFactory: TrajectoryFactory,
-                                private val mainRoutine: (() -> com.rowanmcalpin.nextftc.Command),
-                                private val initRoutine: (() -> com.rowanmcalpin.nextftc.Command)? = null,
+                                private val mainRoutine: (() -> Command),
+                                private val initRoutine: (() -> Command)? = null,
                                 private val drive: Driver,
                                 private vararg val subsystems: Subsystem
 ) : LinearOpMode() {

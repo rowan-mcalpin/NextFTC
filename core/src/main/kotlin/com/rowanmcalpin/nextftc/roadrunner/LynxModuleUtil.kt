@@ -44,7 +44,7 @@ object LynxModuleUtil {
                 }
             }
         }
-        if (outdatedModules.size > 0) {
+        if (outdatedModules.isNotEmpty()) {
             val msgBuilder = StringBuilder()
             msgBuilder.append("One or more of the attached Lynx modules has outdated firmware\n")
             msgBuilder.append(

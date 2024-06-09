@@ -10,8 +10,7 @@ enum class AxesSigns(val bVal: Int) {
 
     companion object {
         fun fromBinaryValue(bVal: Int): AxesSigns {
-            val maskedVal = bVal and 0x07
-            return when (maskedVal) {
+            return when (val maskedVal = bVal and 0x07) {
                 0 -> PPP
                 1 -> PPN
                 2 -> PNP
