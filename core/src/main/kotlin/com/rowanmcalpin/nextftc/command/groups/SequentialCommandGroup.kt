@@ -1,14 +1,20 @@
 package com.rowanmcalpin.nextftc.command.groups
 
+import com.rowanmcalpin.nextftc.command.Command
+
 /**
  * Runs a group of commands one at a time.
  */
-class SequentialCommandGroup: CommandGroup() {
+class SequentialCommandGroup(vararg val command: Command): CommandGroup() {
 
     /**
      * Starts the first command in the list.
      */
     override fun onStart() {
+        command.forEach {
+            add(it)
+        }
+
         if (commands.isNotEmpty()) {
             commands[0].start()
         }

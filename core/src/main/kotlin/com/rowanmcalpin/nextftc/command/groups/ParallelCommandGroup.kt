@@ -19,16 +19,21 @@ import com.rowanmcalpin.nextftc.command.Command
  * then run both FirstParallelCommand and SecondParallelCommand at the same time until they are both
  * finished.
  */
-class ParallelCommandGroup: CommandGroup() {
+class ParallelCommandGroup(vararg val command: Command): CommandGroup() {
     private val commandsToCancel: MutableMap<Command, Boolean> = mutableMapOf()
 
     /**
      * Starts each command in the list.
      */
     override fun onStart() {
-        for (command in commands) {
-            command.start()
-            command.isStarted = true
+
+        command.forEach {
+            add(it)
+        }
+
+        commands.forEach {
+            it.start()
+            it.isStarted = true
         }
     }
 
