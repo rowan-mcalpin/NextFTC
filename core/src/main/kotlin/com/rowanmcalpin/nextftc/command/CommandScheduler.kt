@@ -1,6 +1,7 @@
-package com.rowanmcalpin.nextftc
+package com.rowanmcalpin.nextftc.command
 
-import com.rowanmcalpin.nextftc.command.Command
+import com.rowanmcalpin.nextftc.Constants
+import com.rowanmcalpin.nextftc.hardware.GamepadEx
 import com.rowanmcalpin.nextftc.command.groups.CommandGroup
 import com.rowanmcalpin.nextftc.subsystems.Subsystem
 import com.rowanmcalpin.nextftc.command.utility.TelemetryCommand

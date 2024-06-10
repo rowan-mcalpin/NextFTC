@@ -1,7 +1,7 @@
 package com.rowanmcalpin.nextftc.command.utility
 
 import com.rowanmcalpin.nextftc.command.Command
-import com.rowanmcalpin.nextftc.CommandScheduler
+import com.rowanmcalpin.nextftc.command.CommandScheduler
 
 class OptionCommand(
     private val value: () -> Any,
@@ -25,7 +25,7 @@ class OptionCommand(
     override val _isDone: Boolean
         get() = true
 
-    override fun start() {
+    override fun onStart() {
         val invokedValue: Any = value.invoke()
         outcomes.forEach {
             if(invokedValue == it.first) {

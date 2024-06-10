@@ -42,7 +42,7 @@ class DriverControlled(
     /**
      * Calculates and sets the robot's drive power
      */
-    override fun execute() {
+    override fun onExecute() {
         val drivePower: Pose2d
         if (pov != POV.ROBOT_CENTRIC) {
             val angle: Double = atan2((if(reverseStraight) -gamepad.left_stick_y else gamepad.left_stick_y), (if(reverseStrafe) -gamepad.left_stick_x else gamepad.left_stick_x)).toDouble()

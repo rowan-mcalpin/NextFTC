@@ -10,7 +10,7 @@ class ConditionalCommand(
     override val _isDone: Boolean
         get() = true
 
-    override fun start() {
+    override fun onStart() {
         if(condition.invoke()) {
             trueOperation.invoke()
         } else {

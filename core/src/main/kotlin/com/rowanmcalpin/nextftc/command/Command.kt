@@ -1,6 +1,5 @@
 package com.rowanmcalpin.nextftc.command
 
-import com.rowanmcalpin.nextftc.CommandScheduler
 import com.rowanmcalpin.nextftc.subsystems.Subsystem
 
 /**

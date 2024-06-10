@@ -47,14 +47,14 @@ class TelemetryCommand(private val time: Double, private val message: () -> Stri
     /**
      * Resets timer
      */
-    override fun start() {
+    override fun onStart() {
         timer.reset()
     }
 
     /**
      * Adds telemetry line
      */
-    override fun execute() {
+    override fun onExecute() {
         TelemetryController.telemetry.addLine(message.invoke())
     }
 }

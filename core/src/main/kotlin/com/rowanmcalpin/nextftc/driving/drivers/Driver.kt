@@ -13,7 +13,7 @@ import com.qualcomm.robotcore.hardware.Gamepad
 import com.qualcomm.robotcore.hardware.HardwareMap
 import com.qualcomm.robotcore.hardware.VoltageSensor
 import com.rowanmcalpin.nextftc.command.Command
-import com.rowanmcalpin.nextftc.CommandScheduler
+import com.rowanmcalpin.nextftc.command.CommandScheduler
 import com.rowanmcalpin.nextftc.Constants
 import com.rowanmcalpin.nextftc.driving.DriveConstants
 import com.rowanmcalpin.nextftc.driving.FollowTrajectory

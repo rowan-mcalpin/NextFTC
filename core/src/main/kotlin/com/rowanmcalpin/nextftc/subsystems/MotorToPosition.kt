@@ -4,7 +4,7 @@ import com.qualcomm.robotcore.hardware.DcMotor
 import com.qualcomm.robotcore.util.ElapsedTime
 import com.qualcomm.robotcore.util.Range
 import com.rowanmcalpin.nextftc.command.Command
-import com.rowanmcalpin.nextftc.CommandScheduler
+import com.rowanmcalpin.nextftc.command.CommandScheduler
 import com.rowanmcalpin.nextftc.command.utility.TelemetryCommand
 import com.qualcomm.robotcore.util.RobotLog
 import com.rowanmcalpin.nextftc.hardware.MotorEx
@@ -53,7 +53,7 @@ open class MotorToPosition(
      * Sets the motor's mode to RUN_USING_ENCODER, sets the error to the difference between the target and current
      * positions, and sets the direction to the sign of the error
      */
-    override fun start() {
+    override fun onStart() {
         motor.mode = DcMotor.RunMode.RUN_USING_ENCODER
         error = targetPosition - motor.currentPosition
         direction = sign(error.toDouble())
@@ -62,7 +62,7 @@ open class MotorToPosition(
     /**
      * Updates the error and direction, then calculates and sets the motor power
      */
-    override fun execute() {
+    override fun onExecute() {
         error = targetPosition - motor.currentPosition
         direction = sign(error.toDouble())
         val power = kP * abs(error) * speed * direction
@@ -77,7 +77,7 @@ open class MotorToPosition(
     /**
      * Stops the motor
      */
-    override fun end(interrupted: Boolean) {
+    override fun onEnd(interrupted: Boolean) {
         motor.power = speed
         motor.mode = DcMotor.RunMode.RUN_TO_POSITION
         motor.targetPosition = motor.currentPosition

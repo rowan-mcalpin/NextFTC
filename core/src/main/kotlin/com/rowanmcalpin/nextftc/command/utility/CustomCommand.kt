@@ -38,7 +38,7 @@ open class CustomCommand(
     /**
      * Resets the timer and invokes the _start lambda
      */
-    override fun start() {
+    override fun onStart() {
         timer.reset()
         _start.invoke()
     }
@@ -46,14 +46,14 @@ open class CustomCommand(
     /**
      * Invokes the _execute lambda
      */
-    override fun execute() {
+    override fun onExecute() {
         _execute.invoke()
     }
 
     /**
      * Invokes the _end lambda
      */
-    override fun end(interrupted: Boolean) {
+    override fun onEnd(interrupted: Boolean) {
         _done.invoke(interrupted)
     }
 }

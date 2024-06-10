@@ -26,7 +26,7 @@ class DisplayRobot(
     val actualPoseHistory = mutableListOf<Pose2d>()
     val targetPoseHistory = mutableListOf<Pose2d>()
 
-    override fun execute() {
+    override fun onExecute() {
         // saves the robot's actual and target position history
         if (actualPoseHistory.size < 1 || drive.poseEstimate != actualPoseHistory.last()) {
             actualPoseHistory.add(drive.poseEstimate)

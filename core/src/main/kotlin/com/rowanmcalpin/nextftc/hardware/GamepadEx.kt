@@ -1,7 +1,8 @@
-package com.rowanmcalpin.nextftc
+package com.rowanmcalpin.nextftc.hardware
 
 import com.qualcomm.robotcore.hardware.Gamepad
 import com.rowanmcalpin.nextftc.command.Command
+import com.rowanmcalpin.nextftc.command.CommandScheduler
 
 /**
  * By default, the Qualcomm Gamepad class has very little functionality. It tells you whether each
@@ -106,7 +107,7 @@ class GamepadEx(private val gamepad: Gamepad) {
          * @param value whether the button is being held down right now
          */
         fun update(value: Boolean) {
-            // Update whether or not the button is pressed, released, or down
+            // Update whether the button is pressed, released, or down
             pressed = value && !down
             released = !value && down
             down = value
@@ -268,7 +269,7 @@ class GamepadEx(private val gamepad: Gamepad) {
         override val _isDone = true
         override val interruptible = true
 
-        override fun start() {
+        override fun onStart() {
             gamepad.runRumbleEffect(rumbleEffect.invoke())
         }
     }

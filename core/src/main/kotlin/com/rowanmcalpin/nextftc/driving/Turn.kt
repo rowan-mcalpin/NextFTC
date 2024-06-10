@@ -48,7 +48,7 @@ open class Turn(
     /**
      * Makes sure the robot doesn't turn more than 180 degrees, then sets up the turnProfile and resets the timer
      */
-    override fun start() {
+    override fun onStart() {
         if (turnType == TurnType.ABSOLUTE) {
             angle -= drive.poseEstimate.heading
         }
@@ -68,7 +68,7 @@ open class Turn(
     /**
      * Calculates and sets the new drive signal
      */
-    override fun execute() {
+    override fun onExecute() {
         val t = timer.seconds()
         val targetState = turnProfile[t]
         drive.turnController.targetPosition = targetState.x
@@ -86,7 +86,7 @@ open class Turn(
     /**
      * Makes sure the robot understands its heading and stops it
      */
-    override fun end(interrupted: Boolean) {
+    override fun onEnd(interrupted: Boolean) {
         drive.poseEstimate = Pose2d(drive.poseEstimate.vec(), drive.rawExternalHeading)
         drive.setDriveSignal(DriveSignal())
     }

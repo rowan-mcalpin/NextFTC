@@ -18,7 +18,7 @@ class Delay(private val time: Double): Command() {
     /**
      * Resets timer
      */
-    override fun start() {
+    override fun onStart() {
         timer.reset()
     }
 }

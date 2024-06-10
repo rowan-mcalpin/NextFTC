@@ -26,7 +26,7 @@ class FollowTrajectory(
     /**
      * Tells the follower to start following the trajectory.
      */
-    override fun start() {
+    override fun onStart() {
         drive.follower.followTrajectory(trajectory.trajectory)
         drive.trajectory = trajectory
     }
@@ -34,11 +34,11 @@ class FollowTrajectory(
     /**
      * Updates the drive signal
      */
-    override fun execute() {
+    override fun onExecute() {
         drive.setDriveSignal(drive.follower.update(drive.poseEstimate))
     }
 
-    override fun end(interrupted: Boolean) {
+    override fun onEnd(interrupted: Boolean) {
         drive.setDriveSignal(DriveSignal())
         drive.trajectory = null
     }

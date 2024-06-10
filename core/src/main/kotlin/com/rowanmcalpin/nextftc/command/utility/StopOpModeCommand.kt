@@ -8,7 +8,7 @@ class StopOpModeCommand: Command() {
     override val _isDone: Boolean
         get() = true
 
-    override fun start() {
+    override fun onStart() {
         opMode.requestOpModeStop()
     }
 }

@@ -1,8 +1,8 @@
 package com.rowanmcalpin.nextftc.controls
 
-import com.rowanmcalpin.nextftc.CommandScheduler
+import com.rowanmcalpin.nextftc.command.CommandScheduler
 import com.rowanmcalpin.nextftc.Constants
-import com.rowanmcalpin.nextftc.GamepadEx
+import com.rowanmcalpin.nextftc.hardware.GamepadEx
 
 /**
  * This class manages the controls for TeleOp OpModes. In your project, you should create your own

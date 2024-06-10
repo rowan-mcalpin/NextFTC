@@ -2,7 +2,7 @@ package com.rowanmcalpin.nextftc.opmodes
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
 import com.rowanmcalpin.nextftc.command.Command
-import com.rowanmcalpin.nextftc.CommandScheduler
+import com.rowanmcalpin.nextftc.command.CommandScheduler
 import com.rowanmcalpin.nextftc.Constants
 import com.rowanmcalpin.nextftc.TelemetryController
 import com.rowanmcalpin.nextftc.driving.drivers.Driver
