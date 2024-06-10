@@ -8,6 +8,13 @@ apply from: '../build.common.gradle'
 
 android {
     namespace = 'com.rowanmcalpin.nextftc'
+
+    publishing {
+        singleVariant('release') {
+            withSourcesJar()
+            withJavadocJar()
+        }
+    }
 }
 
 dependencies {
@@ -26,7 +33,7 @@ afterEvaluate {
     publishing {
         publications {
             release(MavenPublication) {
-                from components.release
+                components.getByName("release")
 
                 groupId = 'com.rowanmcalpin'
                 artifactId = 'nextftc'
