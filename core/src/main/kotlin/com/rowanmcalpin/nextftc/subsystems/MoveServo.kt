@@ -1,7 +1,7 @@
 package com.rowanmcalpin.nextftc.subsystems
 
 import com.qualcomm.robotcore.util.ElapsedTime
-import com.rowanmcalpin.nextftc.Command
+import com.rowanmcalpin.nextftc.command.Command
 import com.rowanmcalpin.nextftc.hardware.ServoEx
 import kotlin.math.abs
 

@@ -1,6 +1,7 @@
 package com.rowanmcalpin.nextftc
 
 import com.qualcomm.robotcore.hardware.Gamepad
+import com.rowanmcalpin.nextftc.command.Command
 
 /**
  * By default, the Qualcomm Gamepad class has very little functionality. It tells you whether each

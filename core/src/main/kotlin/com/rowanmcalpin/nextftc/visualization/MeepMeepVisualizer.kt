@@ -7,7 +7,7 @@ import com.noahbres.meepmeep.roadrunner.DefaultBotBuilder
 import com.noahbres.meepmeep.roadrunner.trajectorysequence.sequencesegment.SequenceSegment
 import com.noahbres.meepmeep.roadrunner.trajectorysequence.sequencesegment.TrajectorySegment
 import com.noahbres.meepmeep.roadrunner.trajectorysequence.TrajectorySequence
-import com.rowanmcalpin.nextftc.CommandGroup
+import com.rowanmcalpin.nextftc.command.groups.CommandGroup
 import com.rowanmcalpin.nextftc.Constants
 import com.rowanmcalpin.nextftc.driving.DriveConstants
 import com.rowanmcalpin.nextftc.driving.FollowTrajectory

@@ -6,7 +6,7 @@ import com.acmerobotics.roadrunner.profile.MotionProfile
 import com.acmerobotics.roadrunner.profile.MotionProfileGenerator.generateSimpleMotionProfile
 import com.acmerobotics.roadrunner.profile.MotionState
 import com.qualcomm.robotcore.util.ElapsedTime
-import com.rowanmcalpin.nextftc.Command
+import com.rowanmcalpin.nextftc.command.Command
 import com.rowanmcalpin.nextftc.Constants.drive
 import com.rowanmcalpin.nextftc.subsystems.Subsystem
 import com.rowanmcalpin.nextftc.trajectories.toRadians

@@ -1,6 +1,6 @@
-package com.rowanmcalpin.nextftc.utilCommands
+package com.rowanmcalpin.nextftc.command.utility
 
-import com.rowanmcalpin.nextftc.Command
+import com.rowanmcalpin.nextftc.command.Command
 import com.rowanmcalpin.nextftc.CommandScheduler
 
 class OptionCommand(

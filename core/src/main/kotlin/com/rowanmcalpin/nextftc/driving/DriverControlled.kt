@@ -2,7 +2,7 @@ package com.rowanmcalpin.nextftc.driving
 
 import com.acmerobotics.roadrunner.geometry.Pose2d
 import com.qualcomm.robotcore.hardware.Gamepad
-import com.rowanmcalpin.nextftc.Command
+import com.rowanmcalpin.nextftc.command.Command
 import com.rowanmcalpin.nextftc.Constants
 import com.rowanmcalpin.nextftc.Constants.color
 import com.rowanmcalpin.nextftc.Constants.drive

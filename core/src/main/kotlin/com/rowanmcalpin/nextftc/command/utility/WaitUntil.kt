@@ -1,6 +1,6 @@
-package com.rowanmcalpin.nextftc.utilCommands
+package com.rowanmcalpin.nextftc.command.utility
 
-import com.rowanmcalpin.nextftc.Command
+import com.rowanmcalpin.nextftc.command.Command
 
 /**
  * This class is a type of delay that doesn't finish until a given check returns true. Like other

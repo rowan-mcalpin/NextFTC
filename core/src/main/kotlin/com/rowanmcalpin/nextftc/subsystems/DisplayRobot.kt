@@ -4,7 +4,7 @@ import com.acmerobotics.dashboard.canvas.Canvas
 import com.acmerobotics.roadrunner.geometry.Pose2d
 import com.acmerobotics.roadrunner.geometry.Vector2d
 import com.acmerobotics.roadrunner.path.Path
-import com.rowanmcalpin.nextftc.Command
+import com.rowanmcalpin.nextftc.command.Command
 import com.rowanmcalpin.nextftc.Constants.drive
 import com.rowanmcalpin.nextftc.TelemetryController
 import com.rowanmcalpin.nextftc.roadrunner.DashboardUtil

@@ -1,5 +1,6 @@
-package com.rowanmcalpin.nextftc
+package com.rowanmcalpin.nextftc.command
 
+import com.rowanmcalpin.nextftc.CommandScheduler
 import com.rowanmcalpin.nextftc.subsystems.Subsystem
 
 /**
@@ -11,9 +12,9 @@ import com.rowanmcalpin.nextftc.subsystems.Subsystem
 @Suppress("PropertyName")
 abstract class Command {
 
-    var isDone = false
+    var isDone = true
         get() = field || _isDone
-    open val _isDone = false
+    open val _isDone = true
     var isStarted = false
     open val requirements: List<Subsystem> = arrayListOf()
     open val interruptible = true
@@ -21,13 +22,27 @@ abstract class Command {
     /**
      * This function is run repeatedly every loop. isDone is checked before this function is run.
      */
-    open fun execute() { }
+    fun execute() {
+        onExecute()
+    }
+
+    /**
+     * User-overridable function called repeatedly every loop.
+     */
+    open fun onExecute() { }
 
     /**
      * This function is run once at the beginning of the command. isDone is checked after this
      * function is run.
      */
-    open fun start() { }
+    fun start() {
+        onStart()
+    }
+
+    /**
+     * User-overridable function called once when the command is first started.
+     */
+    open fun onStart() { }
 
     /**
      * This function is run once at the end of the command, either when isDone is true, another
@@ -36,5 +51,19 @@ abstract class Command {
      *                    same Subsystem or the OpMode ending. It's false if the command ended
      *                    naturally (i.e. because isDone returned true)
      */
-    open fun end(interrupted: Boolean) { }
+    fun end(interrupted: Boolean) {
+        onEnd(interrupted)
+    }
+
+    /**
+     * User-overridable function called once when the command ends.
+     */
+    open fun onEnd(interrupted: Boolean) { }
+
+    /**
+     * Invocation operator, which lets users call the command as if it's a function, and automatically schedule it.
+     */
+    operator fun invoke() {
+        CommandScheduler.scheduleCommand(this)
+    }
 }

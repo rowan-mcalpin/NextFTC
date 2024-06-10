@@ -1,7 +1,7 @@
 package com.rowanmcalpin.nextftc.subsystems
 
 import com.qualcomm.robotcore.hardware.DcMotor
-import com.rowanmcalpin.nextftc.Command
+import com.rowanmcalpin.nextftc.command.Command
 import com.qualcomm.robotcore.util.RobotLog
 import com.rowanmcalpin.nextftc.hardware.MotorEx
 

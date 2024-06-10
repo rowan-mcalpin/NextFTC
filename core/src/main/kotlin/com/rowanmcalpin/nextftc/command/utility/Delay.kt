@@ -1,7 +1,7 @@
-package com.rowanmcalpin.nextftc.utilCommands
+package com.rowanmcalpin.nextftc.command.utility
 
 import com.qualcomm.robotcore.util.ElapsedTime
-import com.rowanmcalpin.nextftc.Command
+import com.rowanmcalpin.nextftc.command.Command
 
 /**
  * This class is a simple delay that waits for a certain amount of time. Like other delays, it

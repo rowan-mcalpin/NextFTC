@@ -6,7 +6,7 @@ import com.acmerobotics.roadrunner.kinematics.Kinematics
 import com.acmerobotics.roadrunner.kinematics.TankKinematics
 import com.acmerobotics.roadrunner.trajectory.constraints.*
 import com.qualcomm.robotcore.hardware.*
-import com.rowanmcalpin.nextftc.Command
+import com.rowanmcalpin.nextftc.command.Command
 import com.rowanmcalpin.nextftc.driving.DriverControlled
 import com.rowanmcalpin.nextftc.driving.TankDriveConstants
 import com.rowanmcalpin.nextftc.driving.localizers.SubsystemLocalizer

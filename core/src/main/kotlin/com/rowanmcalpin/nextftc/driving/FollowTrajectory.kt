@@ -1,7 +1,7 @@
 package com.rowanmcalpin.nextftc.driving
 
 import com.acmerobotics.roadrunner.drive.DriveSignal
-import com.rowanmcalpin.nextftc.Command
+import com.rowanmcalpin.nextftc.command.Command
 import com.rowanmcalpin.nextftc.Constants.drive
 import com.rowanmcalpin.nextftc.subsystems.Subsystem
 import com.rowanmcalpin.nextftc.trajectories.ParallelTrajectory

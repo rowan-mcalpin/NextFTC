@@ -10,7 +10,7 @@ import com.acmerobotics.roadrunner.trajectory.constraints.MinVelocityConstraint
 import com.qualcomm.robotcore.hardware.*
 import com.qualcomm.robotcore.hardware.DcMotor.RunMode
 import com.qualcomm.robotcore.hardware.DcMotor.ZeroPowerBehavior
-import com.rowanmcalpin.nextftc.Command
+import com.rowanmcalpin.nextftc.command.Command
 import com.rowanmcalpin.nextftc.driving.DriverControlled
 import com.rowanmcalpin.nextftc.driving.MecanumDriveConstants
 import com.rowanmcalpin.nextftc.driving.localizers.SubsystemLocalizer

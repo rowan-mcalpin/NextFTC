@@ -3,9 +3,9 @@ package com.rowanmcalpin.nextftc.subsystems
 import com.qualcomm.robotcore.hardware.DcMotor
 import com.qualcomm.robotcore.util.ElapsedTime
 import com.qualcomm.robotcore.util.Range
-import com.rowanmcalpin.nextftc.Command
+import com.rowanmcalpin.nextftc.command.Command
 import com.rowanmcalpin.nextftc.CommandScheduler
-import com.rowanmcalpin.nextftc.utilCommands.TelemetryCommand
+import com.rowanmcalpin.nextftc.command.utility.TelemetryCommand
 import com.qualcomm.robotcore.util.RobotLog
 import com.rowanmcalpin.nextftc.hardware.MotorEx
 import kotlin.math.abs

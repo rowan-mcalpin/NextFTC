@@ -1,9 +1,9 @@
-package com.rowanmcalpin.nextftc.utilCommands
+package com.rowanmcalpin.nextftc.command.utility
 
 import com.acmerobotics.roadrunner.profile.MotionProfile
 import com.acmerobotics.roadrunner.util.epsilonEquals
 import com.rowanmcalpin.nextftc.Constants.drive
-import com.rowanmcalpin.nextftc.Command
+import com.rowanmcalpin.nextftc.command.Command
 
 /**
  * This class is a delay that waits until the robot has driven either a certain number of inches or

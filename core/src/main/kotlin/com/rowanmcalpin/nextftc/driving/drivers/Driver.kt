@@ -12,7 +12,7 @@ import com.qualcomm.hardware.lynx.LynxModule
 import com.qualcomm.robotcore.hardware.Gamepad
 import com.qualcomm.robotcore.hardware.HardwareMap
 import com.qualcomm.robotcore.hardware.VoltageSensor
-import com.rowanmcalpin.nextftc.Command
+import com.rowanmcalpin.nextftc.command.Command
 import com.rowanmcalpin.nextftc.CommandScheduler
 import com.rowanmcalpin.nextftc.Constants
 import com.rowanmcalpin.nextftc.driving.DriveConstants
@@ -23,7 +23,7 @@ import com.rowanmcalpin.nextftc.roadrunner.LynxModuleUtil
 import com.rowanmcalpin.nextftc.subsystems.Subsystem
 import com.rowanmcalpin.nextftc.trajectories.ParallelTrajectory
 import com.rowanmcalpin.nextftc.trajectories.ParallelTrajectoryBuilder
-import com.rowanmcalpin.nextftc.utilCommands.CustomCommand
+import com.rowanmcalpin.nextftc.command.utility.CustomCommand
 import java.util.*
 
 /**

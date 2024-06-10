@@ -1,6 +1,6 @@
 package com.rowanmcalpin.nextftc.visualization
 
-import com.rowanmcalpin.nextftc.CommandGroup
+import com.rowanmcalpin.nextftc.command.groups.CommandGroup
 import com.rowanmcalpin.nextftc.Constants
 import com.rowanmcalpin.nextftc.driving.drivers.Driver
 
