@@ -37,6 +37,7 @@ afterEvaluate {
 
                 groupId = 'com.rowanmcalpin'
                 artifactId = 'nextftc'
+                // THE FOLLOWING LINE MUST BE UPDATED FOR EVERY UPDATED VERSION
                 version = '0.1.0'
             }
         }
