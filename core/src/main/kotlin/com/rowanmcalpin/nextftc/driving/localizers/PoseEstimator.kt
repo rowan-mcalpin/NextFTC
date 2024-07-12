@@ -1,5 +1,10 @@
 package com.rowanmcalpin.nextftc.driving.localizers
 
+// THIS FILE IS CURRENTLY COMMENTED OUT DUE TO A NUMBER OF ISSUES AND THE DEPRECATION OF VUFORIA. KEEP AN EYE OUT FOR
+// AN APRILTAG ALTERNATIVE... NO GUARANTEES THOUGH
+
+/*
+
 import com.acmerobotics.roadrunner.geometry.Pose2d
 import com.qualcomm.robotcore.util.ElapsedTime
 import kotlin.math.abs
@@ -54,3 +59,4 @@ class PoseEstimator(
             absoluteAdjustment = position - nearestPair.second
     }
 }
+ */
