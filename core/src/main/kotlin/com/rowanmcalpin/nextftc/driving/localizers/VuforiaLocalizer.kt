@@ -1,5 +1,10 @@
 package com.rowanmcalpin.nextftc.driving.localizers
 
+// THIS FILE IS CURRENTLY COMMENTED OUT DUE TO A NUMBER OF ISSUES AND THE DEPRECATION OF VUFORIA. KEEP AN EYE OUT FOR
+// AN APRILTAG ALTERNATIVE... NO GUARANTEES THOUGH
+
+
+/*
 import com.acmerobotics.roadrunner.geometry.Pose2d
 import org.firstinspires.ftc.robotcore.external.ClassFactory
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName
@@ -182,3 +187,4 @@ interface VuforiaConstants {
     val CAMERA_LEFT_DISPLACEMENT: Float
     val DELAY_TIME_MILLIS: Double
 }
+ */
