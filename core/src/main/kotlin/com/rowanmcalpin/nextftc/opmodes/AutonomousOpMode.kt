@@ -26,6 +26,7 @@ import com.rowanmcalpin.nextftc.trajectories.TrajectoryFactory
  *                   and the others should be mechanisms.
  */
 @Suppress("unused")
+@Deprecated("Deprecated as of v0.1.2", replaceWith = ReplaceWith("NextFTCOpMode"))
 abstract class AutonomousOpMode(private val color: Constants.Color,
                                 private val trajectoryFactory: TrajectoryFactory,
                                 private val mainRoutine: (() -> Command),

@@ -25,7 +25,7 @@ repositories {
 Now, in your `TeamCode` module's `build.gradle`, add the following line to the end of the `dependencies` block:
 
 ```groovy
-implementation 'com.rowanmcalpin:nextftc:0.1.1'
+implementation 'com.rowanmcalpin:nextftc:0.1.2'
 ```
 
 Sync Gradle and you're good to go!
