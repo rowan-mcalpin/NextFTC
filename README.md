@@ -11,21 +11,28 @@ NextFTC is built with Kotlin and leverages modern software practices to ensure h
 
 #### Install NextFTC using Gradle.
 
-In your project's `build.dependencies.gradle` file, change the `repositories` block to look like this:
+In your project's `build.dependencies.gradle` file, add the following lines to the `repositories` block:
 
 ```groovy
-repositories {
-    mavenCentral()
-    google() // Needed for androidx
-
-    maven { url = "https://jitpack.io/" }
-}
+maven { url = "https://maven.rowanmcalpin.com/" }
+maven { url = "https://maven.brott.dev/" }
+maven { url = "https://jitpack.io/" }
 ```
 
-Now, in your `TeamCode` module's `build.gradle`, add the following line to the end of the `dependencies` block:
+Next, add the following lines to the `dependencies` block:
 
 ```groovy
-implementation 'com.rowanmcalpin:nextftc:0.1.2'
+implementation 'com.rowanmcalpin.nextftc:core:0.1.2'
+implementation 'com.acmerobotics.roadrunner:core:0.5.6'
+implementation 'com.acmerobotics.dashboard:dashboard:0.4.13'
 ```
 
-Sync Gradle and you're good to go!
+Now, in your TeamCode `build.gradle`, add the following lines to the end of the `dependencies` block:
+
+```groovy
+    implementation "org.apache.commons:commons-math3:3.6.1"
+    implementation 'com.github.NoahBres:MeepMeep:2.0.3'
+```
+
+Finally, sync Gradle. This will add NextFTC, as well as its requirements, RoadRunner, RoadRunner Dashboard, and MeepMeep.
+

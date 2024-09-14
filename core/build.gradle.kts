@@ -2,11 +2,12 @@ import org.jetbrains.dokka.gradle.DokkaTask
 
 plugins {
     id("com.android.library")
-    id("org.jetbrains.kotlin.android")
+    id("org.jetbrains.kotlin.android") version "1.9.20"
 
     `maven-publish`
 
     id("org.jetbrains.dokka") version "1.9.10"
+    id("kotlin-android")
 }
 
 android {
@@ -37,6 +38,11 @@ android {
     publishing {
         singleVariant("release")
     }
+    sourceSets {
+        getByName("main") {
+            java.srcDirs("src/main/kotlin")
+        }
+    }
 }
 
 dependencies {
@@ -45,11 +51,11 @@ dependencies {
 //    implementation("androidx.appcompat:appcompat:1.6.1")
 //    implementation("com.google.android.material:material:1.10.0")
 
-    compileOnly("org.firstinspires.ftc:RobotCore:9.0.1")
-    compileOnly("org.firstinspires.ftc:Hardware:9.0.1")
-    compileOnly("org.firstinspires.ftc:FtcCommon:9.0.1")
-    compileOnly("org.firstinspires.ftc:RobotServer:9.0.1")
-    compileOnly("org.firstinspires.ftc:OnBotJava:9.0.1")
+    compileOnly("org.firstinspires.ftc:RobotCore:10.0.0")
+    compileOnly("org.firstinspires.ftc:Hardware:10.0.0")
+    compileOnly("org.firstinspires.ftc:FtcCommon:10.0.0")
+    compileOnly("org.firstinspires.ftc:RobotServer:10.0.0")
+    compileOnly("org.firstinspires.ftc:OnBotJava:10.0.0")
 
     implementation("com.acmerobotics.dashboard:dashboard:0.4.6") {
         exclude(group = "org.firstinspires.ftc")
@@ -58,6 +64,8 @@ dependencies {
     implementation("org.apache.commons:commons-math3:3.6.1")
     implementation("com.acmerobotics.roadrunner:core:0.5.5")
     implementation("com.github.NoahBres:MeepMeep:2.0.3")
+
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.9.20")
 }
 
 // CONFIGURE DOKKA
@@ -83,13 +91,20 @@ tasks.withType(DokkaTask::class).configureEach {
 publishing {
     publications {
         register<MavenPublication>("release") {
-            groupId = "com.rowanmcalpin"
-            artifactId = "nextftc"
-            version = "0.1.1"
+            groupId = "com.rowanmcalpin.nextftc"
+            artifactId = "core"
+            version = "0.1.2"
 
             afterEvaluate {
                 from(components["release"])
             }
+        }
+    }
+
+    repositories {
+        maven {
+            name = "publishing"
+            url = uri("../../../maven.rowanmcalpin.com")
         }
     }
 }
