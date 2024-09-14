@@ -51,6 +51,7 @@ object MeepMeepVisualizer {
     }
 
     private fun routineToSegmentList(routine: CommandGroup): List<SequenceSegment> {
+        routine.onStart()
         val trajectories = arrayListOf<SequenceSegment>()
         for (command in routine.commands) {
             if (command is FollowTrajectory) {
