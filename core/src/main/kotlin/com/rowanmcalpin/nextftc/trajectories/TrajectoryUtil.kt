@@ -22,6 +22,17 @@ val Double.switchColor get () = (if (color == BLUE) this else this * -1)
 @Deprecated(message = "Outdated", replaceWith = ReplaceWith("Double.translateAcrossField")) val Double.flipAlongX36 get() = (if (color == BLUE) this else 72 - this)
 val Double.translateAcrossField get() = (if (color == BLUE) this else (72 - this) * -1)
 
+val Int.inchesToMm get() = this * 25.4
+val Int.mmToInches get() = this / 25.4
+val Int.toRadians get() = (Math.toRadians(this.toDouble()))
+val Int.rad get() = (this.toRadians)
+val Int.switch get() = (this.switchColor)
+val Int.switchAngle get() = (this.switchColorAngle)
+val Int.switchColorAngle get() = (if (color == BLUE) this else 360 - this)
+val Int.switchApproachTangentAngle get() = (if (color == BLUE) this else this - 180)
+val Int.switchColor get() = (if(color == BLUE) this else this * -1)
+val Int.translateAcrossField get() = (if(color == BLUE) this else (72 - this) * -1)
+
 /** Returns the Vector2d of a Pose2d **/
 val Pose2d.v : Vector2d get() = (this.vec())
 /** Returns the heading of a Pose2d (in radians) **/
