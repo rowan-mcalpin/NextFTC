@@ -28,19 +28,9 @@ interface DriveConstants {
     val HEADING_PID: PIDCoefficients
     val DRIVER_SPEEDS: List<Double>
     /**
-    Depending on the direction your hub is mounted, the IMU has to be reset to have a different vertical direction.
-    //                           | Z axis
-    //                           |
-    //     (Motor Port Side)     |   / X axis
-    //                       ____|__/____
-    //          Y axis     / *   | /    /|   (IO Side)
-    //          _________ /______|/    //      I2C
-    //                   /___________ //     Digital
-    //                  |____________|/      Analog
-    //
-    //                 (Servo Port Side)
-    //
-    // The positive x axis points toward the USB port(s)
+    * Depending on the direction your hub is mounted, the IMU has to be reset to have a different vertical direction.
+    *
+    * *See also:* [graphic](https://gist.github.com/rowan-mcalpin/f29280c34b19697fd5d844694ed042e9)
     */
     val VERTICAL_AXIS: AxisDirection
 
