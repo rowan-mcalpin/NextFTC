@@ -63,7 +63,7 @@ dependencies {
 
     implementation("org.apache.commons:commons-math3:3.6.1")
     implementation("com.acmerobotics.roadrunner:core:0.5.5")
-    implementation("com.github.NoahBres:MeepMeep:2.0.3")
+    implementation("com.github.NoahBres:MeepMeep:-SNAPSHOT")
 
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.9.20")
 }
@@ -93,7 +93,7 @@ publishing {
         register<MavenPublication>("release") {
             groupId = "com.rowanmcalpin.nextftc"
             artifactId = "core"
-            version = "0.1.2"
+            version = "0.2.0"
 
             afterEvaluate {
                 from(components["release"])

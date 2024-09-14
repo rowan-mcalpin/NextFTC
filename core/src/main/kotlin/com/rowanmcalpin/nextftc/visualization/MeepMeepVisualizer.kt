@@ -17,7 +17,7 @@ object MeepMeepVisualizer {
 
     val robots = mutableListOf<MeepMeepRobot>()
 
-    fun run(trajectoryFactory: TrajectoryFactory, windowSize: Int = 600, darkMode: Boolean = true, backgroundAlpha: Float = 0.95f, background: MeepMeep.Background = MeepMeep.Background.FIELD_POWERPLAY_KAI_DARK) {
+    fun run(trajectoryFactory: TrajectoryFactory, windowSize: Int = 600, darkMode: Boolean = true, backgroundAlpha: Float = 0.95f, background: MeepMeep.Background = MeepMeep.Background.FIELD_INTOTHEDEEP_JUICE_DARK) {
         val meepMeep = MeepMeep(windowSize)
         meepMeep.setBackground(background)
             .setDarkMode(darkMode)
