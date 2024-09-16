@@ -93,7 +93,7 @@ publishing {
         register<MavenPublication>("release") {
             groupId = "com.rowanmcalpin.nextftc"
             artifactId = "core"
-            version = "0.2.2"
+            version = "0.3.0"
 
             afterEvaluate {
                 from(components["release"])
