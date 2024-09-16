@@ -16,6 +16,8 @@ import com.rowanmcalpin.nextftc.trajectories.TrajectoryFactory
 object MeepMeepVisualizer {
 
     val robots = mutableListOf<MeepMeepRobot>()
+    var mouseCoordinateDisplayPositionX: Int? = null
+    var mouseCoordinateDisplayPositionY: Int? = null
 
     fun run(trajectoryFactory: TrajectoryFactory, windowSize: Int = 600, darkMode: Boolean = true, backgroundAlpha: Float = 0.95f, background: MeepMeep.Background = MeepMeep.Background.FIELD_INTOTHEDEEP_JUICE_DARK) {
         val meepMeep = MeepMeep(windowSize)
@@ -43,6 +45,10 @@ object MeepMeepVisualizer {
                 )
             ))
         }
+        if(mouseCoordinateDisplayPositionX != null) {
+            meepMeep.setMouseCoordinateDisplayPosition(mouseCoordinateDisplayPositionX!!,
+                mouseCoordinateDisplayPositionY!!)
+        }
         meepMeep.start()
     }
 
@@ -62,5 +68,10 @@ object MeepMeepVisualizer {
             }
         }
         return trajectories
+    }
+
+    fun setMouseCoordinateDisplayPosition(x: Int, y: Int) {
+        mouseCoordinateDisplayPositionX = x
+        mouseCoordinateDisplayPositionY = y
     }
 }
