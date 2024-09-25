@@ -1,5 +1,5 @@
-[![JitPack]([https://img.shields.io/jitpack/version/com.rowanmcalpin/nextftc?label=JitPack](https://img.shields.io/badge/dynamic/xml?url=https%3A%2F%2Fmaven.rowanmcalpin.com%2Fcom%2Frowanmcalpin%2Fnextftc%2Fcore%2Fmaven-metadata.xml&query=%2Fmetadata%2Fversioning%2Flatest&prefix=v&label=Build&color=%2310e000
-))](https://github.com/rowan-mcalpin/NextFTC/releases/latest)
+[![Build](https://img.shields.io/badge/dynamic/xml?url=https%3A%2F%2Fmaven.rowanmcalpin.com%2Fcom%2Frowanmcalpin%2Fnextftc%2Fcore%2Fmaven-metadata.xml&query=%2Fmetadata%2Fversioning%2Flatest&prefix=v&label=Build&color=%2310e000
+)](https://github.com/rowan-mcalpin/NextFTC/releases/latest)
 [![GitHub commit activity](https://img.shields.io/github/commit-activity/t/rowan-mcalpin/nextftc?label=Commits)](https://github.com/rowan-mcalpin/nextftc/commits/main/)
 
 # NextFTC
