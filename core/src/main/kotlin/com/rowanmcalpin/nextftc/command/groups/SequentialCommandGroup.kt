@@ -29,7 +29,6 @@ class SequentialCommandGroup(vararg val command: Command): CommandGroup() {
         if (commands.isNotEmpty()) {
             if (!commands[0].isStarted) {
                 commands[0].start()
-                commands[0].isStarted = true
             }
             commands[0].execute()
             if (commands[0].isDone) {

@@ -35,6 +35,7 @@ abstract class Command {
      * function is run.
      */
     fun start() {
+        isStarted = true
         onStart()
     }
 
