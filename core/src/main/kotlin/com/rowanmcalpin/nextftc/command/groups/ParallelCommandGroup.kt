@@ -33,7 +33,6 @@ class ParallelCommandGroup(vararg val command: Command): CommandGroup() {
 
         commands.forEach {
             it.start()
-            it.isStarted = true
         }
     }
 
@@ -47,7 +46,6 @@ class ParallelCommandGroup(vararg val command: Command): CommandGroup() {
         for (command in commands) {
             if (!command.isStarted) {
                 command.start()
-                command.isStarted = true
             }
             command.execute()
             if(command.isDone) {
