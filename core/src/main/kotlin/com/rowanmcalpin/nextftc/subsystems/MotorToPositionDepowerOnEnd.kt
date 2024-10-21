@@ -80,9 +80,7 @@ open class MotorToPositionDepowerOnEnd(
      * Stops the motor
      */
     override fun onEnd(interrupted: Boolean) {
-        motor.power = speed
-        motor.mode = DcMotor.RunMode.RUN_TO_POSITION
-        motor.targetPosition = motor.currentPosition
+        motor.power = 0.0
     }
 
     /**
