@@ -1,4 +1,4 @@
-package com.rowanmcalpin.nextftc.hardware
+package com.rowanmcalpin.nextftc.controls
 
 import com.qualcomm.robotcore.hardware.Gamepad
 import com.rowanmcalpin.nextftc.command.Command

@@ -6,7 +6,7 @@ plugins {
 
     `maven-publish`
 
-    id("org.jetbrains.dokka") version "1.9.10"
+    id("org.jetbrains.dokka") version "1.9.20"
     id("kotlin-android")
 }
 
@@ -62,8 +62,8 @@ dependencies {
     }
 
     implementation("org.apache.commons:commons-math3:3.6.1")
-    implementation("com.acmerobotics.roadrunner:core:0.5.5")
-    implementation("com.github.rowan-mcalpin:MeepMeep-1:actualworking")
+    implementation("com.acmerobotics.roadrunner:core:0.5.6")
+    implementation("com.github.rh-robotics:MeepMeep:v1.0.0")
 
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.9.20")
 }
@@ -78,7 +78,7 @@ tasks.dokkaHtml.configure {
     }
 }
 
-tasks.withType(DokkaTask::class).configureEach {
+tasks.withType<DokkaTask>().configureEach {
     pluginsMapConfiguration.set(
         mapOf(Pair("org.jetbrains.dokka.base.DokkaBase", """
         {
@@ -93,7 +93,7 @@ publishing {
         register<MavenPublication>("release") {
             groupId = "com.rowanmcalpin.nextftc"
             artifactId = "core"
-            version = "0.4.1-beta"
+            version = "0.4.2-beta6"
 
             afterEvaluate {
                 from(components["release"])
