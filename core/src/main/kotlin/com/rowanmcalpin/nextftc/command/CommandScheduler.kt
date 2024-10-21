@@ -1,8 +1,10 @@
 package com.rowanmcalpin.nextftc.command
 
+import com.qualcomm.robotcore.util.RobotLog
 import com.rowanmcalpin.nextftc.Constants
-import com.rowanmcalpin.nextftc.hardware.GamepadEx
+import com.rowanmcalpin.nextftc.controls.GamepadEx
 import com.rowanmcalpin.nextftc.command.groups.CommandGroup
+import com.rowanmcalpin.nextftc.command.utility.CustomCommand
 import com.rowanmcalpin.nextftc.subsystems.Subsystem
 import com.rowanmcalpin.nextftc.command.utility.TelemetryCommand
 
@@ -13,7 +15,14 @@ import com.rowanmcalpin.nextftc.command.utility.TelemetryCommand
 @Suppress("MemberVisibilityCanBePrivate", "unused")
 object CommandScheduler {
 
+    /**
+     * Actively running commands.
+     */
     private val runningCommands = mutableListOf<Command>()
+
+    /**
+     * Commands that haven't been started yet.
+     */
     private val commandsToSchedule = mutableListOf<Command>()
     private val commandsToCancel = mutableMapOf<Command, Boolean>()
     private val gamepads = mutableListOf<GamepadEx>()
@@ -101,6 +110,7 @@ object CommandScheduler {
         for (command in runningCommands) {
             commandsToCancel += Pair(command, true)
         }
+        runningCommands.clear()
         cancelCommands()
         commandsToSchedule.clear()
     }
@@ -175,8 +185,14 @@ object CommandScheduler {
             command.end(interrupted)
         } catch (e: RuntimeException) {
             scheduleCommand(
-                TelemetryCommand(30.0, "Error canceling " +
-                    command.javaClass, e.message ?: "Message Unknown")
+                /*
+                val data = "Power: " + Range.clip(power, -min(speed, 1.0), min(speed, 1.0)) + ", direction: " + direction + ", error: " + error
+            RobotLog.i("MotorToPosition %s", data)
+                 */
+                CustomCommand(getDone = {true}, _start = {
+                    val data = "Error canceling " + command.javaClass + "Message: " + (e.message ?: "Message unknown")
+                    RobotLog.e("CommandScheduler %s", data)
+                })
             )
         }
         runningCommands -= command

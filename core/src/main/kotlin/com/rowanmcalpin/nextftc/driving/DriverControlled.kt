@@ -2,25 +2,13 @@ package com.rowanmcalpin.nextftc.driving
 
 import com.acmerobotics.roadrunner.geometry.Pose2d
 import com.qualcomm.robotcore.hardware.Gamepad
-import com.rowanmcalpin.nextftc.command.Command
-import com.rowanmcalpin.nextftc.Constants
-import com.rowanmcalpin.nextftc.Constants.color
 import com.rowanmcalpin.nextftc.Constants.drive
+import com.rowanmcalpin.nextftc.command.Command
+import com.rowanmcalpin.nextftc.command.utility.CustomCommand
 import com.rowanmcalpin.nextftc.subsystems.Subsystem
-import com.rowanmcalpin.nextftc.trajectories.toRadians
 import kotlin.math.*
 
-/**
- * Controls the robot manually using a gamepad. Left stick up/down moves the robot forwards/backwards, left stick left/
- * right moves the robot left/right, right stick left/right makes the robot turn left/right
- *
- * @param gamepad the gamepad that controls the driving
- * @param requirements any Subsystems used by this command
- * @param interruptible whether this command can be interrupted or not
- * @param reverseStrafe whether to reverse the left/right direction
- * @param reverseStraight whether to reverse the forwards/backwards direction
- * @param reverseTurn whether to reverse the turning left/right direction
- */
+
 class DriverControlled(
     private val gamepad: Gamepad,
     override val requirements: List<Subsystem> = arrayListOf(),
@@ -28,13 +16,19 @@ class DriverControlled(
     private val pov: POV = POV.ROBOT_CENTRIC,
     private val reverseStrafe: Boolean = true,
     private val reverseStraight: Boolean = false,
-    private val reverseTurn: Boolean = true
-) : Command() {
+    private val reverseTurn: Boolean = true,
+    private val lowMultiplier: Double = 0.65,
+    private val highMultiplier: Double = 1.0
+): Command() {
+
+    var rotationOffset = 0.0
+
+    val resetRotation: Command
+        get() = CustomCommand(_start = { rotationOffset = drive.poseEstimate.heading })
 
     enum class POV {
         ROBOT_CENTRIC,
-        FIELD_CENTRIC,
-        DRIVER_CENTRIC
+        FIELD_CENTRIC
     }
 
     override val _isDone = false
@@ -44,25 +38,38 @@ class DriverControlled(
      */
     override fun onExecute() {
         val drivePower: Pose2d
-        if (pov != POV.ROBOT_CENTRIC) {
-            val angle: Double = atan2((if(reverseStraight) -gamepad.left_stick_y else gamepad.left_stick_y), (if(reverseStrafe) -gamepad.left_stick_x else gamepad.left_stick_x)).toDouble()
+        if (pov == POV.FIELD_CENTRIC) {
+            // Swapped x and y is intentional because roadrunner uses "robotics" x and y whereas gamepad uses "gaming" x and y
+            val x: Double = (if(reverseStraight) -gamepad.left_stick_y else gamepad.left_stick_y).toDouble()
+            val y: Double = (if(reverseStrafe) -gamepad.left_stick_x else gamepad.left_stick_x).toDouble()
+            val rx: Double = (if(reverseTurn) -gamepad.right_stick_x else gamepad.right_stick_x).toDouble()
 
-            var adjustedAngle = angle + drive.poseEstimate.heading
+            /*
+            double botHeading = imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS);
 
-            if (pov == POV.DRIVER_CENTRIC) {
-                if (color == Constants.Color.BLUE) {
-                    adjustedAngle -= 90.0.toRadians
-                }
-                else {
-                    adjustedAngle += 90.0.toRadians
-                }
-            }
-            val totalPower = sqrt(gamepad.left_stick_y.pow(2) + gamepad.left_stick_x.pow(2))
+            // Rotate the movement direction counter to the bot's rotation
+            double rotX = x * Math.cos(-botHeading) - y * Math.sin(-botHeading);
+            double rotY = x * Math.sin(-botHeading) + y * Math.cos(-botHeading);
+
+            rotX = rotX * 1.1;  // Counteract imperfect strafing
+            */
+
+            val heading = drive.poseEstimate.heading - rotationOffset
+            val rotX = x * cos(-heading) - y * sin(-heading)
+            val rotY = x * sin(-heading) + y * cos(-heading)
+
+
+
+            // Denominator is the highest value of the motor powers, so we can have our motor powers between 0 and 1
+            val denominator: Double = max(abs(rotY) + abs(rotX) + abs(rx), 1.0)
             drivePower = Pose2d(
-                totalPower * sin(adjustedAngle),
-                totalPower * cos(adjustedAngle),
-                if (reverseTurn) -1 else { 1 } * (gamepad.right_stick_x).toDouble()
+                rotX / denominator,
+                rotY / denominator,
+                rx / denominator
             )
+//            TelemetryController.telemetry.addData("Angle", angle.toString())
+//            TelemetryController.telemetry.addData("Adjusted angle", adjustedAngle.toString())
+//            TelemetryController.telemetry.addData("Drive power", drivePower.toString())
         }
         else {
             drivePower = Pose2d(

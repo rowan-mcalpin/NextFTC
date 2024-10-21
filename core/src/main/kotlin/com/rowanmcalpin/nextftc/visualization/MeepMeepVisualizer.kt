@@ -1,12 +1,12 @@
 package com.rowanmcalpin.nextftc.visualization
 
-import com.noahbres.meepmeep.MeepMeep
-import com.noahbres.meepmeep.core.colorscheme.scheme.ColorSchemeBlueDark
-import com.noahbres.meepmeep.core.colorscheme.scheme.ColorSchemeRedDark
-import com.noahbres.meepmeep.roadrunner.DefaultBotBuilder
-import com.noahbres.meepmeep.roadrunner.trajectorysequence.sequencesegment.SequenceSegment
-import com.noahbres.meepmeep.roadrunner.trajectorysequence.sequencesegment.TrajectorySegment
-import com.noahbres.meepmeep.roadrunner.trajectorysequence.TrajectorySequence
+import org.rowlandhall.meepmeep.MeepMeep
+import org.rowlandhall.meepmeep.core.colorscheme.scheme.ColorSchemeBlueDark
+import org.rowlandhall.meepmeep.core.colorscheme.scheme.ColorSchemeRedDark
+import org.rowlandhall.meepmeep.roadrunner.DefaultBotBuilder
+import org.rowlandhall.meepmeep.roadrunner.trajectorysequence.sequencesegment.SequenceSegment
+import org.rowlandhall.meepmeep.roadrunner.trajectorysequence.sequencesegment.TrajectorySegment
+import org.rowlandhall.meepmeep.roadrunner.trajectorysequence.TrajectorySequence
 import com.rowanmcalpin.nextftc.command.groups.CommandGroup
 import com.rowanmcalpin.nextftc.Constants
 import com.rowanmcalpin.nextftc.driving.DriveConstants

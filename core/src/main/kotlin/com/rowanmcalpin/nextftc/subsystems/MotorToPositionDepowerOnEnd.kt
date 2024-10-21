@@ -17,6 +17,8 @@ import kotlin.math.sign
  * This class rotates a motor to a certain position. It proportionally slows down as it nears that
  * position. It starts slowing down 1 / kP ticks away from its target position.
  *
+ * On end, it depowers the motor
+ *
  * @param motor the motor to move
  * @param targetPosition where the motor should move to
  * @param speed how fast it should move there
@@ -26,7 +28,7 @@ import kotlin.math.sign
  * @param kP multiplied by the error and speed to get the
  */
 @Suppress("MemberVisibilityCanBePrivate")
-open class MotorToPosition(
+open class MotorToPositionDepowerOnEnd(
     protected val motor: MotorEx,
     protected val targetPosition: Int,
     protected var speed: Double,
@@ -78,9 +80,7 @@ open class MotorToPosition(
      * Stops the motor
      */
     override fun onEnd(interrupted: Boolean) {
-        motor.power = speed
-        motor.mode = DcMotor.RunMode.RUN_TO_POSITION
-        motor.targetPosition = motor.currentPosition
+        motor.power = 0.0
     }
 
     /**
