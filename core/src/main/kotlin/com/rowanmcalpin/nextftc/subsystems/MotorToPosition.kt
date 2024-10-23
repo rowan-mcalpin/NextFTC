@@ -67,7 +67,7 @@ open class MotorToPosition(
         direction = sign(error.toDouble())
         val power = kP * abs(error) * speed * direction
         motor.power = Range.clip(power, -min(speed, 1.0), min(speed, 1.0))
-        // cancelIfStalled()
+//        cancelIfStalled()
         if(logData) {
             val data = "Power: " + Range.clip(power, -min(speed, 1.0), min(speed, 1.0)) + ", direction: " + direction + ", error: " + error
             RobotLog.i("MotorToPosition %s", data)
@@ -88,7 +88,7 @@ open class MotorToPosition(
      * It then compares the speed from the previous check to the current speed. If there's a change of at least
      * minimumChangeForStall times, then the motor is stalled. It sends out a telemetry message and cancels the command.
      */
-    @Deprecated("This function may be contributing to a major issue with the command. Do not use.")
+    @Deprecated("Possibly broken")
     fun cancelIfStalled() {
         val lastTime = if (saveTimes.size == 0) 0.0 else saveTimes.last()
         val roundedLastTime = (lastTime * savesPerSecond).roundToInt() / savesPerSecond
