@@ -215,7 +215,11 @@ class GamepadEx(private val gamepad: Gamepad) {
         var justStopped = false
         var x = 0.0f
         var y = 0.0f
+        var rawX = 0.0f
+        var rawY = 0.0f
         val button = Button()
+
+        var curve: JoyStickCurve = LinearJoyStickCurve()
 
         /**
          * Updates the x and y values of the joystick, whether it just moved or just stopped, and
@@ -229,8 +233,10 @@ class GamepadEx(private val gamepad: Gamepad) {
         fun update(x: Float, y: Float, buttonValue: Boolean) {
             justMoved = x != 0.0f || y != 0.0f && !moved
             justStopped = x == 0.0f && y == 0.0f && moved
-            this.x = x
-            this.y = y
+            this.x = curve.calculate(x)
+            this.y = curve.calculate(y)
+            rawX = x
+            rawY = y
             button.update(buttonValue)
         }
 
@@ -247,9 +253,9 @@ class GamepadEx(private val gamepad: Gamepad) {
             if (button.released) set.add("Button Just Released")
             if (justMoved) set.add("Just Started Moving")
             if (justStopped) set.add("Just Stopped Moving")
-            if (set.isNotEmpty() || x != 0.0f || y != 0.0f) {
-                set.add("X: $x")
-                set.add("Y: $y")
+            if (set.isNotEmpty() || rawX != 0.0f || rawY != 0.0f) {
+                set.add("X: $rawX")
+                set.add("Y: $rawY")
             }
             return if (set.isNotEmpty()) "$name: ${set.joinToString(", ")}" else ""
         }
