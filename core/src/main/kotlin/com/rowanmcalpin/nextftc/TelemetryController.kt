@@ -77,12 +77,12 @@ class Adapter(private val dashboard: FtcDashboard) : Telemetry {
     }
 
     override fun clear() {
-        currentPacket = TelemetryPacket()
+        currentPacket = TelemetryPacket(true)
         log = LogAdapter(currentPacket!!)
     }
 
     override fun clearAll() {
-        currentPacket = TelemetryPacket()
+        currentPacket = TelemetryPacket(true)
     }
 
     override fun addAction(action: Runnable): Any {
