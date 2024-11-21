@@ -57,7 +57,7 @@ dependencies {
     compileOnly("org.firstinspires.ftc:RobotServer:10.0.0")
     compileOnly("org.firstinspires.ftc:OnBotJava:10.0.0")
 
-    implementation("com.acmerobotics.dashboard:dashboard:0.4.6") {
+    implementation("com.acmerobotics.dashboard:dashboard:0.4.16") {
         exclude(group = "org.firstinspires.ftc")
     }
 
@@ -93,7 +93,7 @@ publishing {
         register<MavenPublication>("release") {
             groupId = "com.rowanmcalpin.nextftc"
             artifactId = "core"
-            version = "0.4.3-beta1"
+            version = "0.4.3-beta5"
 
             afterEvaluate {
                 from(components["release"])
@@ -104,7 +104,7 @@ publishing {
     repositories {
         maven {
             name = "publishing"
-            url = uri("../../../maven.rowanmcalpin.com")
+            url = uri("../../../maven.rowanmcalpin.com/public")
         }
     }
 }
