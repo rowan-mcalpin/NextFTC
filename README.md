@@ -23,7 +23,7 @@ maven { url = "https://jitpack.io/" }
 Next, add the following lines to the `dependencies` block:
 
 ```groovy
-implementation 'com.rowanmcalpin.nextftc:core:0.1.2'
+implementation 'com.rowanmcalpin.nextftc:core:0.4.2'
 implementation 'com.acmerobotics.roadrunner:core:0.5.6'
 implementation 'com.acmerobotics.dashboard:dashboard:0.4.13'
 ```
@@ -32,7 +32,7 @@ Now, in your TeamCode `build.gradle`, add the following lines to the end of the 
 
 ```groovy
     implementation "org.apache.commons:commons-math3:3.6.1"
-    implementation 'com.github.NoahBres:MeepMeep:2.0.3'
+    implementation 'com.github.rh-robotics:MeepMeep:v1.0.0'
 ```
 
 Finally, sync Gradle. This will add NextFTC, as well as its requirements, RoadRunner, RoadRunner Dashboard, and MeepMeep.
