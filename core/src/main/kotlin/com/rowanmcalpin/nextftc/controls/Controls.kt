@@ -33,4 +33,12 @@ abstract class Controls {
      * Directions for registering commands are in the class docs.
      */
     abstract fun registerCommands()
+
+    /**
+     * Sets the curve for a gamepad's sticks
+     */
+    fun setJoystickCurves(gamepad: GamepadEx, leftStickCurve: JoyStickCurve, rightStickCurve: JoyStickCurve) {
+        gamepad.leftStick.curve = leftStickCurve
+        gamepad.rightStick.curve = rightStickCurve
+    }
 }
