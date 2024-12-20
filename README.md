@@ -23,7 +23,7 @@ maven { url = "https://jitpack.io/" }
 Next, add the following lines to the `dependencies` block:
 
 ```groovy
-implementation 'com.rowanmcalpin.nextftc:core:0.4.2'
+implementation 'com.rowanmcalpin.nextftc:core:0.4.4'
 implementation 'com.acmerobotics.roadrunner:core:0.5.6'
 implementation 'com.acmerobotics.dashboard:dashboard:0.4.13'
 ```
