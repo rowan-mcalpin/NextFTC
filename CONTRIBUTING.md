@@ -5,6 +5,8 @@ requests, documentation improvements, and code enhancements.
 
 ## How to Contribute
 
+To contribute, it's highly recommended to join the [Discord server](https://discord.gg/PjP9Ze6fkX)
+
 1. Fork the Repository: Click the "Fork" button on the top right of the repository page.
 2. Clone Your Fork: Clone your fork to your local machine
    using `git clone https://github.com/YOUR-USERNAME/NextFTC.git`,
