@@ -7,6 +7,7 @@ import com.rowanmcalpin.nextftc.core.command.Command
 import com.rowanmcalpin.nextftc.core.control.controllers.PIDFController
 import kotlin.math.abs
 
+@Deprecated("Deprecated in favor of controllables", ReplaceWith("RunToVelocity"))
 /**
  * This implements a PID controller to drive a motor to a specified target velocity.
  *

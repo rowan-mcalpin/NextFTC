@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.hardware.DcMotorEx
 import com.rowanmcalpin.nextftc.core.Subsystem
 import com.rowanmcalpin.nextftc.core.command.Command
 
+@Deprecated("Deprecated in favor of controllables", replaceWith = ReplaceWith("SetPower"))
 /**
  * Sets a motor to a specific power without any internal feedback
  * 

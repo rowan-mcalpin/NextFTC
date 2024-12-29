@@ -7,6 +7,7 @@ import com.rowanmcalpin.nextftc.core.command.Command
 import com.rowanmcalpin.nextftc.core.control.controllers.PIDFController
 import kotlin.math.abs
 
+@Deprecated("Removed in favor of controllables", replaceWith = ReplaceWith("RunToPosition"))
 /**
  * This command holds a multiple motor's positions until another command is scheduled that uses the 
  * same subsystem.

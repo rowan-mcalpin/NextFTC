@@ -5,8 +5,10 @@ import com.qualcomm.robotcore.hardware.DcMotorEx
 import com.rowanmcalpin.nextftc.core.Subsystem
 import com.rowanmcalpin.nextftc.core.command.Command
 import com.rowanmcalpin.nextftc.core.control.controllers.PIDFController
+import com.rowanmcalpin.nextftc.ftc.hardware.controllables.RunToPosition
 import kotlin.math.abs
 
+@Deprecated("Removed in favor of controllables", replaceWith = ReplaceWith("RunToPosition"))
 /**
  * This implements a PID controller to drive a motor to a specified target position.
  * 

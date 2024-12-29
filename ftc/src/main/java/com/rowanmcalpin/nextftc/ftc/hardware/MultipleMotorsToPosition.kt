@@ -7,6 +7,7 @@ import com.rowanmcalpin.nextftc.core.command.Command
 import com.rowanmcalpin.nextftc.core.control.controllers.PIDFController
 import kotlin.math.abs
 
+@Deprecated("Removed in favor of controllables", replaceWith = ReplaceWith("RunToPosition"))
 /**
  * This implements a PID controller to drive multiple motors to a specified target position.
  * 

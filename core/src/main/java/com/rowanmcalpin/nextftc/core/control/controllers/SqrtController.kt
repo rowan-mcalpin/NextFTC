@@ -12,7 +12,7 @@ import kotlin.math.sqrt
 open class SqrtController(val kS: Double): Controller {
     override var target: Double = 0.0
 
-    var setPointTolerance: Double = 0.0
+    override var setPointTolerance: Double = 0.0
 
     override fun calculate(reference: Double): Double {
         val error = target - reference
@@ -20,6 +20,7 @@ open class SqrtController(val kS: Double): Controller {
         return (sqrt(error) * kS)
     }
 
+    @Deprecated("Removed to shift to Controllable interface")
     /**
      * Whether this controller is within a certain distance of the [target].
      *

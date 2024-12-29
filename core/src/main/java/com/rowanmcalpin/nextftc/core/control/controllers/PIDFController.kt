@@ -24,7 +24,7 @@ open class PIDFController(val coefficients: PIDFCoefficients): Controller {
 
     override var target: Double = 0.0
     
-    var setPointTolerance: Double = 0.0
+    override var setPointTolerance: Double = 0.0
     
     private var lastError = 0.0
     private var integralSum = 0.0
@@ -45,6 +45,7 @@ open class PIDFController(val coefficients: PIDFCoefficients): Controller {
         return (error * coefficients.kP) + (integralSum * coefficients.kI) + (derivative * coefficients.kD) + coefficients.kF
     }
 
+    @Deprecated("Removed to shift to Controllable interface")
     /**
      * Whether this controller is within a certain distance of the [target].
      *
