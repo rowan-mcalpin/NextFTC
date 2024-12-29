@@ -38,8 +38,6 @@ dependencies {
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
 
     implementation(libs.pedro)
     implementation(libs.ftc.hardware)
