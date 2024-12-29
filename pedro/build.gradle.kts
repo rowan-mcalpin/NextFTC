@@ -35,10 +35,6 @@ android {
 }
 
 dependencies {
-
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.appcompat)
-
     implementation(libs.pedro)
     implementation(libs.ftc.hardware)
     implementation(libs.ftc.robotcore)

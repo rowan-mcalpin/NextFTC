@@ -35,10 +35,6 @@ android {
 }
 
 dependencies {
-
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.appcompat)
-
     implementation(project(":core"))
 
     compileOnly(libs.ftc.robotcore)

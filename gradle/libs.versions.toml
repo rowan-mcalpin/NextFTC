@@ -1,21 +1,17 @@
 [versions]
 agp = "8.7.3"
 kotlin = "1.9.24"
-coreKtx = "1.10.1"
-appcompat = "1.2.0"
 
 commons-math3 = "3.6.1"
 pedro = "0.0.1-beta14"
 ftc = "10.1.1"
 dokka = "1.9.24"
 
-module-pedro = "0.5.0-beta3"
-module-ftc = "0.5.0-beta3"
-module-core = "0.5.0-beta3"
+module-pedro = "0.5.0-beta4"
+module-ftc = "0.5.0-beta4"
+module-core = "0.5.0-beta4"
 
 [libraries]
-androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
-androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 commons-math3 = { module = "org.apache.commons:commons-math3", version.ref = "commons-math3" }
 pedro = { module = "com.pedropathing:pedro", version.ref = "pedro" }
 ftc-robotcore = { group = "org.firstinspires.ftc", name="RobotCore", version.ref = "ftc" }
