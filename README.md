@@ -34,9 +34,9 @@ maven { url = "https://maven.brott.dev/" }
 Next, add the following lines to the `dependencies` block:
 
 ```groovy
-implementation 'com.rowanmcalpin.nextftc:core:0.5.0-beta1'
-implementation 'com.rowanmcalpin.nextftc:ftc:0.5.0-beta1'
-implementation 'com.pedropathing:pedro:0.0.1-beta13'
+implementation 'com.rowanmcalpin.nextftc:core:0.5.0-beta2'
+implementation 'com.rowanmcalpin.nextftc:ftc:0.5.0-beta2'
+implementation 'com.pedropathing:pedro:0.0.1-beta14'
 implementation 'com.acmerobotics.dashboard:dashboard:0.4.16'
 ```
 

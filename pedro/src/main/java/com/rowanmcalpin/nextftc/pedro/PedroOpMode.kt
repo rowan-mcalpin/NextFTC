@@ -1,16 +1,21 @@
-package com.rowanmcalpin.nextftc.ftc
+package com.rowanmcalpin.nextftc.pedro
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
 import com.rowanmcalpin.nextftc.core.Subsystem
 import com.rowanmcalpin.nextftc.core.command.CommandManager
 import com.rowanmcalpin.nextftc.ftc.gamepad.GamepadManager
+import com.pedropathing.follower.Follower
+import com.rowanmcalpin.nextftc.ftc.OpModeData
 
 /**
  * This is a wrapper class for an OpMode that does the following:
  *  - Automatically initializes and runs the CommandManager
  *  - If desired, automatically implements and handles Gamepads
+ *  - If desired, automatically updates the PedroPath Follower
  */
-open class NextFTCOpMode(vararg val subsystems: Subsystem = arrayOf()): LinearOpMode() {
+open class PedroOpMode(vararg val subsystems: Subsystem = arrayOf()): LinearOpMode() {
+
+    lateinit var follower: Follower
 
     open lateinit var gamepadManager: GamepadManager
 
@@ -28,6 +33,11 @@ open class NextFTCOpMode(vararg val subsystems: Subsystem = arrayOf()): LinearOp
 
         // We want to continually update the gamepads
         CommandManager.scheduleCommand(gamepadManager.GamepadUpdaterCommand())
+
+        if (this::follower.isInitialized) {
+            PedroData.follower = follower
+            CommandManager.scheduleCommand(UpdateFollower())
+        }
 
         // Wait for start
         while (!isStarted && !isStopRequested) {
@@ -65,7 +75,7 @@ open class NextFTCOpMode(vararg val subsystems: Subsystem = arrayOf()): LinearOp
         }
 
         onStop()
-        // Since users might schedule a command that stops things, we want to be able to run it 
+        // Since users might schedule a command that stops things, we want to be able to run it
         // (one update of it, anyways) before we cancel all of our commands.
         CommandManager.run()
         CommandManager.cancelAll()

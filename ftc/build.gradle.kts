@@ -38,14 +38,10 @@ dependencies {
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
-    implementation(libs.material)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
 
     implementation(project(":core"))
-
-    implementation(libs.pedro)
 
     compileOnly(libs.ftc.robotcore)
     compileOnly(libs.ftc.hardware)
@@ -57,7 +53,7 @@ publishing {
         register<MavenPublication>("release") {
             groupId = "com.rowanmcalpin.nextftc"
             artifactId = "ftc"
-            version = "0.5.0-beta1"
+            version = libs.versions.module.ftc.get()
 
             afterEvaluate {
                 from(components["release"])

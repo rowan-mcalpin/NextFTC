@@ -1,12 +1,9 @@
-package com.rowanmcalpin.nextftc.ftc
+package com.rowanmcalpin.nextftc.pedro
 
 import com.rowanmcalpin.nextftc.core.Subsystem
 import com.rowanmcalpin.nextftc.core.command.Command
-import com.rowanmcalpin.nextftc.core.command.FollowerNotInitializedException
 import com.rowanmcalpin.nextftc.ftc.gamepad.GamepadEx
 import com.rowanmcalpin.nextftc.ftc.gamepad.Joystick
-import com.rowanmcalpin.nextftc.ftc.driving.Drivetrain
-
 
 /**
  * Uses the joystick inputs to drive the robot
@@ -39,14 +36,14 @@ class DriverControlled(val driveJoystick: Joystick, val turnJoystick: Joystick, 
     override val subsystems: Set<Subsystem> = setOf(Drivetrain)
 
     override fun start() {
-        if (OpModeData.follower == null) {
+        if (PedroData.follower == null) {
             throw FollowerNotInitializedException()
         }
-        OpModeData.follower!!.startTeleopDrive()
+        PedroData.follower!!.startTeleopDrive()
     }
     
     override fun update() {
-        OpModeData.follower!!.setTeleOpMovementVectors(driveJoystick.y.toDouble(),
+        PedroData.follower!!.setTeleOpMovementVectors(driveJoystick.y.toDouble(),
             driveJoystick.x.toDouble(), turnJoystick.x.toDouble(), robotCentric)
     }
 }

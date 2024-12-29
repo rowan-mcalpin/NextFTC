@@ -26,3 +26,4 @@ dependencyResolutionManagement {
 rootProject.name = "NextFTC"
 include(":core")
 include(":ftc")
+include(":pedro")

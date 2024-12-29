@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "com.rowanmcalpin.nextftc.core"
+    namespace = "com.rowanmcalpin.nextftc.pedro"
     compileSdk = 34
 
     defaultConfig {
@@ -41,16 +41,22 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
 
-    api(libs.commons.math3)
+    implementation(libs.pedro)
+    implementation(libs.ftc.hardware)
+    implementation(libs.ftc.robotcore)
+
+    implementation(project(":core"))
+    implementation(project(":ftc"))
 }
+
 
 // CONFIGURE PUBLISHING
 publishing {
     publications {
         register<MavenPublication>("release") {
             groupId = "com.rowanmcalpin.nextftc"
-            artifactId = "core"
-            version = libs.versions.module.core.get()
+            artifactId = "pedro"
+            version = libs.versions.module.pedro.get()
 
             afterEvaluate {
                 from(components["release"])

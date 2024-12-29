@@ -4,7 +4,6 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode
 import com.qualcomm.robotcore.hardware.Gamepad
 import com.qualcomm.robotcore.hardware.HardwareMap
 import org.firstinspires.ftc.robotcore.external.Telemetry
-import com.pedropathing.follower.Follower
 
 object OpModeData {
 
@@ -25,8 +24,6 @@ object OpModeData {
     lateinit var opMode: OpMode
 
     lateinit var telemetry: Telemetry
-    
-    var follower: Follower? = null
     
     var gamepad1: Gamepad? = null
     var gamepad2: Gamepad? = null
