@@ -1,0 +1,31 @@
+[versions]
+agp = "8.7.3"
+kotlin = "1.9.24"
+coreKtx = "1.10.1"
+junit = "4.13.2"
+junitVersion = "1.1.5"
+appcompat = "1.7.0"
+commons-math3 = "3.6.1"
+pedro = "0.0.1-beta13"
+espressoCore = "3.5.1"
+material = "1.10.0"
+ftc = "10.1.1"
+dokka = "1.9.24"
+
+[libraries]
+androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+junit = { group = "junit", name = "junit", version.ref = "junit" }
+androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
+androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+commons-math3 = { module = "org.apache.commons:commons-math3", version.ref = "commons-math3" }
+pedro = { module = "com.pedropathing:pedro", version.ref = "pedro" }
+androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
+material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+ftc-robotcore = { group = "org.firstinspires.ftc", name="RobotCore", version.ref = "ftc" }
+ftc-hardware = { group = "org.firstinspires.ftc", name="Hardware", version.ref = "ftc" }
+
+[plugins]
+android-application = { id = "com.android.application", version.ref = "agp" }
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+android-library = { id = "com.android.library", version.ref = "agp" }
+dokka = { id = "org.jetbrains.dokka", version.ref = "dokka" }

@@ -1,8 +1,13 @@
 pluginManagement {
     repositories {
-        google()
+        google {
+            content {
+                includeGroupByRegex("com\\.android.*")
+                includeGroupByRegex("com\\.google.*")
+                includeGroupByRegex("androidx.*")
+            }
+        }
         mavenCentral()
-        mavenLocal()
         gradlePluginPortal()
     }
 }
@@ -11,10 +16,13 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
-        maven(url = "https://jitpack.io/")
-        maven(url = "https://maven.brott.dev/")
+        // For PedroPathing:
+        maven(url = "https://maven.pedropathing.com/" )
+        // For Dashboard:
+        maven(url = "https://maven.brott.dev/" )
     }
 }
 
 rootProject.name = "NextFTC"
 include(":core")
+include(":ftc")

@@ -1,0 +1,3 @@
+[submodule "maven.rowanmcalpin.com"]
+	path = maven.rowanmcalpin.com
+	url = https://github.com/rowan-mcalpin/maven.rowanmcalpin.com

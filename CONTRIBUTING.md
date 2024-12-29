@@ -9,10 +9,12 @@ requests, documentation improvements, and code enhancements.
 2. Clone Your Fork: Clone your fork to your local machine
    using `git clone https://github.com/YOUR-USERNAME/NextFTC.git`,
    replacing `YOUR-USERNAME` with your GitHub username.
-3. Create a Branch: Create a new branch for your work using `git checkout -b feature/YourFeatureName`.
+3. Create a Branch: Create a new branch for your work using `git checkout -b BRANCH-NAME`, replacing `BRANCH-NAME` with 
+the name of your feature/modification.
 4. Make Changes: Make your changes in your branch.
 5. Commit Changes: Commit your changes with a clear and descriptive commit message.
-6. Push to GitHub: Push your branch to your fork on GitHub using `git push origin feature/YourFeatureName`.
+6. Push to GitHub: Push your branch to your fork on GitHub using `git push origin BRANCH-NAME`, replacing `BRANCH-NAME`
+with the branch name you selected in step 3.
 7. Create a Pull Request: Open a pull request to the main branch of the original repository. Provide a clear description
    of your changes and link any relevant issues.
 
