@@ -36,3 +36,5 @@ open class SqrtController(val kS: Double): Controller {
 
     override fun reset() { }
 }
+
+typealias SquidController = SqrtController
