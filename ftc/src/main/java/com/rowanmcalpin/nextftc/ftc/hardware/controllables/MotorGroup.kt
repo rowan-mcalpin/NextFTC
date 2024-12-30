@@ -9,8 +9,8 @@ package com.rowanmcalpin.nextftc.ftc.hardware.controllables
  */
 class MotorGroup(val leader: MotorEx, vararg val followers: MotorEx): Controllable {
 
-    constructor(vararg names: String): this(
-        MotorEx(names[0]),
+    constructor(leaderName: String, vararg names: String): this(
+        MotorEx(leaderName),
         *createMotors(names)
     )
 
@@ -34,11 +34,8 @@ class MotorGroup(val leader: MotorEx, vararg val followers: MotorEx): Controllab
     companion object {
         fun createMotors(names: Array<out String>): Array<out MotorEx> {
             val list = mutableListOf<MotorEx>()
-            if (names.isEmpty()) {
-                throw NotEnoughMotorsException()
-            }
 
-            for (i in 1..names.size) {
+            for (i in 0..names.size) {
                 list += MotorEx(names[i])
             }
 
@@ -46,5 +43,3 @@ class MotorGroup(val leader: MotorEx, vararg val followers: MotorEx): Controllab
         }
     }
 }
-
-class NotEnoughMotorsException(): Exception("You must supply at least one motor to a MotorGroup.")
