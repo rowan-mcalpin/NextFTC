@@ -13,7 +13,7 @@ import com.rowanmcalpin.nextftc.core.command.Command
  * @param subsystemCollection a set of subsystems this command implements
  * @param interruptible whether this command can be stopped due to an overlap of subsystems
  */
-class LambdaCommand @JvmOverloads constructor(
+open class LambdaCommand @JvmOverloads constructor(
     private val isDoneLambda: () -> Boolean = { true },
     private val startLambda: () -> Unit = { },
     private val updateLambda: () -> Unit = { },
