@@ -8,4 +8,7 @@ package com.rowanmcalpin.nextftc.core.control.coefficients
  * @param kD derivative constant
  * @param kF feedforward constant
  */
-data class PIDFCoefficients(var kP: Double, var kI: Double, var kD: Double, var kF: Double)
+data class PIDFCoefficients @JvmOverloads constructor(var kP: Double = 0.005,
+                            var kI: Double = 0.0,
+                            var kD: Double = 0.0,
+                            var kF: Double = 0.0)

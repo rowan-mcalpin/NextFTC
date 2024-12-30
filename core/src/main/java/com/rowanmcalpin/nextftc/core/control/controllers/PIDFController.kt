@@ -20,7 +20,9 @@ open class PIDFController(val coefficients: PIDFCoefficients): Controller {
      * @param kD derivative constant
      * @param kF feedforward constant
      */
-    constructor(kP: Double, kI: Double, kD: Double, kF: Double): this(PIDFCoefficients(kP, kI, kD, kF))
+    @JvmOverloads
+    constructor(kP: Double = 0.005, kI: Double = 0.0, kD: Double = 0.0, kF: Double = 0.0):
+            this(PIDFCoefficients(kP, kI, kD, kF))
 
     override var target: Double = 0.0
     

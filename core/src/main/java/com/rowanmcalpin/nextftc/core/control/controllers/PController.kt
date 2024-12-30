@@ -8,4 +8,5 @@ import com.rowanmcalpin.nextftc.core.control.coefficients.PDCoefficients
  * 
  * @param kP the proportional constant for the proportional controller
  */
-open class PController(kP: Double): PDController(PDCoefficients(kP, 0.0))
+open class PController @JvmOverloads constructor(kP: Double = 0.005):
+    PDController(PDCoefficients(kP, 0.0))

@@ -7,4 +7,6 @@ package com.rowanmcalpin.nextftc.core.control.coefficients
  * @param kI integral constant
  * @param kD derivative constant
  */
-data class PIDCoefficients(var kP: Double, var kI: Double, var kD: Double)
+data class PIDCoefficients @JvmOverloads constructor(var kP: Double = 0.005,
+                                                     var kI: Double = 0.0,
+                                                     var kD: Double = 0.0)
