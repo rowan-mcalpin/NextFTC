@@ -5,6 +5,7 @@ import com.rowanmcalpin.nextftc.core.Subsystem
 import com.rowanmcalpin.nextftc.core.command.CommandManager
 import com.rowanmcalpin.nextftc.ftc.gamepad.GamepadManager
 import com.pedropathing.follower.Follower
+import com.qualcomm.hardware.lynx.LynxModule
 import com.rowanmcalpin.nextftc.ftc.OpModeData
 
 /**
@@ -19,6 +20,15 @@ open class PedroOpMode(vararg val subsystems: Subsystem = arrayOf()): LinearOpMo
 
     open lateinit var gamepadManager: GamepadManager
 
+    /**
+     * Whether to bulk read the hubs. It is recommended to leave this ON. You must only update this
+     * in [onInit]. If you update it in [onUpdate] or from a command, you will likely break things.
+     */
+    var useBulkReading = true
+
+    private lateinit var allHubs: List<LynxModule>
+
+
     override fun runOpMode() {
         OpModeData.opMode = this
         OpModeData.hardwareMap = hardwareMap
@@ -30,6 +40,14 @@ open class PedroOpMode(vararg val subsystems: Subsystem = arrayOf()): LinearOpMo
         CommandManager.runningCommands.clear()
         initSubsystems()
         onInit()
+
+        if (useBulkReading) {
+            allHubs = hardwareMap.getAll(LynxModule::class.java)
+
+            allHubs.forEach {
+                it.bulkCachingMode = LynxModule.BulkCachingMode.MANUAL
+            }
+        }
 
         // We want to continually update the gamepads
         CommandManager.scheduleCommand(gamepadManager.GamepadUpdaterCommand())
@@ -52,6 +70,12 @@ open class PedroOpMode(vararg val subsystems: Subsystem = arrayOf()): LinearOpMo
             }
             CommandManager.run()
             onWaitForStart()
+
+            if (useBulkReading) {
+                allHubs.forEach {
+                    it.clearBulkCache()
+                }
+            }
         }
 
         // If we pressed stop after init (instead of start) we want to skip the rest of the OpMode
@@ -71,6 +95,12 @@ open class PedroOpMode(vararg val subsystems: Subsystem = arrayOf()): LinearOpMo
                 }
                 CommandManager.run()
                 onUpdate()
+
+                if (useBulkReading) {
+                    allHubs.forEach {
+                        it.clearBulkCache()
+                    }
+                }
             }
         }
 

@@ -1,9 +1,11 @@
 package com.rowanmcalpin.nextftc.ftc
 
+import com.qualcomm.hardware.lynx.LynxModule
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
 import com.rowanmcalpin.nextftc.core.Subsystem
 import com.rowanmcalpin.nextftc.core.command.CommandManager
 import com.rowanmcalpin.nextftc.ftc.gamepad.GamepadManager
+
 
 /**
  * This is a wrapper class for an OpMode that does the following:
@@ -13,6 +15,14 @@ import com.rowanmcalpin.nextftc.ftc.gamepad.GamepadManager
 open class NextFTCOpMode(vararg val subsystems: Subsystem = arrayOf()): LinearOpMode() {
 
     open lateinit var gamepadManager: GamepadManager
+
+    /**
+     * Whether to bulk read the hubs. It is recommended to leave this ON. You must only update this
+     * in [onInit]. If you update it in [onUpdate] or from a command, you will likely break things.
+     */
+    var useBulkReading = true
+
+    private lateinit var allHubs: List<LynxModule>
 
     override fun runOpMode() {
         OpModeData.opMode = this
@@ -25,6 +35,14 @@ open class NextFTCOpMode(vararg val subsystems: Subsystem = arrayOf()): LinearOp
         CommandManager.runningCommands.clear()
         initSubsystems()
         onInit()
+
+        if (useBulkReading) {
+            allHubs = hardwareMap.getAll(LynxModule::class.java)
+
+            allHubs.forEach {
+                it.bulkCachingMode = LynxModule.BulkCachingMode.MANUAL
+            }
+        }
 
         // We want to continually update the gamepads
         CommandManager.scheduleCommand(gamepadManager.GamepadUpdaterCommand())
@@ -42,6 +60,12 @@ open class NextFTCOpMode(vararg val subsystems: Subsystem = arrayOf()): LinearOp
             }
             CommandManager.run()
             onWaitForStart()
+
+            if (useBulkReading) {
+                allHubs.forEach {
+                    it.clearBulkCache()
+                }
+            }
         }
 
         // If we pressed stop after init (instead of start) we want to skip the rest of the OpMode
@@ -61,6 +85,12 @@ open class NextFTCOpMode(vararg val subsystems: Subsystem = arrayOf()): LinearOp
                 }
                 CommandManager.run()
                 onUpdate()
+
+                if (useBulkReading) {
+                    allHubs.forEach {
+                        it.clearBulkCache()
+                    }
+                }
             }
         }
 
