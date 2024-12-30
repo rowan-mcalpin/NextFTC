@@ -10,6 +10,9 @@ import kotlin.math.abs
  */
 class RunToPosition @JvmOverloads constructor(val controllable: Controllable, val target: Double, val controller: Controller,
     override val subsystems: Set<Subsystem> = setOf()): Command() {
+
+    constructor(controllable: Controllable, target: Double, controller: Controller, subsystem: Subsystem): this(controllable, target, controller, setOf(subsystem))
+
     override val isDone: Boolean
         get() = controller.atTarget(controllable.currentPosition)
 

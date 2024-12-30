@@ -13,6 +13,9 @@ import com.rowanmcalpin.nextftc.core.command.Command
  */
 class SetPower @JvmOverloads constructor(val controllable: Controllable, val power: Double,
                override val subsystems: Set<Subsystem> = setOf()): Command() {
+
+    constructor(controllable: Controllable, power: Double, subsystem: Subsystem): this(controllable, power, setOf(subsystem))
+
     override val isDone = true
 
     override fun start() {

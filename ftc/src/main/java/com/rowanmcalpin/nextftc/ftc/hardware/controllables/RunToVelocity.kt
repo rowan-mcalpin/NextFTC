@@ -18,6 +18,14 @@ import kotlin.math.abs
 class RunToVelocity @JvmOverloads constructor(val controllable: Controllable, val targetVelocity: Double,
     val controller: Controller, override val subsystems: Set<Subsystem> = setOf(),
     val outCondition: () -> Boolean = { abs(controllable.velocity)-targetVelocity < 10 }): Command() {
+
+    @JvmOverloads
+    constructor(controllable: Controllable,
+                targetVelocity: Double,
+                controller: Controller,
+                subsystem: Subsystem,
+                outCondition: () -> Boolean = { abs(controllable.velocity)-targetVelocity < 10 }): this(controllable, targetVelocity, controller, setOf(subsystem), outCondition)
+
     override val isDone: Boolean
         get() = outCondition.invoke()
 
