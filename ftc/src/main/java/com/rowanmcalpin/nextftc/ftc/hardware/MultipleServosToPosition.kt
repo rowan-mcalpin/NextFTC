@@ -3,6 +3,7 @@ package com.rowanmcalpin.nextftc.ftc.hardware
 import com.qualcomm.robotcore.hardware.Servo
 import com.rowanmcalpin.nextftc.core.Subsystem
 import com.rowanmcalpin.nextftc.core.command.Command
+import kotlin.math.abs
 
 /**
  * This command moves multiple servos to a specified target position
@@ -22,7 +23,9 @@ class MultipleServosToPosition(val servos: List<Servo>, val target: Double,
 
     override fun start() {
         servos.forEach {
-            it.position = target
+            if (abs(it.position - target) > 0.01) {
+                it.position = target
+            }
         }
     }
 }

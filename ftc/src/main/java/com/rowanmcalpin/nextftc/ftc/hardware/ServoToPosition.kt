@@ -3,6 +3,7 @@ package com.rowanmcalpin.nextftc.ftc.hardware
 import com.qualcomm.robotcore.hardware.Servo
 import com.rowanmcalpin.nextftc.core.Subsystem
 import com.rowanmcalpin.nextftc.core.command.Command
+import kotlin.math.abs
 
 /**
  * This command moves a servo to a target position
@@ -21,6 +22,8 @@ class ServoToPosition(val servo: Servo, val targetPosition: Double,
         get() = true
 
     override fun start() {
-        servo.position = targetPosition
+        if (abs(servo.position - targetPosition) > 0.01) {
+            servo.position = targetPosition
+        }
     }
 }
