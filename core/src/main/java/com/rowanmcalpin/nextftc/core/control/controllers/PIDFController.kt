@@ -49,7 +49,7 @@ open class PIDFController(val coefficients: PIDFCoefficients): Controller {
     /**
      * Whether this controller is within a certain distance of the [target].
      *
-     * @param reference the current location of the motor being controlled
+     * @param reference the current state of the item being controlled
      */
     fun atSetPoint(reference: Double): Boolean {
         if (abs(target - reference) <= setPointTolerance) {

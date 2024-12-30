@@ -19,7 +19,7 @@ interface Controller {
     /**
      * Given a reference, calculates how to best match the target.
      *
-     * @param reference the current location of the motor being controlled
+     * @param reference the current state of the item being controlled
      */
     fun calculate(reference: Double): Double
 
