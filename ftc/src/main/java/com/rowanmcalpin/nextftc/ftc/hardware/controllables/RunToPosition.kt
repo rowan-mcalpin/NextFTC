@@ -6,7 +6,9 @@ import com.rowanmcalpin.nextftc.core.control.controllers.Controller
 import kotlin.math.abs
 
 /**
- * This implements a [Controller] to drive a [Controllable] to a specified target position
+ * This implements a [Controller] to drive a [Controllable] to a specified target position. When it
+ * finishes, it will set the [Controllable]'s power to 0. To have it hold position, set the default
+ * command to a [HoldPosition] command.
  */
 class RunToPosition @JvmOverloads constructor(val controllable: Controllable, val target: Double, val controller: Controller,
     override val subsystems: Set<Subsystem> = setOf()): Command() {
@@ -26,5 +28,9 @@ class RunToPosition @JvmOverloads constructor(val controllable: Controllable, va
         if (abs(controllable.power - calculatedPower) > 0.01) {
             controllable.power = calculatedPower
         }
+    }
+
+    override fun stop(interrupted: Boolean) {
+        controllable.power = 0.0
     }
 }

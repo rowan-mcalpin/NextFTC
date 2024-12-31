@@ -6,7 +6,9 @@ import com.rowanmcalpin.nextftc.core.control.controllers.Controller
 import kotlin.math.abs
 
 /**
- * This implements a PID controller to drive a motor to a specified target velocity.
+ * This implements a PID controller to drive a motor to a specified target velocity. Note that this
+ * command will spin a motor to a specific velocity, *and then depower the motor*. To have it hold
+ * velocity, set the subsystem's default command to a [HoldVelocity] command.
  *
  * @param controllable the [Controllable] to control
  * @param targetVelocity the target velocity
