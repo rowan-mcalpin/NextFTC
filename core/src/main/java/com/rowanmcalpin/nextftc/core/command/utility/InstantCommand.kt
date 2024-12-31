@@ -12,4 +12,7 @@ import com.rowanmcalpin.nextftc.core.Subsystem
 class InstantCommand @JvmOverloads constructor(lambda: () -> Unit = { },
            subsystemCollection: Set<Subsystem> = setOf()): LambdaCommand({ true }, lambda,
             {  }, {  }, subsystemCollection, true) {
+
+    @JvmOverloads
+    constructor(lambda: () -> Unit = { }, subsystem: Subsystem): this(lambda, setOf(subsystem))
 }
