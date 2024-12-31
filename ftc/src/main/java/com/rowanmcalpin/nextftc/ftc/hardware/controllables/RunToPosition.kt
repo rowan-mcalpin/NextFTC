@@ -15,6 +15,8 @@ class RunToPosition @JvmOverloads constructor(val controllable: Controllable, va
 
     constructor(controllable: Controllable, target: Double, controller: Controller, subsystem: Subsystem): this(controllable, target, controller, setOf(subsystem))
 
+    private var cachedPower = Double.MAX_VALUE
+
     override val isDone: Boolean
         get() = controller.atTarget(controllable.currentPosition)
 
@@ -25,9 +27,7 @@ class RunToPosition @JvmOverloads constructor(val controllable: Controllable, va
 
     override fun update() {
         val calculatedPower = controller.calculate(controllable.currentPosition)
-        if (abs(controllable.power - calculatedPower) > 0.01) {
-            controllable.power = calculatedPower
-        }
+        controllable.power = calculatedPower
     }
 
     override fun stop(interrupted: Boolean) {

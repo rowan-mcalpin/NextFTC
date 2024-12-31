@@ -38,8 +38,6 @@ class RunToVelocity @JvmOverloads constructor(val controllable: Controllable, va
 
     override fun update() {
         val calculatedPower = controller.calculate(controllable.velocity)
-        if (abs(controllable.power - calculatedPower) > 0.01) {
-            controllable.power = calculatedPower
-        }
+        controllable.power = calculatedPower
     }
 }

@@ -22,9 +22,7 @@ class MultipleServosToSeperatePositions @JvmOverloads constructor(val servos: Ma
 
     override fun start() {
         servos.forEach {
-            if (abs(it.key.position - it.value) > 0.01) {
-                it.key.position = it.value
-            }
+            it.key.position = it.value
         }
     }
 }

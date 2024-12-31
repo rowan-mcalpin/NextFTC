@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.hardware.DcMotor
 import com.qualcomm.robotcore.hardware.DcMotorEx
 import com.qualcomm.robotcore.hardware.DcMotorSimple.Direction
 import com.rowanmcalpin.nextftc.ftc.OpModeData
+import kotlin.math.abs
 
 /**
  * Wrapper class for motors that implements controllable (and can therefore be used with RunToPosition
@@ -12,6 +13,8 @@ import com.rowanmcalpin.nextftc.ftc.OpModeData
 class MotorEx(val motor: DcMotorEx): Controllable {
 
     constructor(name: String): this(OpModeData.hardwareMap.get(DcMotorEx::class.java, name))
+
+    private var cachedPower = Double.MAX_VALUE
 
     var direction: Direction
         get() = motor.direction
@@ -29,6 +32,9 @@ class MotorEx(val motor: DcMotorEx): Controllable {
         get() = motor.power
         set(value) {
             motor.mode = DcMotor.RunMode.RUN_WITHOUT_ENCODER
-            motor.power = value
+            if (abs(cachedPower - value) > 0.01) {
+                motor.power = value
+                cachedPower = value
+            }
         }
 }

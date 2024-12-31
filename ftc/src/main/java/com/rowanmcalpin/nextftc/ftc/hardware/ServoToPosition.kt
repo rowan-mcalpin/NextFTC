@@ -22,8 +22,6 @@ class ServoToPosition(val servo: Servo, val targetPosition: Double,
         get() = true
 
     override fun start() {
-        if (abs(servo.position - targetPosition) > 0.01) {
-            servo.position = targetPosition
-        }
+        servo.position = targetPosition
     }
 }

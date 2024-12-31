@@ -23,9 +23,7 @@ class MultipleServosToPosition @JvmOverloads constructor(val servos: List<Servo>
 
     override fun start() {
         servos.forEach {
-            if (abs(it.position - target) > 0.01) {
-                it.position = target
-            }
+            it.position = target
         }
     }
 }

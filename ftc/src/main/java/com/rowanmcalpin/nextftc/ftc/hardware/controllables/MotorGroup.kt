@@ -1,5 +1,7 @@
 package com.rowanmcalpin.nextftc.ftc.hardware.controllables
 
+import kotlin.math.abs
+
 /**
  * A MotorGroup is a collection of [MotorEx]s that are all controlled by a single encoder (connected
  * to the leader motor)
@@ -14,6 +16,8 @@ class MotorGroup(val leader: MotorEx, vararg val followers: MotorEx): Controllab
         *createMotors(names)
     )
 
+    private var cachedPower = Double.MAX_VALUE
+
     override var currentPosition: Double
         get() = leader.currentPosition
         set(value) { }
@@ -25,9 +29,11 @@ class MotorGroup(val leader: MotorEx, vararg val followers: MotorEx): Controllab
     override var power: Double
         get() = leader.power
         set(value) {
-            leader.power = value
-            followers.forEach {
-                it.power = value
+            if (abs(cachedPower - value) > 0.01) {
+                leader.power = value
+                followers.forEach {
+                    it.power = value
+                }
             }
         }
 
