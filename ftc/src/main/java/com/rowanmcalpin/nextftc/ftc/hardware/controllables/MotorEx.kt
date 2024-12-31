@@ -2,15 +2,20 @@ package com.rowanmcalpin.nextftc.ftc.hardware.controllables
 
 import com.qualcomm.robotcore.hardware.DcMotor
 import com.qualcomm.robotcore.hardware.DcMotorEx
+import com.qualcomm.robotcore.hardware.DcMotorSimple.Direction
 import com.rowanmcalpin.nextftc.ftc.OpModeData
 
 /**
  * Wrapper class for motors that implements controllable (and can therefore be used with RunToPosition
  * commands).
  */
-class MotorEx(private val motor: DcMotorEx): Controllable {
+class MotorEx(val motor: DcMotorEx): Controllable {
 
     constructor(name: String): this(OpModeData.hardwareMap.get(DcMotorEx::class.java, name))
+
+    var direction: Direction
+        get() = motor.direction
+        set(value) { motor.direction = value }
 
     override var currentPosition: Double
         get() = motor.currentPosition.toDouble()
