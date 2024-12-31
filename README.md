@@ -37,7 +37,7 @@ Next, add the following lines to the `dependencies` block:
 implementation 'com.rowanmcalpin.nextftc:core:0.5.2-beta2'
 implementation 'com.rowanmcalpin.nextftc:ftc:0.5.2-beta2'
 implementation 'com.rowanmcalpin.nextftc:pedro:0.5.2-beta2'
-implementation 'com.pedropathing:pedro:1.0.0'
+implementation 'com.pedropathing:pedro:1.0.1'
 implementation 'com.acmerobotics.dashboard:dashboard:0.4.16'
 ```
 

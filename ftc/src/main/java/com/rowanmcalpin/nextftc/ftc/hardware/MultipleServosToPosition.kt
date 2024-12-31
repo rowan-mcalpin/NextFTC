@@ -13,8 +13,8 @@ import kotlin.math.abs
  * @param subsystems the subsystems this command interacts with (should be whatever
  *                      subsystem holds this command)
  */
-class MultipleServosToPosition(val servos: List<Servo>, val target: Double,
-                                override val subsystems: Set<Subsystem>): Command() {
+class MultipleServosToPosition @JvmOverloads constructor(val servos: List<Servo>, val target: Double,
+                                override val subsystems: Set<Subsystem> = setOf()): Command() {
 
     constructor(servos: List<Servo>, target: Double, subsystem: Subsystem): this(servos, target, setOf(subsystem))
 
