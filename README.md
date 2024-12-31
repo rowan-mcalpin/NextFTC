@@ -35,7 +35,7 @@ Next, add the following lines to the `dependencies` block:
 
 ```groovy
 implementation 'com.rowanmcalpin.nextftc:core:0.5.3-beta1'
-implementation 'com.rowanmcalpin.nextftc:ftc:0.5.3-beta2'
+implementation 'com.rowanmcalpin.nextftc:ftc:0.5.3-beta4'
 implementation 'com.rowanmcalpin.nextftc:pedro:0.5.3-beta1'
 implementation 'com.pedropathing:pedro:1.0.1'
 implementation 'com.acmerobotics.dashboard:dashboard:0.4.16'
