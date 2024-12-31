@@ -26,8 +26,7 @@ class RunToPosition @JvmOverloads constructor(val controllable: Controllable, va
     }
 
     override fun update() {
-        val calculatedPower = controller.calculate(controllable.currentPosition)
-        controllable.power = calculatedPower
+        controllable.power = controller.calculate(controllable.currentPosition)
     }
 
     override fun stop(interrupted: Boolean) {

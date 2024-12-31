@@ -28,9 +28,6 @@ class HoldPosition @JvmOverloads constructor(val controllable: Controllable, val
     }
 
     override fun update() {
-        val calculatedPower = controller.calculate(controllable.currentPosition)
-        if (abs(controllable.power - calculatedPower) > 0.01) {
-            controllable.power = calculatedPower
-        }
+        controllable.power = controller.calculate(controllable.currentPosition)
     }
 }

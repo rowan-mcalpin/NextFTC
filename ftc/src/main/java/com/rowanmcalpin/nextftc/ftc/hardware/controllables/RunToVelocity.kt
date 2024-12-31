@@ -37,7 +37,6 @@ class RunToVelocity @JvmOverloads constructor(val controllable: Controllable, va
     }
 
     override fun update() {
-        val calculatedPower = controller.calculate(controllable.velocity)
-        controllable.power = calculatedPower
+        controllable.power = controller.calculate(controllable.velocity)
     }
 }
