@@ -44,7 +44,7 @@ publishing {
         register<MavenPublication>("release") {
             groupId = "com.rowanmcalpin.nextftc"
             artifactId = "core"
-            version = libs.versions.module.core.get()
+            version = libs.versions.nextftc.get()
 
             afterEvaluate {
                 from(components["release"])
