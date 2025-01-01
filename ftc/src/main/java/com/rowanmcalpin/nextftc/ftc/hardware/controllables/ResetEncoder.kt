@@ -15,6 +15,6 @@ class ResetEncoder @JvmOverloads constructor(val motor: MotorEx, override val su
         get() = true
 
     override fun start() {
-        motor.currentPosition = 0.0
+        motor.resetEncoder()
     }
 }

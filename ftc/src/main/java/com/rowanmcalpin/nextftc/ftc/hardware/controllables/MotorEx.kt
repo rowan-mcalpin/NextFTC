@@ -68,4 +68,8 @@ class MotorEx(val motor: DcMotorEx): Controllable {
         direction = Direction.REVERSE
         return this
     }
+
+    fun resetEncoder() {
+        currentPosition = 0.0
+    }
 }
