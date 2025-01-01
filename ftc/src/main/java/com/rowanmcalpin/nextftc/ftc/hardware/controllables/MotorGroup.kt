@@ -16,8 +16,6 @@ class MotorGroup(val leader: MotorEx, vararg val followers: MotorEx): Controllab
         *createMotors(names)
     )
 
-    private var cachedPower = Double.MAX_VALUE
-
     override var currentPosition: Double
         get() = leader.currentPosition
         set(value) { }
@@ -29,11 +27,9 @@ class MotorGroup(val leader: MotorEx, vararg val followers: MotorEx): Controllab
     override var power: Double
         get() = leader.power
         set(value) {
-            if (abs(cachedPower - value) > 0.01) {
-                leader.power = value
-                followers.forEach {
-                    it.power = value
-                }
+            leader.power = value
+            followers.forEach {
+                it.power = value
             }
         }
 
