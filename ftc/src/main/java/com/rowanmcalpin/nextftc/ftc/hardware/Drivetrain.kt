@@ -1,4 +1,4 @@
-package com.rowanmcalpin.nextftc.pedro
+package com.rowanmcalpin.nextftc.ftc.hardware
 
 import com.rowanmcalpin.nextftc.core.Subsystem
 

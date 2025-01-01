@@ -37,4 +37,8 @@ class MotorEx(val motor: DcMotorEx): Controllable {
                 cachedPower = value
             }
         }
+    fun reverse(): MotorEx {
+        direction = Direction.REVERSE
+        return this
+    }
 }
