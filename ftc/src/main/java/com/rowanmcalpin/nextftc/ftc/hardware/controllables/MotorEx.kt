@@ -16,27 +16,54 @@ class MotorEx(val motor: DcMotorEx): Controllable {
 
     private var cachedPower = Double.MAX_VALUE
 
+    private var tickOffset = 0.0 // By default, we don't want to offset from the motor's raw ticks
+
+    /**
+     * The tolerance that must be surpassed in order to update the motors power. Defaults to 0.01.
+     */
+    var cacheTolerance = 0.01
+
     var direction: Direction
         get() = motor.direction
         set(value) { motor.direction = value }
 
-    override var currentPosition: Double
+    /**
+     * Gives the unmodified raw tick value of the motor
+     */
+    val rawTicks: Double
         get() = motor.currentPosition.toDouble()
-        set(value) { }
 
+    /**
+     * This returns the current position of the motor, accounting for any offsets created by manually
+     * settings its currentPosition.
+     *
+     * Setting this value tells it that its current position is actually the position you've set the variable to,
+     * which will get accounted for automatically when getting this value.
+     */
+    override var currentPosition: Double
+        get() = (motor.currentPosition.toDouble() - tickOffset)
+        set(value) { tickOffset = rawTicks - value }
+
+    /**
+     * Current velocity of the motor. Setter does nothing
+     */
     override var velocity: Double
         get() = motor.velocity
         set(value) { }
 
+    /**
+     * Gets / sets the current power of the motor (automatically implements power caching)
+     */
     override var power: Double
-        get() = motor.power
+        get() = cachedPower
         set(value) {
             motor.mode = DcMotor.RunMode.RUN_WITHOUT_ENCODER
-            if (abs(cachedPower - value) > 0.01) {
+            if (abs(cachedPower - value) > cacheTolerance) {
                 motor.power = value
                 cachedPower = value
             }
         }
+
     fun reverse(): MotorEx {
         direction = Direction.REVERSE
         return this
