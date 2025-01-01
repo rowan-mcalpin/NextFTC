@@ -4,6 +4,7 @@ import com.rowanmcalpin.nextftc.core.Subsystem
 import com.rowanmcalpin.nextftc.core.command.Command
 import com.rowanmcalpin.nextftc.ftc.gamepad.GamepadEx
 import com.rowanmcalpin.nextftc.ftc.gamepad.Joystick
+import com.rowanmcalpin.nextftc.ftc.hardware.Drivetrain
 
 /**
  * Uses the joystick inputs to drive the robot
