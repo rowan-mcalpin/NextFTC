@@ -65,6 +65,10 @@ class MotorEx(val motor: DcMotorEx): Controllable {
         get() = motor.velocity
         set(value) { }
 
+    var direction: Direction
+        get() = motor.direction
+        set(value) { motor.direction = value }
+
     /**
      * Gets / sets the current power of the motor (automatically implements power caching)
      */
