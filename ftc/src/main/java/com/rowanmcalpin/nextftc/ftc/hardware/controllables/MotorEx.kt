@@ -10,7 +10,7 @@ import kotlin.math.abs
  * Wrapper class for motors that implements controllable (and can therefore be used with RunToPosition
  * commands).
  */
-class MotorEx(val motor: DcMotorEx): Controllable {
+class MotorEx(val motor: DcMotorEx): DcMotorEx by motor, Controllable {
 
     constructor(name: String): this(OpModeData.hardwareMap.get(DcMotorEx::class.java, name))
 
@@ -22,10 +22,6 @@ class MotorEx(val motor: DcMotorEx): Controllable {
      * The tolerance that must be surpassed in order to update the motors power. Defaults to 0.01.
      */
     var cacheTolerance = 0.01
-
-    var direction: Direction
-        get() = motor.direction
-        set(value) { motor.direction = value }
 
     /**
      * Gives the unmodified raw tick value of the motor
