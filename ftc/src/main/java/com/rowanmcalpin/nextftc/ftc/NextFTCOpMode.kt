@@ -3,6 +3,7 @@ package com.rowanmcalpin.nextftc.ftc
 import com.qualcomm.hardware.lynx.LynxModule
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
 import com.rowanmcalpin.nextftc.core.Subsystem
+import com.rowanmcalpin.nextftc.core.SubsystemGroup
 import com.rowanmcalpin.nextftc.core.command.CommandManager
 import com.rowanmcalpin.nextftc.ftc.gamepad.GamepadManager
 
@@ -12,7 +13,7 @@ import com.rowanmcalpin.nextftc.ftc.gamepad.GamepadManager
  *  - Automatically initializes and runs the CommandManager
  *  - If desired, automatically implements and handles Gamepads
  */
-open class NextFTCOpMode(vararg val subsystems: Subsystem = arrayOf()): LinearOpMode() {
+open class NextFTCOpMode(vararg var subsystems: Subsystem = arrayOf()): LinearOpMode() {
 
     open lateinit var gamepadManager: GamepadManager
 
@@ -33,6 +34,7 @@ open class NextFTCOpMode(vararg val subsystems: Subsystem = arrayOf()): LinearOp
         gamepadManager = GamepadManager(gamepad1, gamepad2)
 
         CommandManager.runningCommands.clear()
+        expandSubsystems()
         initSubsystems()
         onInit()
 
@@ -108,6 +110,38 @@ open class NextFTCOpMode(vararg val subsystems: Subsystem = arrayOf()): LinearOp
         subsystems.forEach {
             it.initialize()
         }
+    }
+
+    /**
+     * Expands SubsystemGroups into a single-layer array (and puts that back into the [subsystems]
+     * array)
+     */
+    private fun expandSubsystems() {
+        val expanded = mutableListOf<Subsystem>()
+
+        for (subsystem in subsystems) {
+            if (subsystem is SubsystemGroup) {
+                expanded += expandSubsystemGroup(subsystem)
+            }
+        }
+
+        subsystems = expanded.toTypedArray()
+    }
+
+    /**
+     * Expands a subsystem group (recursively)
+     */
+    private fun expandSubsystemGroup(group: SubsystemGroup): Array<Subsystem> {
+        val expanded = mutableListOf<Subsystem>()
+
+        for (child in group.subsystems) {
+            if (child is SubsystemGroup) {
+                expanded += expandSubsystemGroup(child)
+            }
+            expanded += child
+        }
+
+        return expanded.toTypedArray()
     }
 
     /**

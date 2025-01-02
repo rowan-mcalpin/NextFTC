@@ -6,6 +6,7 @@ import com.rowanmcalpin.nextftc.core.command.CommandManager
 import com.rowanmcalpin.nextftc.ftc.gamepad.GamepadManager
 import com.pedropathing.follower.Follower
 import com.qualcomm.hardware.lynx.LynxModule
+import com.rowanmcalpin.nextftc.core.SubsystemGroup
 import com.rowanmcalpin.nextftc.ftc.OpModeData
 
 /**
@@ -14,7 +15,7 @@ import com.rowanmcalpin.nextftc.ftc.OpModeData
  *  - If desired, automatically implements and handles Gamepads
  *  - If desired, automatically updates the PedroPath Follower
  */
-open class PedroOpMode(vararg val subsystems: Subsystem = arrayOf()): LinearOpMode() {
+open class PedroOpMode(vararg var subsystems: Subsystem = arrayOf()): LinearOpMode() {
 
     lateinit var follower: Follower
 
@@ -38,6 +39,7 @@ open class PedroOpMode(vararg val subsystems: Subsystem = arrayOf()): LinearOpMo
         gamepadManager = GamepadManager(gamepad1, gamepad2)
 
         CommandManager.runningCommands.clear()
+        expandSubsystems()
         initSubsystems()
         onInit()
 
@@ -118,6 +120,38 @@ open class PedroOpMode(vararg val subsystems: Subsystem = arrayOf()): LinearOpMo
         subsystems.forEach {
             it.initialize()
         }
+    }
+
+    /**
+     * Expands SubsystemGroups into a single-layer array (and puts that back into the [subsystems]
+     * array)
+     */
+    private fun expandSubsystems() {
+        val expanded = mutableListOf<Subsystem>()
+
+        for (subsystem in subsystems) {
+            if (subsystem is SubsystemGroup) {
+                expanded += expandSubsystemGroup(subsystem)
+            }
+        }
+
+        subsystems = expanded.toTypedArray()
+    }
+
+    /**
+     * Expands a subsystem group (recursively)
+     */
+    private fun expandSubsystemGroup(group: SubsystemGroup): Array<Subsystem> {
+        val expanded = mutableListOf<Subsystem>()
+
+        for (child in group.subsystems) {
+            if (child is SubsystemGroup) {
+                expanded += expandSubsystemGroup(child)
+            }
+            expanded += child
+        }
+
+        return expanded.toTypedArray()
     }
 
     /**
