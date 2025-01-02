@@ -15,8 +15,6 @@ class RunToPosition @JvmOverloads constructor(val controllable: Controllable, va
 
     constructor(controllable: Controllable, target: Double, controller: Controller, subsystem: Subsystem): this(controllable, target, controller, setOf(subsystem))
 
-    private var cachedPower = Double.MAX_VALUE
-
     override val isDone: Boolean
         get() = controller.atTarget(controllable.currentPosition)
 

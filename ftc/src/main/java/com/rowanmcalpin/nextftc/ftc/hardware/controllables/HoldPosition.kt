@@ -18,12 +18,10 @@ class HoldPosition @JvmOverloads constructor(val controllable: Controllable, val
 
     constructor(controllable: Controllable, controller: Controller, subsystem: Subsystem): this(controllable, controller, setOf(subsystem))
 
-    private val target = controllable.currentPosition
-
     override val isDone = false
 
     override fun start() {
-        controller.target = target
+        controller.target = controllable.currentPosition
         controller.reset()
     }
 
