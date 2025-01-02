@@ -18,7 +18,7 @@ class MotorGroup(val leader: MotorEx, vararg val followers: MotorEx): Controllab
 
     override var currentPosition: Double
         get() = leader.currentPosition
-        set(value) { }
+        set(value) { leader.currentPosition = value }
 
     override var velocity: Double
         get() = leader.velocity
