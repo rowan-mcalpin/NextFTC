@@ -24,7 +24,6 @@ import com.rowanmcalpin.nextftc.ftc.gamepad.GamepadEx
 import com.rowanmcalpin.nextftc.ftc.gamepad.Joystick
 import com.rowanmcalpin.nextftc.ftc.hardware.Drivetrain
 import com.rowanmcalpin.nextftc.ftc.hardware.controllables.Controllable
-import com.rowanmcalpin.nextftc.ftc.hardware.controllables.MotorEx
 
 /**
  * Drives a differential drivetrain as a tank drive.

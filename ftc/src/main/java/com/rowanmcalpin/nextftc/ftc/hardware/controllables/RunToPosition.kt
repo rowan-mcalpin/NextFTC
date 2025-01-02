@@ -21,7 +21,6 @@ package com.rowanmcalpin.nextftc.ftc.hardware.controllables
 import com.rowanmcalpin.nextftc.core.Subsystem
 import com.rowanmcalpin.nextftc.core.command.Command
 import com.rowanmcalpin.nextftc.core.control.controllers.Controller
-import kotlin.math.abs
 
 /**
  * This implements a [Controller] to drive a [Controllable] to a specified target position. When it

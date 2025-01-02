@@ -18,14 +18,14 @@ NextFTC: a user-friendly control library for FIRST Tech Challenge
 
 package com.rowanmcalpin.nextftc.pedro
 
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
-import com.rowanmcalpin.nextftc.core.Subsystem
-import com.rowanmcalpin.nextftc.core.command.CommandManager
-import com.rowanmcalpin.nextftc.ftc.gamepad.GamepadManager
 import com.pedropathing.follower.Follower
 import com.qualcomm.hardware.lynx.LynxModule
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
+import com.rowanmcalpin.nextftc.core.Subsystem
 import com.rowanmcalpin.nextftc.core.SubsystemGroup
+import com.rowanmcalpin.nextftc.core.command.CommandManager
 import com.rowanmcalpin.nextftc.ftc.OpModeData
+import com.rowanmcalpin.nextftc.ftc.gamepad.GamepadManager
 
 /**
  * This is a wrapper class for an OpMode that does the following:
