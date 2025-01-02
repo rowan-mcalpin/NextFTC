@@ -14,7 +14,7 @@ class MotorEx(val motor: DcMotorEx): Controllable {
 
     constructor(name: String): this(OpModeData.hardwareMap.get(DcMotorEx::class.java, name))
 
-    private var cachedPower = Double.MAX_VALUE
+    private var cachedPower = 0.0 // By default, motors are unpowered
 
     private var tickOffset = 0.0 // By default, we don't want to offset from the motor's raw ticks
 
