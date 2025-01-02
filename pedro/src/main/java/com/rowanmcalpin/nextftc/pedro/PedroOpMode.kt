@@ -151,6 +151,7 @@ open class PedroOpMode(vararg var subsystems: Subsystem = arrayOf()): LinearOpMo
             if (subsystem is SubsystemGroup) {
                 expanded += expandSubsystemGroup(subsystem)
             }
+            expanded += subsystem
         }
 
         subsystems = expanded.toTypedArray()

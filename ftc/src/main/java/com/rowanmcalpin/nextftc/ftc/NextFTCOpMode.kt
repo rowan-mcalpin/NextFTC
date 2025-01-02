@@ -141,6 +141,7 @@ open class NextFTCOpMode(vararg var subsystems: Subsystem = arrayOf()): LinearOp
             if (subsystem is SubsystemGroup) {
                 expanded += expandSubsystemGroup(subsystem)
             }
+            expanded += subsystem
         }
 
         subsystems = expanded.toTypedArray()
