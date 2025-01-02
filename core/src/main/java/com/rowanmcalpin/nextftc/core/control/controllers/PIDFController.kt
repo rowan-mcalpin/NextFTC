@@ -1,30 +1,18 @@
 package com.rowanmcalpin.nextftc.core.control.controllers
 
+import com.rowanmcalpin.nextftc.core.command.PIDBoundaryException
 import com.rowanmcalpin.nextftc.core.control.coefficients.PIDCoefficients
+import com.rowanmcalpin.nextftc.core.control.controllers.feedforward.Feedforward
+import com.rowanmcalpin.nextftc.core.control.controllers.feedforward.StaticFeedforward
 import kotlin.math.abs
-import kotlin.math.cos
 import kotlin.math.max
 import kotlin.math.min
 import kotlin.math.withSign
 
 /**
- * Feedforward is a functional interface for computing feedforward.
- * It is essentially just a Function<Double, Double> but
- * named and with example uses.
- */
-fun interface Feedforward {
-    fun compute(position: Double): Double
-
-    companion object {
-        @JvmStatic fun static(kS: Double) = Feedforward { kS }
-        @JvmStatic fun arm(kCos: Double) = Feedforward { kCos * cos(it) }
-    }
-}
-
-/**
  * PID controller with various feedforward components.
- * Originally from Roadrunner 0.5
- * Ported to Kotlin and NextFTC by Zach.Waffle
+ *
+ * @author Originally from Roadrunner 0.5, ported to Kotlin & NextFTC by Zach.Waffle
  */
 open class PIDFController
 /**
@@ -32,17 +20,18 @@ open class PIDFController
  * @param kF      custom feedforward that depends on position
  */ @JvmOverloads constructor(
     pid: PIDCoefficients,
-    private val kF: Feedforward = Feedforward.static(0.0),
+    private val kF: Feedforward = StaticFeedforward(0.0),
     override var target: Double = 0.0,
     override var setPointTolerance: Double = 10.0
 ) : Controller {
 
+    @JvmOverloads
     constructor(
         kP: Double = 0.0,
         kI: Double = 0.0,
         kD: Double = 0.0,
-        kF: Feedforward = Feedforward.static(0.0),
-        target: Double = 0.0, 
+        kF: Feedforward = StaticFeedforward(0.0),
+        target: Double = 0.0,
         setPointTolerance: Double = 10.0
     ) : this(PIDCoefficients(kP, kI, kD), kF, target, setPointTolerance)
 
@@ -81,7 +70,9 @@ open class PIDFController
      * @param max maximum input
      */
     fun setInputBounds(min: Double, max: Double) {
-        assert(min < max) { "Min output must be less than max output!" }
+        if (min > max) {
+            throw PIDBoundaryException()
+        }
         inputBounded = true
         minInput = min
         maxInput = max
@@ -94,7 +85,9 @@ open class PIDFController
      * @param max maximum output
      */
     fun setOutputBounds(min: Double, max: Double) {
-        assert(min < max) { "Min output must be less than max output!" }
+        if (min > max) {
+            throw PIDBoundaryException()
+        }
         outputBounded = true
         minOutput = min
         maxOutput = max
@@ -174,21 +167,3 @@ open class PIDFController
     @Deprecated("Use supertype method atTarget instead", ReplaceWith("atTarget(reference)"))
     fun atSetPoint(reference: Double) = atTarget(reference)
 }
-
-class PController(kP: Double, 
-                  target: Double = 0.0,
-                  setPointTolerance: Double = 10.0
-) : PIDFController(kP=kP, target=target, setPointTolerance=setPointTolerance)
-
-class PDController(kP: Double, 
-    kD: Double,
-    target: Double = 0.0,
-    setPointTolerance: Double = 0.0
-) : PIDFController(kP=kP, kD=kD, target=target, setPointTolerance=setPointTolerance)
-
-class PIDController(kP: Double,
-                     kI: Double,
-                     kD: Double,
-                     target: Double = 0.0,
-                     setPointTolerance: Double = 0.0
-) : PIDFController(kP=kP, kI=kI, kD=kD, target=target, setPointTolerance=setPointTolerance)
