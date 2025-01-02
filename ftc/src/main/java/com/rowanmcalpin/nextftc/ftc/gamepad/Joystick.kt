@@ -72,6 +72,10 @@ class Joystick(private val xAxisValue: () -> Float, private val yAxisValue: () -
     val y: Float
         get() = yAxis.value
 
+    /**
+     * Current profile curve (defaults to linear)
+     */
+    var profileCurve: (Float) -> Float = { it }
 
     override fun update() {
         xAxis.update()
