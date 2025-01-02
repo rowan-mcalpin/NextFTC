@@ -7,7 +7,7 @@ pedro = "1.0.1"
 ftc = "10.1.1"
 dokka = "1.9.24"
 
-nextftc = "0.5.5-beta1"
+nextftc = "0.5.5-beta2"
 
 [libraries]
 commons-math3 = { module = "org.apache.commons:commons-math3", version.ref = "commons-math3" }
