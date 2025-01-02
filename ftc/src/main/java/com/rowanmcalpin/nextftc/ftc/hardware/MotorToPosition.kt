@@ -24,7 +24,7 @@ class MotorToPosition(val motor: DcMotorEx, val target: Double, val controller: 
     constructor(motor: DcMotorEx, target: Double, controller: PIDFController, subsystem: Subsystem): this(motor, target, controller, setOf(subsystem))
                           
     override val isDone: Boolean
-        get() = controller.atSetPoint(motor.currentPosition.toDouble())
+        get() = controller.atTarget(motor.currentPosition.toDouble())
 
     override fun start() {
         controller.target = target

@@ -22,7 +22,7 @@ class MultipleMotorsToPosition(val motorsAndControllers: Map<DcMotorEx, PIDFCont
     constructor(motorsAndControllers: Map<DcMotorEx, PIDFController>, target: Double, subsystem: Subsystem): this (motorsAndControllers, target, setOf(subsystem))
     
     override val isDone: Boolean
-        get() = motorsAndControllers.all { it.value.atSetPoint(it.key.currentPosition.toDouble()) }
+        get() = motorsAndControllers.all { it.value.atTarget(it.key.currentPosition.toDouble()) }
 
     override fun start() {
         if (motorsAndControllers.isEmpty()) {
