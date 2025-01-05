@@ -123,21 +123,25 @@ open class PIDFController
         return error
     }
 
+    override fun calculateFromError(
+        error: Double
+    ): Double {
+        return calculateFromError(System.nanoTime(), error)
+    }
+
     /**
-     * Run a single iteration of the controller.
+     * Run a single iteration of the controller. Only uses PID, no feedforward.
      *
      * @param timestamp        measurement timestamp as given by [System.nanoTime]
-     * @param measuredPosition measured position (feedback)
+     * @param error current system error.
      * @param measuredVelocity measured velocity
      */
     @JvmOverloads
-    open fun calculate(
+    open fun calculateFromError(
         timestamp: Long,
-        measuredPosition: Double,
-        measuredVelocity: Double? = null
+        error: Double,
+        measuredVelocity: Double? = null,
     ): Double {
-        val error = getPositionError(measuredPosition)
-
         if (lastUpdateTs == 0L) {
             lastError = error
             lastUpdateTs = timestamp
@@ -157,14 +161,35 @@ open class PIDFController
         }
 
         val output =
-            kP * error + kI * errorSum + kD * velError +
-                    kF.compute(measuredPosition)
+            kP * error + kI * errorSum + kD * velError
 
         if (outputBounded) {
             return max(minOutput, min(output, maxOutput))
         }
 
         return output
+    }
+
+    /**
+     * Run a single iteration of the controller.
+     *
+     * @param timestamp        measurement timestamp as given by [System.nanoTime]
+     * @param measuredPosition measured position (feedback)
+     * @param measuredVelocity measured velocity
+     */
+
+    @JvmOverloads
+    open fun calculate(
+        timestamp: Long,
+        measuredPosition: Double,
+        measuredVelocity: Double? = null
+    ): Double {
+        val error = getPositionError(measuredPosition)
+
+        val pidOutput = calculateFromError(timestamp, error, measuredVelocity)
+        val ffOutput = kF.compute(measuredPosition)
+
+        return pidOutput + ffOutput
     }
 
     override fun calculate(
