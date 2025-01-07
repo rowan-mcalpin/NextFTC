@@ -42,6 +42,13 @@ interface Controller {
     fun calculate(reference: Double): Double
 
     /**
+     * Given an error, calculates how to best match the target. Only uses PID, no feedforward.
+     *
+     * @param error the current error of the item being controlled
+     */
+    fun calculateFromError(error: Double): Double
+
+    /**
      * Resets the control loop
      */
     fun reset()
