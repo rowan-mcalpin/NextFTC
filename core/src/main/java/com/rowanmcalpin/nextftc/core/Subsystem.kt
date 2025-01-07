@@ -26,7 +26,7 @@ import com.rowanmcalpin.nextftc.core.command.utility.NullCommand
  * controlled by multiple commands simultaneously.
  */
 abstract class Subsystem {
-    open val defaultCommand: () -> Command = { NullCommand() }
+    open val defaultCommand: Command get() = NullCommand()
 
     /**
      * Initializes this subsystem. This function is perfect for calling `hardwareMap.get` or

@@ -40,5 +40,6 @@ class ParallelGroup(vararg commands: Command): CommandGroup(*commands) {
         children.forEach {
             CommandManager.scheduleCommand(it)
         }
+        CommandManager.scheduleCommands()
     }
 }

@@ -86,7 +86,7 @@ object CommandManager {
     /**
      * Initializes every command in the commandsToSchedule list.
      */
-    private fun scheduleCommands() {
+    fun scheduleCommands() {
         // We have to do it like this in order to prevent concurrentmodificationexceptions when
         // scheduling command groups
         val newCommands = commandsToSchedule.toList()
@@ -103,7 +103,12 @@ object CommandManager {
      * Cancels every command in the commandsToCancel list.
      */
     fun cancelCommands() {
-        for(pair in commandsToCancel) {
+        // We have to do it like this in order to prevent concurrentmodificationexceptions when cancelling certain commandgroups
+        val commands = commandsToCancel.toMap()
+        // Clear before looping so we don't clear any commands that get cancelled inside of stop functions
+        commandsToCancel.clear()
+
+        for(pair in commands) {
             cancel(pair.key, pair.value)
         }
         commandsToCancel.clear()

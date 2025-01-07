@@ -38,6 +38,7 @@ class SequentialGroup(vararg commands: Command): CommandGroup(*commands) {
     override fun start() {
         super.start()
         CommandManager.scheduleCommand(children[0])
+        CommandManager.scheduleCommands()
     }
 
     /**

@@ -85,7 +85,7 @@ open class PedroOpMode(vararg var subsystems: Subsystem = arrayOf()): LinearOpMo
                 // Check if there are any commands running that use the subsystem, or if we can safely
                 // schedule its default command
                 if (!CommandManager.hasCommandsUsing(it)) {
-                    CommandManager.scheduleCommand(it.defaultCommand())
+                    CommandManager.scheduleCommand(it.defaultCommand)
                 }
             }
             CommandManager.run()
@@ -110,7 +110,7 @@ open class PedroOpMode(vararg var subsystems: Subsystem = arrayOf()): LinearOpMo
                     // Check if there are any commands running that use the subsystem, or if we can safely
                     // schedule its default command
                     if (!CommandManager.hasCommandsUsing(it)) {
-                        CommandManager.scheduleCommand(it.defaultCommand())
+                        CommandManager.scheduleCommand(it.defaultCommand)
                     }
                 }
                 CommandManager.run()

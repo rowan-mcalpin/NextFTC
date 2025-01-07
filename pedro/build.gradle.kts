@@ -35,7 +35,7 @@ android {
 }
 
 dependencies {
-    implementation(libs.pedro)
+    compileOnly(libs.pedro)
     implementation(libs.ftc.hardware)
     implementation(libs.ftc.robotcore)
 
