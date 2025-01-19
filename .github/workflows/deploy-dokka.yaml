@@ -41,7 +41,20 @@ jobs:
           mkdir -p target-repo/public/reference
           cp -r build/dokka/htmlMultiModule/* target-repo/public/reference/
 
+      - name: Check for documentation changes
+        id: check_changes
+        run: |
+          cd target-repo
+          if git diff --quiet; then
+            echo "No changes in documentation. Exiting."
+            echo "has_changes=false" >> $GITHUB_ENV
+            exit 0
+          else
+            echo "has_changes=true" >> $GITHUB_ENV
+          fi
+
       - name: Commit and push documentation
+        if: env.has_changes == 'true'
         run: |
           cd target-repo
           git config user.name "github-actions[bot]"
