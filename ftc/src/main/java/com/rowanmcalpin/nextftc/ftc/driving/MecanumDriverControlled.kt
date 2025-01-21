@@ -25,7 +25,6 @@ import com.rowanmcalpin.nextftc.ftc.gamepad.GamepadEx
 import com.rowanmcalpin.nextftc.ftc.gamepad.Joystick
 import com.rowanmcalpin.nextftc.ftc.hardware.Drivetrain
 import com.rowanmcalpin.nextftc.ftc.hardware.controllables.Controllable
-import org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.gamepad1
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit
 import kotlin.math.abs
 import kotlin.math.cos
@@ -35,31 +34,19 @@ import kotlin.math.sin
 
 /**
  * Drives a mecanum drivetrain
- * @param motors: An array of your drive motors in the following order: left front, right front, left back, right back
- * @param driveJoystick: The joystick to use for forward and strafe movement
- * @param turnJoystick: The joystick to use for turning
- * @param robotCentric: Whether to use robot centric or field centric movement
+ * @param motors an array of your drive motors in the following order: left front, right front, left back, right back
+ * @param driveSupplier a float supplier for the drive (forward/backward) signal
+ * @param strafeSupplier a float supplier for the strafe (left/right) signal
+ * @param turnSupplier a float supplier for the turn signal
+ * @param robotCentric whether to use robot centric or field centric movement
  */
-class MecanumDriverControlled(val motors: Array<out Controllable>, val driveJoystick: Joystick, val turnJoystick: Joystick, val robotCentric: Boolean, val imu: IMU?): Command() {
-    /**
-     * @param motors: An array of your drive motors in the following order: left front, right front, left back, right back
-     * @param driveJoystick: The joystick to use for forward and strafe movement
-     * @param turnJoystick: The joystick to use for turning
-     */
-    constructor(motors: Array<out Controllable>, driveJoystick: Joystick, turnJoystick: Joystick): this(motors, driveJoystick, turnJoystick, true, null)
+class MecanumDriverControlled @JvmOverloads constructor(private val motors: Array<out Controllable>, val driveSupplier: () -> Float, val strafeSupplier: () -> Float, val turnSupplier: () -> Float, private val robotCentric: Boolean = true, private val imu: IMU? = null): Command() {
 
-    /**
-     * @param motors: An array of your drive motors in the following order: left front, right front, left back, right back
-     * @param gamepad: The gamepad to use the joysticks from
-     * @param robotCentric: Whether to use robot centric or field centric movement
-     */
-    constructor(motors: Array<out Controllable>, gamepad: GamepadEx, robotCentric: Boolean, imu: IMU): this(motors, gamepad.leftStick, gamepad.rightStick, robotCentric, imu)
+    @JvmOverloads
+    constructor(motors: Array<out Controllable>, driveJoystick: Joystick, turnJoystick: Joystick, robotCentric: Boolean = true, imu: IMU? = null): this(motors, { driveJoystick.y }, { driveJoystick.x }, { turnJoystick.x }, robotCentric, imu)
 
-    /**
-     * @param motors: An array of your drive motors in the following order: left front, right front, left back, right back
-     * @param gamepad: The gamepad to use the joysticks from
-     */
-    constructor(motors: Array<out Controllable>, gamepad: GamepadEx): this(motors, gamepad.leftStick, gamepad.rightStick, true, null)
+    @JvmOverloads
+    constructor(motors: Array<out Controllable>, gamepad: GamepadEx, robotCentric: Boolean = true, imu: IMU? = null): this(motors, gamepad.leftStick, gamepad.rightStick, robotCentric, imu)
 
     override val isDone: Boolean = false
 
@@ -78,9 +65,9 @@ class MecanumDriverControlled(val motors: Array<out Controllable>, val driveJoys
     }
 
     override fun update() {
-        var y = driveJoystick.y.toDouble()
-        var x = driveJoystick.x.toDouble()
-        val rx = turnJoystick.x.toDouble()
+        val y = driveSupplier().toDouble()
+        val x = strafeSupplier().toDouble()
+        val rx = turnSupplier().toDouble()
 
         if (!robotCentric) {
             val botHeading = orientation
