@@ -26,7 +26,7 @@ import kotlin.math.abs
  * @param threshold the amount the axis has to be moved in either direction before it is considered 
  * 'displaced'
  */
-class JoystickAxis(private val axis: () -> Float, private val threshold: Float = 0f, private val reverse: Boolean): Control() {
+class JoystickAxis(private val axis: () -> Float, private val threshold: Float = 0f, var reverse: Boolean): Control() {
     /**
      * The amount the joystick is being moved.
      */

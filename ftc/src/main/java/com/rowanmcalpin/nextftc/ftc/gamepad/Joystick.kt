@@ -31,14 +31,14 @@ import com.rowanmcalpin.nextftc.core.command.utility.NullCommand
  *                                  before it is considered 'displaced'
  * @param verticalThreshold the amount the vertical axis has to be moved in either direction before
  *                                  it is considered 'displaced'
- *  @param reverseVertical by default, the y-axis of Joysticks are reversed (so pushing away from
+ * @param reverseVertical by default, the y-axis of Joysticks are reversed (so pushing away from
  *                                  you decreases the value instead of increasing. When this is true,
  *                                  it will automatically correct for that.
  */
 class Joystick(private val xAxisValue: () -> Float, private val yAxisValue: () -> Float, 
                private val buttonValue: () -> Boolean,
                private val horizontalThreshold: Float = 0f, private val verticalThreshold: Float = 0f,
-               private val reverseVertical: Boolean = true,): Control() {
+               private val reverseVertical: Boolean = true): Control() {
     /**
      * This command will be scheduled every time the joystick moves off center. Note that it 
      * receives a pair of floats; these are the x and y values.  
@@ -115,5 +115,29 @@ class Joystick(private val xAxisValue: () -> Float, private val yAxisValue: () -
         if (xAxis.stateChanged || yAxis.stateChanged) {
             CommandManager.scheduleCommand(stateChangeCommand(Pair(x, y)))
         }
+    }
+
+    /**
+     * Reverse the x-axis. If no parameter is passed, it will flip the direction of the x-axis.
+     * Otherwise, it will set the direction to the passed value.
+     */
+    @JvmOverloads fun reverseX(reverse: Boolean = !xAxis.reverse) {
+        xAxis.reverse = reverse
+    }
+
+    /**
+     * Reverse the y-axis. If no parameter is passed, it will flip the direction of the y-axis.
+     * Otherwies, it will set the direction to the passed value.
+     */
+    @JvmOverloads fun reverseY(reverse: Boolean = !yAxis.reverse) {
+        yAxis.reverse = reverse
+    }
+
+    /**
+     * Reverse the x and y axes.
+     */
+    fun reverse(reverseX: Boolean, reverseY: Boolean) {
+        reverseX(reverseX)
+        reverseY(reverseY)
     }
 }
