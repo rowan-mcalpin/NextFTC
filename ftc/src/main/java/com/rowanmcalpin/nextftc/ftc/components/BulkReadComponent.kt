@@ -16,35 +16,33 @@ NextFTC: a user-friendly control library for FIRST Tech Challenge
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.rowanmcalpin.nextftc.ftc.gamepad
+package com.rowanmcalpin.nextftc.ftc.components
 
-import com.qualcomm.robotcore.hardware.Gamepad
-import com.rowanmcalpin.nextftc.core.command.Command
+import com.qualcomm.hardware.lynx.LynxModule
+import com.rowanmcalpin.nextftc.ftc.OpModeData
 
-object GamepadManager {
-    @JvmStatic
-    lateinit var gamepad1: GamepadEx
+class BulkReadComponent: NextComponent {
+    private lateinit var allHubs: List<LynxModule>
+    override fun postInit() {
+        if (OpModeData.hardwareMap == null) {
+            throw UninitializedPropertyAccessException("hardwareMap was not initialized")
+        }
+        allHubs = OpModeData.hardwareMap!!.getAll(LynxModule::class.java)
 
-    @JvmStatic
-    lateinit var gamepad2: GamepadEx
-
-    @JvmStatic
-    fun initialize(gamepad1: Gamepad, gamepad2: Gamepad) {
-        this.gamepad1 = GamepadEx(gamepad1)
-        this.gamepad2 = GamepadEx(gamepad2)
+        allHubs.forEach {
+            it.bulkCachingMode = LynxModule.BulkCachingMode.MANUAL
+        }
     }
 
-    @JvmStatic
-    fun updateGamepads() {
-        gamepad1.update()
-        gamepad2.update()
+    override fun postWaitForStart() {
+        allHubs.forEach {
+            it.clearBulkCache()
+        }
     }
-    
-    class GamepadUpdaterCommand: Command() {
-        override val isDone: Boolean = false
 
-        override fun update() {
-            updateGamepads()
+    override fun postUpdate() {
+        allHubs.forEach {
+            it.clearBulkCache()
         }
     }
 }

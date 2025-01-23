@@ -37,15 +37,23 @@ object OpModeData {
         NONE
     }
 
-    lateinit var hardwareMap: HardwareMap
-    
-    lateinit var opMode: OpMode
+    @JvmField
+    var hardwareMap: HardwareMap? = null
 
-    lateinit var telemetry: Telemetry
-    
+    @JvmField
+    var opMode: OpMode? = null
+
+    @JvmField
+    var telemetry: Telemetry? = null
+
+    @JvmField
     var gamepad1: Gamepad? = null
+    @JvmField
     var gamepad2: Gamepad? = null
 
-    lateinit var alliance: Alliance
-    lateinit var opModeType: OpModeType
+    @JvmField
+    var alliance: Alliance = Alliance.NONE
+
+    @JvmField
+    var opModeType: OpModeType = OpModeType.NONE
 }

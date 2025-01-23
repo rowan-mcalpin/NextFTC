@@ -18,12 +18,11 @@ NextFTC: a user-friendly control library for FIRST Tech Challenge
 
 package com.rowanmcalpin.nextftc.ftc
 
-import com.qualcomm.hardware.lynx.LynxModule
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
-import com.rowanmcalpin.nextftc.core.Subsystem
-import com.rowanmcalpin.nextftc.core.SubsystemGroup
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 import com.rowanmcalpin.nextftc.core.command.CommandManager
-import com.rowanmcalpin.nextftc.ftc.gamepad.GamepadManager
+import com.rowanmcalpin.nextftc.ftc.components.NextComponent
 
 
 /**
@@ -31,136 +30,87 @@ import com.rowanmcalpin.nextftc.ftc.gamepad.GamepadManager
  *  - Automatically initializes and runs the CommandManager
  *  - If desired, automatically implements and handles Gamepads
  */
-open class NextFTCOpMode(vararg var subsystems: Subsystem = arrayOf()): LinearOpMode() {
-
-    open lateinit var gamepadManager: GamepadManager
-
-    /**
-     * Whether to bulk read the hubs. It is recommended to leave this ON. You must only update this
-     * in [onInit]. If you update it in [onUpdate] or from a command, you will likely break things.
-     */
-    var useBulkReading = true
-
-    private lateinit var allHubs: List<LynxModule>
-
+open class NextFTCOpMode(vararg var components: NextComponent): LinearOpMode() {
     override fun runOpMode() {
+        processAnnotations() // Identify whether this is an Autonomous or a TeleOp
+
         OpModeData.opMode = this
         OpModeData.hardwareMap = hardwareMap
         OpModeData.gamepad1 = gamepad1
         OpModeData.gamepad2 = gamepad2
-
-        gamepadManager = GamepadManager(gamepad1, gamepad2)
+        OpModeData.telemetry = telemetry
 
         CommandManager.runningCommands.clear()
-        expandSubsystems()
-        initSubsystems()
-        onInit()
 
-        if (useBulkReading) {
-            allHubs = hardwareMap.getAll(LynxModule::class.java)
-
-            allHubs.forEach {
-                it.bulkCachingMode = LynxModule.BulkCachingMode.MANUAL
-            }
+        components.forEach {
+            it.preInit()
         }
-
-        // We want to continually update the gamepads
-        CommandManager.scheduleCommand(gamepadManager.GamepadUpdaterCommand())
+        onInit()
+        components.reversed().forEach {
+            it.postInit()
+        }
 
         // Wait for start
         while (!isStarted && !isStopRequested) {
-            subsystems.forEach {
-                it.periodic()
-
-                // Check if there are any commands running that use the subsystem, or if we can safely
-                // schedule its default command
-                if (!CommandManager.hasCommandsUsing(it)) {
-                    CommandManager.scheduleCommand(it.defaultCommand)
-                }
+            components.forEach {
+                it.preWaitForStart()
             }
             CommandManager.run()
             onWaitForStart()
-
-            if (useBulkReading) {
-                allHubs.forEach {
-                    it.clearBulkCache()
-                }
+            components.reversed().forEach {
+                it.postWaitForStart()
             }
         }
 
         // If we pressed stop after init (instead of start) we want to skip the rest of the OpMode
         // and jump straight to the end
         if (!isStopRequested) {
+            components.forEach {
+                it.preStartButtonPressed()
+            }
             onStartButtonPressed()
+            components.reversed().forEach {
+                it.postStartButtonPressed()
+            }
 
             while (!isStopRequested && isStarted) {
-                subsystems.forEach {
-                    it.periodic()
-
-                    // Check if there are any commands running that use the subsystem, or if we can safely
-                    // schedule its default command
-                    if (!CommandManager.hasCommandsUsing(it)) {
-                        CommandManager.scheduleCommand(it.defaultCommand)
-                    }
+                components.forEach {
+                    it.preUpdate()
                 }
                 CommandManager.run()
                 onUpdate()
-
-                if (useBulkReading) {
-                    allHubs.forEach {
-                        it.clearBulkCache()
-                    }
+                components.forEach {
+                    it.postUpdate()
                 }
             }
         }
 
+        components.forEach {
+            it.preStop()
+        }
         onStop()
-        // Since users might schedule a command that stops things, we want to be able to run it 
+        // Since users might schedule a command that stops things, we want to be able to run it
         // (one update of it, anyways) before we cancel all of our commands.
         CommandManager.run()
         CommandManager.cancelAll()
-    }
-
-    /**
-     * Called internally to initialize subsystems.
-     */
-    private fun initSubsystems() {
-        subsystems.forEach {
-            it.initialize()
+        components.reversed().forEach {
+            it.postStop()
         }
     }
 
     /**
-     * Expands SubsystemGroups into a single-layer array (and puts that back into the [subsystems]
-     * array)
+     * This class automatically identifies what type of OpMode it is annotated as, thereby allowing
+     * it to set the [OpModeData.opModeType] variable correctly.
      */
-    private fun expandSubsystems() {
-        val expanded = mutableListOf<Subsystem>()
-
-        for (subsystem in subsystems) {
-            if (subsystem is SubsystemGroup) {
-                expanded += expandSubsystemGroup(subsystem)
+    private fun processAnnotations() {
+        for (annotation in this::class.annotations) {
+            if (annotation is TeleOp) {
+                OpModeData.opModeType = OpModeData.OpModeType.TELEOP
             }
-            expanded += subsystem
-        }
-
-        subsystems = expanded.toTypedArray()
-    }
-
-    /**
-     * Expands a subsystem group (recursively)
-     */
-    private fun expandSubsystemGroup(group: SubsystemGroup): Array<Subsystem> {
-        val expanded = mutableListOf<Subsystem>()
-
-        for (child in group.subsystems) {
-            if (child is SubsystemGroup) {
-                expanded += expandSubsystemGroup(child)
+            if (annotation is Autonomous) {
+                OpModeData.opModeType = OpModeData.OpModeType.AUTO
             }
-            expanded += child
         }
-
-        return expanded.toTypedArray()
     }
 
     /**

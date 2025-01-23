@@ -19,10 +19,25 @@ NextFTC: a user-friendly control library for FIRST Tech Challenge
 package com.rowanmcalpin.nextftc.pedro
 
 import com.pedropathing.follower.Follower
+import com.pedropathing.util.Constants
+import com.rowanmcalpin.nextftc.core.command.CommandManager
+import com.rowanmcalpin.nextftc.ftc.OpModeData
+import com.rowanmcalpin.nextftc.ftc.components.NextComponent
 
-object PedroData {
-    @JvmField
-    var follower: Follower? = null
+/**
+ * This component adds PedroPathing to your OpMode. It automatically sets the constants and
+ * instantiates the follower, which
+ */
+class PedroComponent(val fConstants: Class<*>, val lConstants: Class<*>): NextComponent {
+    override fun preInit() {
+        if (OpModeData.hardwareMap == null) {
+            throw UninitializedPropertyAccessException("hardwareMap has not been initialized")
+        }
+        Constants.setConstants(fConstants, lConstants)
+        PedroData.follower = Follower(OpModeData.hardwareMap)
+    }
+
+    override fun preStartButtonPressed() {
+        CommandManager.scheduleCommand(UpdateFollower())
+    }
 }
-
-class FollowerNotInitializedException: Exception("Follower was not initialized.")

@@ -16,35 +16,21 @@ NextFTC: a user-friendly control library for FIRST Tech Challenge
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.rowanmcalpin.nextftc.ftc.gamepad
+package com.rowanmcalpin.nextftc.ftc.components
 
-import com.qualcomm.robotcore.hardware.Gamepad
-import com.rowanmcalpin.nextftc.core.command.Command
+import com.rowanmcalpin.nextftc.core.command.CommandManager
+import com.rowanmcalpin.nextftc.ftc.OpModeData
+import com.rowanmcalpin.nextftc.ftc.gamepad.GamepadManager
 
-object GamepadManager {
-    @JvmStatic
-    lateinit var gamepad1: GamepadEx
-
-    @JvmStatic
-    lateinit var gamepad2: GamepadEx
-
-    @JvmStatic
-    fun initialize(gamepad1: Gamepad, gamepad2: Gamepad) {
-        this.gamepad1 = GamepadEx(gamepad1)
-        this.gamepad2 = GamepadEx(gamepad2)
-    }
-
-    @JvmStatic
-    fun updateGamepads() {
-        gamepad1.update()
-        gamepad2.update()
-    }
-    
-    class GamepadUpdaterCommand: Command() {
-        override val isDone: Boolean = false
-
-        override fun update() {
-            updateGamepads()
+class GamepadComponent: NextComponent {
+    override fun preInit() {
+        if (OpModeData.gamepad1 == null || OpModeData.gamepad2 == null) {
+            throw UninitializedPropertyAccessException("gamepad has not been initialized")
         }
+        GamepadManager.initialize(OpModeData.gamepad1!!, OpModeData.gamepad2!!)
+    }
+
+    override fun postInit() {
+        CommandManager.scheduleCommand(GamepadManager.GamepadUpdaterCommand())
     }
 }

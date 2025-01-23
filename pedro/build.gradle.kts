@@ -41,6 +41,7 @@ dependencies {
 
     implementation(project(":core"))
     implementation(project(":ftc"))
+    implementation(kotlin("reflect"))
 }
 
 
