@@ -27,6 +27,6 @@ class StopOpModeCommand: Command() {
     override val isDone = true
 
     override fun start() {
-        OpModeData.opMode.requestOpModeStop()
+        OpModeData.opMode?.requestOpModeStop()
     }
 }

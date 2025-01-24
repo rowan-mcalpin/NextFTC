@@ -30,7 +30,7 @@ import kotlin.math.abs
  */
 class MotorEx(val motor: DcMotorEx): Controllable {
 
-    constructor(name: String): this(OpModeData.hardwareMap.get(DcMotorEx::class.java, name))
+    constructor(name: String): this(OpModeData.hardwareMap!!.get(DcMotorEx::class.java, name))
 
     private var cachedPower = 0.0 // By default, motors are unpowered
 
