@@ -26,6 +26,7 @@ import com.rowanmcalpin.nextftc.core.SubsystemGroup
 import com.rowanmcalpin.nextftc.core.command.CommandManager
 import com.rowanmcalpin.nextftc.ftc.OpModeData
 import com.rowanmcalpin.nextftc.ftc.gamepad.GamepadManager
+import java.lang.RuntimeException
 
 /**
  * This is a wrapper class for an OpMode that does the following:
@@ -49,61 +50,37 @@ open class PedroOpMode(vararg var subsystems: Subsystem = arrayOf()): LinearOpMo
 
 
     override fun runOpMode() {
-        OpModeData.opMode = this
-        OpModeData.hardwareMap = hardwareMap
-        OpModeData.gamepad1 = gamepad1
-        OpModeData.gamepad2 = gamepad2
+        try {
+            OpModeData.opMode = this
+            OpModeData.hardwareMap = hardwareMap
+            OpModeData.gamepad1 = gamepad1
+            OpModeData.gamepad2 = gamepad2
 
-        gamepadManager = GamepadManager(gamepad1, gamepad2)
+            gamepadManager = GamepadManager(gamepad1, gamepad2)
 
-        CommandManager.runningCommands.clear()
-        expandSubsystems()
-        initSubsystems()
-        onInit()
-
-        if (useBulkReading) {
-            allHubs = hardwareMap.getAll(LynxModule::class.java)
-
-            allHubs.forEach {
-                it.bulkCachingMode = LynxModule.BulkCachingMode.MANUAL
-            }
-        }
-
-        // We want to continually update the gamepads
-        CommandManager.scheduleCommand(gamepadManager.GamepadUpdaterCommand())
-
-        if (this::follower.isInitialized) {
-            PedroData.follower = follower
-            CommandManager.scheduleCommand(UpdateFollower())
-        }
-
-        // Wait for start
-        while (!isStarted && !isStopRequested) {
-            subsystems.forEach {
-                it.periodic()
-
-                // Check if there are any commands running that use the subsystem, or if we can safely
-                // schedule its default command
-                if (!CommandManager.hasCommandsUsing(it)) {
-                    CommandManager.scheduleCommand(it.defaultCommand)
-                }
-            }
-            CommandManager.run()
-            onWaitForStart()
+            CommandManager.runningCommands.clear()
+            expandSubsystems()
+            initSubsystems()
+            onInit()
 
             if (useBulkReading) {
+                allHubs = hardwareMap.getAll(LynxModule::class.java)
+
                 allHubs.forEach {
-                    it.clearBulkCache()
+                    it.bulkCachingMode = LynxModule.BulkCachingMode.MANUAL
                 }
             }
-        }
 
-        // If we pressed stop after init (instead of start) we want to skip the rest of the OpMode
-        // and jump straight to the end
-        if (!isStopRequested) {
-            onStartButtonPressed()
+            // We want to continually update the gamepads
+            CommandManager.scheduleCommand(gamepadManager.GamepadUpdaterCommand())
 
-            while (!isStopRequested && isStarted) {
+            if (this::follower.isInitialized) {
+                PedroData.follower = follower
+                CommandManager.scheduleCommand(UpdateFollower())
+            }
+
+            // Wait for start
+            while (!isStarted && !isStopRequested) {
                 subsystems.forEach {
                     it.periodic()
 
@@ -114,7 +91,7 @@ open class PedroOpMode(vararg var subsystems: Subsystem = arrayOf()): LinearOpMo
                     }
                 }
                 CommandManager.run()
-                onUpdate()
+                onWaitForStart()
 
                 if (useBulkReading) {
                     allHubs.forEach {
@@ -122,13 +99,41 @@ open class PedroOpMode(vararg var subsystems: Subsystem = arrayOf()): LinearOpMo
                     }
                 }
             }
-        }
 
-        onStop()
-        // Since users might schedule a command that stops things, we want to be able to run it
-        // (one update of it, anyways) before we cancel all of our commands.
-        CommandManager.run()
-        CommandManager.cancelAll()
+            // If we pressed stop after init (instead of start) we want to skip the rest of the OpMode
+            // and jump straight to the end
+            if (!isStopRequested) {
+                onStartButtonPressed()
+
+                while (!isStopRequested && isStarted) {
+                    subsystems.forEach {
+                        it.periodic()
+
+                        // Check if there are any commands running that use the subsystem, or if we can safely
+                        // schedule its default command
+                        if (!CommandManager.hasCommandsUsing(it)) {
+                            CommandManager.scheduleCommand(it.defaultCommand)
+                        }
+                    }
+                    CommandManager.run()
+                    onUpdate()
+
+                    if (useBulkReading) {
+                        allHubs.forEach {
+                            it.clearBulkCache()
+                        }
+                    }
+                }
+            }
+
+            onStop()
+            // Since users might schedule a command that stops things, we want to be able to run it
+            // (one update of it, anyways) before we cancel all of our commands.
+            CommandManager.run()
+            CommandManager.cancelAll()
+        } catch (e: Exception) {
+            throw RuntimeException(e)
+        }
     }
 
     /**
