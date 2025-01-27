@@ -36,10 +36,15 @@ class ParallelRaceGroup(vararg commands: Command): CommandGroup(*commands) {
         get() = _interruptible
 
     /**
+     * Private variable to track whether this group is completed
+     */
+    private var _isDone = false
+
+    /**
      * This will return false until one of its children is done
      */
     override val isDone: Boolean
-        get() = children.any { it.isDone }
+        get() = _isDone
 
     /**
      * Overrides the [Command.subsystems] variable to inherit all subsystems from all of its children.
@@ -49,13 +54,46 @@ class ParallelRaceGroup(vararg commands: Command): CommandGroup(*commands) {
 
 
     /**
-     * In a Parallel Group, we can just straight away add all of the commands to the CommandManager,
-     * which can take care of the rest.
+     * This function starts all of the children (but ensures that only one command will use each subsystem)
+     * If there are multiple commands using a subsystem, only the *first* command gets started & run; the
+     * other WILL NOT happen.
      */
     override fun start() {
         super.start()
+
+        val subsystems = mutableListOf<Subsystem>()
+
+        val badCommands = mutableListOf<Command>()
+
         children.forEach {
-            CommandManager.scheduleCommand(it)
+            var hasNoConflicts = true
+            for (subsystem in it.subsystems) {
+                if (subsystems.contains(subsystem)) {
+                    hasNoConflicts = false
+                }
+            }
+            if (hasNoConflicts) {
+                subsystems.addAll(it.subsystems)
+                it.start()
+            } else {
+                // This means that there was already a command that used one or more of this command's subsystems
+                // So, we can't start it, and we also shouldn't run it, so we'll need to remove it.
+                badCommands += it
+            }
+        }
+        // Cancel running any problematic commands (without calling their stop function)
+        badCommands.forEach {
+            children.remove(it)
+        }
+    }
+
+    override fun update() {
+        children.forEach {
+            it.update()
+
+            if (it.isDone) {
+                _isDone = true
+            }
         }
     }
 
@@ -72,7 +110,7 @@ class ParallelRaceGroup(vararg commands: Command): CommandGroup(*commands) {
 
     override fun stop(interrupted: Boolean) {
         children.forEach {
-            CommandManager.cancelCommand(it)
+            it.stop(interrupted)
         }
     }
 }

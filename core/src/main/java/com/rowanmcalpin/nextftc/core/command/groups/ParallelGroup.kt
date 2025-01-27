@@ -18,8 +18,8 @@ NextFTC: a user-friendly control library for FIRST Tech Challenge
 
 package com.rowanmcalpin.nextftc.core.command.groups
 
+import com.rowanmcalpin.nextftc.core.Subsystem
 import com.rowanmcalpin.nextftc.core.command.Command
-import com.rowanmcalpin.nextftc.core.command.CommandManager
 
 /**
  * A [CommandGroup] that runs all of its children simultaneously.
@@ -31,15 +31,59 @@ class ParallelGroup(vararg commands: Command): CommandGroup(*commands) {
     override val isDone: Boolean
         get() = children.all { it.isDone }
 
+    private val finishedCommands: MutableList<Command> = mutableListOf()
+
     /**
-     * In a Parallel Group, we can just straight away add all of the commands to the CommandManager,
-     * which can take care of the rest.
+     * In a Parallel Group, we need to immediately start all of our children
      */
     override fun start() {
         super.start()
+
+        val subsystems = mutableListOf<Subsystem>()
+
         children.forEach {
-            CommandManager.scheduleCommand(it)
+            var hasNoConflicts = true
+            for (subsystem in it.subsystems) {
+                if (subsystems.contains(subsystem)) {
+                    hasNoConflicts = false
+                }
+            }
+            if (hasNoConflicts) {
+                subsystems.addAll(it.subsystems)
+                it.start()
+            } else {
+                // This means that there was already a command that used one or more of this command's subsystems
+                // So, we can't start it, and we also shouldn't run it, so we'll need to remove it.
+                finishedCommands += it
+            }
         }
-        CommandManager.scheduleCommands()
+        // Cancel running any problematic commands (without calling their stop function)
+        finishedCommands.forEach {
+            children.remove(it)
+        }
+        finishedCommands.clear()
     }
+
+    override fun update() {
+        // Cancel commands that need cancelling
+        finishedCommands.forEach {
+            it.stop(false)
+            children.remove(it)
+        }
+        finishedCommands.clear()
+        children.forEach {
+            it.update()
+
+            if (it.isDone) {
+                finishedCommands += it
+            }
+        }
+    }
+
+    override fun stop(interrupted: Boolean) {
+        children.forEach {
+            it.stop(interrupted)
+        }
+    }
+
 }

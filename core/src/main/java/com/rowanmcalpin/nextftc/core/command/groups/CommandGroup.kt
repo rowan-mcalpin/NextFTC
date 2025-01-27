@@ -18,6 +18,7 @@ NextFTC: a user-friendly control library for FIRST Tech Challenge
 
 package com.rowanmcalpin.nextftc.core.command.groups
 
+import com.rowanmcalpin.nextftc.core.Subsystem
 import com.rowanmcalpin.nextftc.core.command.Command
 import com.rowanmcalpin.nextftc.core.command.EmptyGroupException
 
@@ -25,6 +26,8 @@ import com.rowanmcalpin.nextftc.core.command.EmptyGroupException
  * A command that schedules other commands at certain times. Inherits all subsystems of its children.
  */
 abstract class CommandGroup(vararg val commands: Command): Command() {
+    // Inherit subsystems from children
+    override val subsystems: Set<Subsystem> = commands.flatMap { it.subsystems }.toSet()
 
     /**
      * Start functionality for all command groups
@@ -38,7 +41,6 @@ abstract class CommandGroup(vararg val commands: Command): Command() {
             children.add(it)
         }
     }
-
 
     /**
      * The collection of all commands within this group.

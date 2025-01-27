@@ -37,8 +37,8 @@ class SequentialGroup(vararg commands: Command): CommandGroup(*commands) {
      */
     override fun start() {
         super.start()
-        CommandManager.scheduleCommand(children[0])
-        CommandManager.scheduleCommands()
+
+        children[0].start()
     }
 
     /**
@@ -46,14 +46,19 @@ class SequentialGroup(vararg commands: Command): CommandGroup(*commands) {
      * it and start the next one (if there is one).
      */
     override fun update() {
+        children[0].update()
         // If the first child is done running, remove it and start the next one.
         if (children[0].isDone) {
             children.removeAt(0)
 
             // Now, if there is another command to run, start it. 
             if (children.size > 0) {
-                CommandManager.scheduleCommand(children[0])
+                children[0].start()
             }
         }
+    }
+
+    override fun stop(interrupted: Boolean) {
+        children[0].stop(interrupted)
     }
 }
