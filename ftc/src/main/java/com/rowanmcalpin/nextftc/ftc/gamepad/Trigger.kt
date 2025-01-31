@@ -59,7 +59,8 @@ class Trigger(private val trigger: () -> Float, private val threshold: Float = 0
     var profileCurve: (Float) -> Float = { it }
 
     override fun update() {
-        value = trigger()
+        value = profileCurve(trigger())
+
         updateState(value > threshold)
         
         if (state) {

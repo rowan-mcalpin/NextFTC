@@ -82,13 +82,13 @@ class Joystick(private val xAxisValue: () -> Float, private val yAxisValue: () -
      * X-value of the joystick.
      */
     val x: Float
-        get() = xAxis.value
+        get() = profileCurve(xAxis.value)
 
     /**
      * Y-value of the joystick. If [reverseVertical] is true, this will be the corrected direction.
      */
     val y: Float
-        get() = yAxis.value
+        get() = profileCurve(yAxis.value)
 
     /**
      * Current profile curve (defaults to linear)
