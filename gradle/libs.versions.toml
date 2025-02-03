@@ -8,12 +8,15 @@ ftc = "10.1.1"
 dokka = "1.9.24"
 
 nextftc = "0.5.6-beta"
+junit = "4.13.2"
+junit-version = "1.2.1"
 
 [libraries]
 commons-math3 = { module = "org.apache.commons:commons-math3", version.ref = "commons-math3" }
 pedro = { module = "com.pedropathing:pedro", version.ref = "pedro" }
 ftc-robotcore = { group = "org.firstinspires.ftc", name="RobotCore", version.ref = "ftc" }
 ftc-hardware = { group = "org.firstinspires.ftc", name="Hardware", version.ref = "ftc" }
+junit = { group = "junit", name = "junit", version.ref = "junit" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
