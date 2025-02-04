@@ -36,6 +36,7 @@ android {
 
 dependencies {
     testImplementation(libs.junit)
+    testImplementation(libs.mockk)
 }
 
 // CONFIGURE PUBLISHING

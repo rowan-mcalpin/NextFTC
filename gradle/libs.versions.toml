@@ -3,6 +3,7 @@ agp = "8.7.3"
 kotlin = "1.9.0"
 
 commons-math3 = "3.6.1"
+mockk = "1.13.16"
 pedro = "1.0.5"
 ftc = "10.1.1"
 dokka = "1.9.24"
@@ -13,6 +14,7 @@ junit-version = "1.2.1"
 
 [libraries]
 commons-math3 = { module = "org.apache.commons:commons-math3", version.ref = "commons-math3" }
+mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
 pedro = { module = "com.pedropathing:pedro", version.ref = "pedro" }
 ftc-robotcore = { group = "org.firstinspires.ftc", name="RobotCore", version.ref = "ftc" }
 ftc-hardware = { group = "org.firstinspires.ftc", name="Hardware", version.ref = "ftc" }
