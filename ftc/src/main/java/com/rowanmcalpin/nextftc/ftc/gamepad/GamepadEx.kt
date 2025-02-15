@@ -41,6 +41,17 @@ class GamepadEx(private val gamepad: Gamepad, triggerThreshold: Float = 0f,
     
     val leftBumper = Button { gamepad.left_bumper }
     val rightBumper = Button { gamepad.right_bumper }
+
+    val start = Button { gamepad.start }
+    val back = Button { gamepad.back }
+
+    val cross = Button { gamepad.cross }
+    val square = Button { gamepad.square }
+    val circle = Button { gamepad.circle }
+    val triangle = Button { gamepad.triangle }
+
+    val guide = Button { gamepad.guide }
+    val options = Button { gamepad.options }
     
     val leftTrigger = Trigger({ gamepad.left_trigger }, triggerThreshold)
     val rightTrigger = Trigger({ gamepad.right_trigger }, triggerThreshold)
@@ -54,6 +65,7 @@ class GamepadEx(private val gamepad: Gamepad, triggerThreshold: Float = 0f,
      * A list of all of the controls this gamepad has.
      */
     val controls = listOf(a, b, x, y, dpadUp, dpadDown, dpadLeft, dpadRight, leftBumper, rightBumper,
+        start, back, cross, square, circle, triangle, guide, options,
         leftTrigger, rightTrigger, leftStick, rightStick)
     
     fun update() {
