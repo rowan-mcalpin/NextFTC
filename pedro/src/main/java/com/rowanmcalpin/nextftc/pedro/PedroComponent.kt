@@ -19,6 +19,7 @@ NextFTC: a user-friendly control library for FIRST Tech Challenge
 package com.rowanmcalpin.nextftc.pedro
 
 import com.pedropathing.follower.Follower
+import com.pedropathing.localization.Pose
 import com.pedropathing.util.Constants
 import com.rowanmcalpin.nextftc.core.command.CommandManager
 import com.rowanmcalpin.nextftc.ftc.OpModeData
@@ -28,13 +29,17 @@ import com.rowanmcalpin.nextftc.ftc.components.NextComponent
  * This component adds PedroPathing to your OpMode. It automatically sets the constants and
  * instantiates the follower, which
  */
-class PedroComponent(val fConstants: Class<*>, val lConstants: Class<*>): NextComponent {
+class PedroComponent(val fConstants: Class<*>, val lConstants: Class<*>, val startingPose: Pose, val resetIMU: Boolean = false): NextComponent {
     override fun preInit() {
         if (OpModeData.hardwareMap == null) {
             throw UninitializedPropertyAccessException("hardwareMap has not been initialized")
         }
         Constants.setConstants(fConstants, lConstants)
         PedroData.follower = Follower(OpModeData.hardwareMap)
+        if (resetIMU) {
+            // TODO RESET IMU
+        }
+        PedroData.follower!!.setStartingPose(startingPose)
     }
 
     override fun preStartButtonPressed() {
