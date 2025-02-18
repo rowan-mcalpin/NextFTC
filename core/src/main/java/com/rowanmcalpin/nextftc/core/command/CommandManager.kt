@@ -19,6 +19,7 @@ NextFTC: a user-friendly control library for FIRST Tech Challenge
 package com.rowanmcalpin.nextftc.core.command
 
 import com.rowanmcalpin.nextftc.core.Subsystem
+import com.rowanmcalpin.nextftc.core.SubsystemGroup
 import com.rowanmcalpin.nextftc.core.command.groups.CommandGroup
 
 /**
@@ -123,9 +124,13 @@ object CommandManager {
      * @param command the new command being initialized
      */
     private fun initCommand(command: Command) {
+        val subsystems = expandSubsystems(command.subsystems)
+
         for (otherCommand in runningCommands) {
-            for (requirement in command.subsystems) {
-                if (otherCommand.subsystems.contains(requirement)) {
+            val otherSubsystems = expandSubsystems(otherCommand.subsystems)
+
+            for (requirement in subsystems) {
+                if (otherSubsystems.contains(requirement)) {
                     if (otherCommand.interruptible) {
                         commandsToCancel += Pair(otherCommand, true)
                     } else {
@@ -137,6 +142,41 @@ object CommandManager {
         
         command.start()
         runningCommands += command
+    }
+
+    /**
+     * Given a set of subsystems (including groups), this extracts the subsystems from within those
+     * groups and returns the set of the subsystems in the set plus the subsystems that are children
+     * of the groups (if any).
+     * @param subsystems the set of subsystems to expand
+     * @return the expanded set of subsystems
+     */
+    fun expandSubsystems(subsystems: Set<Subsystem>): Set<Subsystem> {
+        val expanded = mutableListOf<Subsystem>()
+
+        for (subsystem in subsystems) {
+            if (subsystem is SubsystemGroup) {
+                expanded += expandSubsystemGroup(subsystem)
+            }
+        }
+
+        return expanded.toSet()
+    }
+
+    /**
+     * Expands a subsystem group (recursively)
+     */
+    private fun expandSubsystemGroup(group: SubsystemGroup): Array<Subsystem> {
+        val expanded = mutableListOf<Subsystem>()
+
+        for (child in group.subsystems) {
+            if (child is SubsystemGroup) {
+                expanded += expandSubsystemGroup(child)
+            }
+            expanded += child
+        }
+
+        return expanded.toTypedArray()
     }
 
     /**

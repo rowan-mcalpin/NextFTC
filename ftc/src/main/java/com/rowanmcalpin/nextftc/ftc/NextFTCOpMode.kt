@@ -54,7 +54,7 @@ open class NextFTCOpMode(vararg var subsystems: Subsystem = arrayOf()): LinearOp
             gamepadManager = GamepadManager(gamepad1, gamepad2)
 
             CommandManager.runningCommands.clear()
-            expandSubsystems()
+            subsystems = CommandManager.expandSubsystems(subsystems.toSet()).toTypedArray()
             initSubsystems()
             onInit()
 
@@ -133,39 +133,6 @@ open class NextFTCOpMode(vararg var subsystems: Subsystem = arrayOf()): LinearOp
         subsystems.forEach {
             it.initialize()
         }
-    }
-
-    /**
-     * Expands SubsystemGroups into a single-layer array (and puts that back into the [subsystems]
-     * array)
-     */
-    private fun expandSubsystems() {
-        val expanded = mutableListOf<Subsystem>()
-
-        for (subsystem in subsystems) {
-            if (subsystem is SubsystemGroup) {
-                expanded += expandSubsystemGroup(subsystem)
-            }
-            expanded += subsystem
-        }
-
-        subsystems = expanded.toTypedArray()
-    }
-
-    /**
-     * Expands a subsystem group (recursively)
-     */
-    private fun expandSubsystemGroup(group: SubsystemGroup): Array<Subsystem> {
-        val expanded = mutableListOf<Subsystem>()
-
-        for (child in group.subsystems) {
-            if (child is SubsystemGroup) {
-                expanded += expandSubsystemGroup(child)
-            }
-            expanded += child
-        }
-
-        return expanded.toTypedArray()
     }
 
     /**
