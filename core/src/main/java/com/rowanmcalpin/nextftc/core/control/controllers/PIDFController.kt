@@ -91,6 +91,6 @@ open class PIDFController
 
         prevErrorVal = target - pv
 
-        return kP * (target - pv) + kI * totalError + kD * derivative + kF.compute(pv)
+        return kP * (target - pv) + kI * totalError + kD * derivative + kF.compute(target)
     }
 }
