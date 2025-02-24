@@ -33,35 +33,23 @@ import kotlin.math.sqrt
  * @param kF custom feedforward that depends on position
  */
 class SqrtController @JvmOverloads constructor(
-    pid: PIDCoefficients,
+    kP: Double = 0.0,
+    kI: Double = 0.0,
+    kD: Double = 0.0,
     kF: Feedforward = StaticFeedforward(0.0),
-    target: Double = 0.0,
     setPointTolerance: Double = 10.0
-) : PIDFController(pid=pid, kF=kF, target=target, setPointTolerance=setPointTolerance) {
+) : PIDFController(kP, kI, kD, kF, setPointTolerance=setPointTolerance) {
 
-    @JvmOverloads
-    constructor(
-        kP: Double = 0.0,
-        kI: Double = 0.0,
-        kD: Double = 0.0,
-        kF: Feedforward = StaticFeedforward(0.0),
-        target: Double = 0.0,
-        setPointTolerance: Double = 10.0
-    ) : this(PIDCoefficients(kP, kI, kD), kF, target, setPointTolerance)
+    override fun calculate(pv: Double, target: Double): Double {
+        this.target = target
+        return calculate(pv)
+    }
 
     override fun calculate(
-        timestamp: Long,
-        measuredPosition: Double,
-        measuredVelocity: Double?
+        pv: Double
     ): Double {
-        val result = super.calculate(timestamp, measuredPosition, measuredVelocity)
+        val result = super.calculate(pv, target)
 
         return sqrt(abs(result)) * sign(result)
     }
-
-    override fun calculate(reference: Double): Double {
-        return this.calculate(System.nanoTime(), reference)
-    }
 }
-
-typealias SquidController = SqrtController

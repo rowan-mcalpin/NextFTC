@@ -37,9 +37,9 @@ interface Controller {
     /**
      * Given a reference, calculates how to best match the target.
      *
-     * @param reference the current state of the item being controlled
+     * @param pv the current state of the item being controlled
      */
-    fun calculate(reference: Double): Double
+    fun calculate(pv: Double): Double
 
     /**
      * Resets the control loop
@@ -49,8 +49,8 @@ interface Controller {
     /**
      * Whether the controller is within a tolerable distance of the target
      */
-    fun atTarget(reference: Double): Boolean {
-        if (abs(target - reference) <= setPointTolerance) return true
+    fun atTarget(pv: Double): Boolean {
+        if (abs(target - pv) <= setPointTolerance) return true
         return false
     }
 }
