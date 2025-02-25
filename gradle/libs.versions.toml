@@ -3,7 +3,7 @@ agp = "8.7.3"
 kotlin = "1.9.0"
 
 commons-math3 = "3.6.1"
-pedro = "1.0.5"
+pedro = "1.0.8"
 ftc = "10.1.1"
 dokka = "1.9.24"
 

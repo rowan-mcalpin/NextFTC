@@ -28,18 +28,13 @@ import com.rowanmcalpin.nextftc.ftc.hardware.Drivetrain
  * This Command tells the PedroPath follower to follow a specific path or pathchain
  * @param path the path to follow
  * @param holdEnd whether to actively hold position after the path is done being followed
+ * @param maxPower the max power, between 0 and 1. If maxPower is null then the default (set in `FConstants` or with `follower.setMaxPower`) is used.
+ * @throws FollowerNotInitializedException if the follower is not set
+ * @throws IllegalArgumentException if maxPower is not null or in the interval [0, 1]
  */
-class FollowPath(val path: PathChain, val holdEnd: Boolean = false): Command() {
+class FollowPath @JvmOverloads constructor(private val path: PathChain, private val holdEnd: Boolean = false, private val maxPower: Double? = null): Command() {
     
-    constructor (path: Path, holdEnd: Boolean = false): this(
-        PathChain(path), holdEnd)
-    
-    // Java single parameter compatability
-    constructor(path: Path): this(
-        PathChain(
-            path
-        ), false)
-    constructor(path: PathChain): this(path, false)
+    @JvmOverloads constructor(path: Path, holdEnd: Boolean = false, maxPower: Double? = null): this(PathChain(path), holdEnd, maxPower)
     
     override val isDone: Boolean
         get() = !PedroData.follower!!.isBusy
@@ -47,10 +42,12 @@ class FollowPath(val path: PathChain, val holdEnd: Boolean = false): Command() {
     override val subsystems: Set<Subsystem> = setOf(Drivetrain)
 
     override fun start() {
-        if (PedroData.follower == null) {
-            throw FollowerNotInitializedException()
-        }
+        if (PedroData.follower == null) throw FollowerNotInitializedException()
+        require(maxPower == null || maxPower in 0.0..1.0) { "maxPower must be null or between 0 and 1" }
 
-        PedroData.follower!!.followPath(path, holdEnd)
+        if (maxPower == null)
+            PedroData.follower!!.followPath(path, holdEnd)
+        else
+            PedroData.follower!!.followPath(path, maxPower, holdEnd)
     }
 }
