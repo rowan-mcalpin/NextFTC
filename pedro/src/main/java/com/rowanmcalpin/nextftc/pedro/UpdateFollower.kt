@@ -28,9 +28,7 @@ class UpdateFollower: Command() {
     override val isDone: Boolean = false
 
     override fun update() {
-        if (PedroData.follower == null) {
-            throw FollowerNotInitializedException()
-        }
+        if (PedroData.follower == null) throw FollowerNotInitializedException()
         
         PedroData.follower!!.update()
     }

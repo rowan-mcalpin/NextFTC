@@ -51,3 +51,5 @@ abstract class Quantity<T: Quantity<T>> {
      */
     abstract fun newInstance(value: Double): T
 }
+
+fun <T: Quantity<T>> abs(quantity: T): T = quantity.abs
