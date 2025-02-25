@@ -20,6 +20,7 @@ package com.rowanmcalpin.nextftc.core.command.utility
 
 import com.rowanmcalpin.nextftc.core.Subsystem
 import com.rowanmcalpin.nextftc.core.command.Command
+import com.rowanmcalpin.nextftc.core.units.TimeSpan
 
 /**
  * A [Command] that is created using lambdas to define each function instead of manually overriding
@@ -29,7 +30,7 @@ import com.rowanmcalpin.nextftc.core.command.Command
  * @param startLambda a lambda to be called once when the command is first added
  * @param updateLambda a lambda to be called repeatedly while the command is running
  * @param stopLambda a lambda to be called once when the command has finished
- * @param endTime the end time for this command, in milliseconds after the starting of this command
+ * @param time the time for this command, after the starting of this command
  * @param subsystemCollection a set of subsystems this command implements
  * @param interruptible whether this command can be stopped due to an overlap of subsystems
  */
@@ -38,7 +39,7 @@ class TimedLambdaCommand(
     private val startLambda: () -> Unit = { },
     private val updateLambda: () -> Unit = { },
     private val stopLambda: (interrupted: Boolean) -> Unit = { },
-    private val endTime: Long = 0L,
+    private val time: TimeSpan = TimeSpan.ZERO,
     private val subsystemCollection: Set<Subsystem> = setOf(),
     override var interruptible: Boolean = true
 ): Command() {
@@ -49,7 +50,7 @@ class TimedLambdaCommand(
         get() = subsystemCollection
     
     override val isDone: Boolean
-        get() = (isDoneLambda() && System.currentTimeMillis() - startTime >= endTime)
+        get() = (isDoneLambda() && System.currentTimeMillis() - startTime >= time.inMs)
 
     override fun start() {
         startTime = System.currentTimeMillis()
