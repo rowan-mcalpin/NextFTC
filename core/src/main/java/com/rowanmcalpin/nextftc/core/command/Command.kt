@@ -19,6 +19,13 @@ NextFTC: a user-friendly control library for FIRST Tech Challenge
 package com.rowanmcalpin.nextftc.core.command
 
 import com.rowanmcalpin.nextftc.core.Subsystem
+import com.rowanmcalpin.nextftc.core.command.groups.ParallelGroup
+import com.rowanmcalpin.nextftc.core.command.groups.ParallelRaceGroup
+import com.rowanmcalpin.nextftc.core.command.groups.SequentialGroup
+import com.rowanmcalpin.nextftc.core.command.utility.PerpetualCommand
+import com.rowanmcalpin.nextftc.core.command.utility.delays.Delay
+import com.rowanmcalpin.nextftc.core.units.TimeSpan
+import com.rowanmcalpin.nextftc.core.units.sec
 
 /**
  * A discrete unit of functionality that runs simultaneous to all other commands. 
@@ -69,4 +76,99 @@ abstract class Command {
     operator fun invoke() {
         CommandManager.scheduleCommand(this)
     }
+
+    /**
+     * Returns a [ParallelRaceGroup] with the command and a [Delay] of [time]
+     * @param time the time-span for the [Delay]
+     */
+    fun endAfter(time: TimeSpan) = ParallelRaceGroup(
+        this,
+        Delay(time)
+    )
+
+    /**
+     * Returns a [ParallelRaceGroup] with the command and a [Delay] of [time]
+     * @param time the time-span for the [Delay], in seconds
+     */
+    fun endAfter(time: Double) = endAfter(time.sec)
+
+    /**
+     * Returns a [ParallelRaceGroup] with the command and a [Delay] of [time]
+     * @param time the time-span for the [Delay], in seconds
+     */
+    fun endAfter(time: Int) = endAfter(time.sec)
+
+    /**
+     * Returns a [SequentialGroup] with the command and an arbitrary number of other commands
+     * @param commands the other commands to create a [SequentialGroup] with
+     */
+    fun then(vararg commands: Command) = SequentialGroup(
+        this,
+        *commands
+    )
+
+    /**
+     * Returns a [ParallelGroup] with the command and an arbitrary number of other commands
+     * @param commands the other commands to create a [ParallelGroup] with
+     */
+    fun and(vararg commands: Command) = ParallelGroup(
+        this,
+        *commands
+    )
+
+    /**
+     * Returns a [ParallelRaceGroup] with the command and an arbitrary number of other commands
+     * @param commands the other commands to create a [ParallelRaceGroup] with
+     */
+    fun raceWith(vararg commands: Command) = ParallelRaceGroup(
+        this,
+        *commands
+    )
+
+    /**
+     * Returns a [PerpetualCommand] that wraps the command
+     */
+    fun perpetually() = PerpetualCommand(this)
+
+    /**
+     * Returns a [SequentialGroup] with a [Delay] and then the command
+     * @param time the time-span for the [Delay]
+     */
+    fun afterTime(time: TimeSpan) = SequentialGroup(
+        Delay(time),
+        this
+    )
+
+    /**
+     * Returns a [SequentialGroup] with a [Delay] and then the command
+     * @param time the time-span for the [Delay], in seconds
+     */
+    fun afterTime(time: Double) = afterTime(time.sec)
+
+    /**
+     * Returns a [SequentialGroup] with a [Delay] and then the command
+     * @param time the time-span for the [Delay], in seconds
+     */
+    fun afterTime(time: Int) = afterTime(time.sec)
+
+    /**
+     * Returns a [SequentialGroup] with the command and then a [Delay]
+     * @param time the time-span for the [Delay]
+     */
+    fun thenWait(time: TimeSpan) = SequentialGroup(
+        this,
+        Delay(time)
+    )
+
+    /**
+     * Returns a [SequentialGroup] with the command and then a [Delay]
+     * @param time the time-span for the [Delay], in seconds
+     */
+    fun thenWait(time: Double) = thenWait(time.sec)
+
+    /**
+     * Returns a [SequentialGroup] with the command and then a [Delay]
+     * @param time the time-span for the [Delay]
+     */
+    fun thenWait(time: Int) = thenWait(time.sec)
 }
