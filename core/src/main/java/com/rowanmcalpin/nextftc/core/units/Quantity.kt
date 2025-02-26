@@ -25,6 +25,7 @@ abstract class Quantity<T: Quantity<T>> {
     operator fun unaryMinus(): T = newInstance(-value)
     operator fun rem(other: T): T = newInstance(value % other.value)
     operator fun rem(divisor: Double): T = newInstance(value % divisor)
+    operator fun rem(divisor: Int): T = newInstance(value % divisor)
     operator fun compareTo(other: T): Int = value.compareTo(other.value)
 
     val sign: Int get() = when {
