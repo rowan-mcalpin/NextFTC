@@ -18,14 +18,20 @@ abstract class Quantity<T: Quantity<T>> {
     operator fun times(other: T): T = newInstance(value * other.value)
     operator fun times(scalar: Double): T = newInstance(value * scalar)
     operator fun times(scalar: Int): T = newInstance(value * scalar)
-    operator fun div(other: T): T = newInstance(value / other.value)
+    operator fun div(other: T): T = value / other.value
     operator fun div(scalar: Double): T = newInstance(value / scalar)
     operator fun div(scalar: Int): T = newInstance(value / scalar)
     operator fun unaryPlus(): T = newInstance(value)
     operator fun unaryMinus(): T = newInstance(-value)
     operator fun rem(other: T): T = newInstance(value % other.value)
     operator fun rem(divisor: Double): T = newInstance(value % divisor)
+    operator fun rem(divisor: Int): T = newInstance(value % divisor)
     operator fun compareTo(other: T): Int = value.compareTo(other.value)
+
+    fun lessThan(other: T): Boolean = compareTo(other) < 0
+    fun lessThanOrEqualTo(other: T): Boolean = compareTo(other) <= 0
+    fun greaterThan(other: T): Boolean = compareTo(other) > 0
+    fun greaterThanOrEqualTo(other: T): Boolean = compareTo(other) >= 0
 
     val sign: Int get() = when {
         value > 0 -> 1
