@@ -27,10 +27,9 @@ import com.rowanmcalpin.nextftc.core.Subsystem
  * @param lambda the lambda to execute
  * @param subsystemCollection a set of subsystems this command implements
  */
-class InstantCommand @JvmOverloads constructor(lambda: () -> Unit = { },
-           subsystemCollection: Set<Subsystem> = setOf()): LambdaCommand({ true }, lambda,
-            {  }, {  }, subsystemCollection, true) {
-
-    @JvmOverloads
-    constructor(lambda: () -> Unit = { }, subsystem: Subsystem): this(lambda, setOf(subsystem))
+class InstantCommand(lambda: Runnable): LambdaCommand() {
+    init {
+        super.setStart(lambda)
+        super.setIsDone { true }
+    }
 }

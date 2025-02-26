@@ -20,43 +20,81 @@ package com.rowanmcalpin.nextftc.core.command.utility
 
 import com.rowanmcalpin.nextftc.core.Subsystem
 import com.rowanmcalpin.nextftc.core.command.Command
+import java.util.function.Consumer
+import java.util.function.Supplier
 
 /**
  * A [Command] that is created using lambdas to define each function instead of manually overriding
  * the functions.
- * @param isDoneLambda a lambda that returns whether the command has finished running
- * @param startLambda a lambda to be called once when the command is first added
- * @param updateLambda a lambda to be called repeatedly while the command is running
- * @param stopLambda a lambda to be called once when the command has finished
- * @param subsystemCollection a set of subsystems this command implements
- * @param interruptible whether this command can be stopped due to an overlap of subsystems
+ * @author BeepBot99
  */
-open class LambdaCommand @JvmOverloads constructor(
-    private val isDoneLambda: () -> Boolean = { true },
-    private val startLambda: () -> Unit = { },
-    private val updateLambda: () -> Unit = { },
-    private val stopLambda: (interrupted: Boolean) -> Unit = { },
-    private val subsystemCollection: Set<Subsystem> = setOf(),
+
+open class LambdaCommand: Command() {
+    private var isDoneLambda = Supplier<Boolean> { true }
+    private var startLambda = Runnable { }
+    private var updateLambda = Runnable { }
+    private var stopLambda = Consumer<Boolean> { }
+    override var subsystems: Set<Subsystem> = setOf()
     override var interruptible: Boolean = true
-): Command() {
-    
-    override val subsystems: Set<Subsystem>
-        get() = subsystemCollection
-    
-    override val isDone: Boolean
-        get() = isDoneLambda()
 
-    override fun start() {
-        startLambda()
-    }
+    override val isDone: Boolean get() = isDoneLambda.get()
+    override fun start() = startLambda.run()
+    override fun update() = updateLambda.run()
+    override fun stop(interrupted: Boolean) = stopLambda.accept(interrupted)
 
-    override fun update() {
-        updateLambda()
-    }
+    /**
+     * Sets the function that is called when the command is first scheduled
+     */
+    fun setStart(start: Runnable) = apply { startLambda = start }
 
-    override fun stop(interrupted: Boolean) {
-        stopLambda(interrupted)
-    }
-    
-    
+    /**
+     * Sets the function that is called repeatedly while the command is running
+     */
+    fun setUpdate(update: Runnable) = apply { updateLambda = update }
+
+    /**
+     * Sets the function that is called when the command is finished
+     * Receives a boolean that is whether the command has been interrupted
+     */
+    fun setStop(stop: Consumer<Boolean>) = apply { stopLambda = stop }
+
+    /**
+     * Sets the subsystems that the command implements
+     */
+    fun setSubsystems(subsystemsSet: Set<Subsystem>) = apply { subsystems = subsystemsSet }
+
+    /**
+     * Sets the subsystems that the command implements
+     */
+    fun setSubsystems(vararg subsystemsArr: Subsystem) = apply { subsystems = subsystemsArr.toSet() }
+
+    /**
+     * Sets the subsystem that the command implements
+     */
+    fun setSubsystem(subsystem: Subsystem) = apply { subsystems = setOf(subsystem) }
+
+    /**
+     * Adds subsystems to the set of subsystems that the command implements
+     */
+    fun addSubsystems(subsystemsSet: Set<Subsystem>) = apply { subsystems += subsystemsSet }
+
+    /**
+     * Adds subsystems to the set of subsystems that the command implements
+     */
+    fun addSubsystems(vararg subsystemsArr: Subsystem) = apply{ subsystems += subsystemsArr.toSet() }
+
+    /**
+     * Adds a subsystem to the set of subsystems that the command implements
+     */
+    fun addSubsystem(subsystem: Subsystem) = apply { subsystems += subsystem }
+
+    /**
+     * Sets the function that returns whether the command has finished running
+     */
+    fun setIsDone(done: Supplier<Boolean>) = apply { isDoneLambda = done }
+
+    /**
+     * Sets whether the command can be stopped due to an overlap of subsystems
+     */
+    fun setInterruptible(isInterruptible: Boolean) = apply { interruptible = isInterruptible }
 }
