@@ -18,7 +18,7 @@ abstract class Quantity<T: Quantity<T>> {
     operator fun times(other: T): T = newInstance(value * other.value)
     operator fun times(scalar: Double): T = newInstance(value * scalar)
     operator fun times(scalar: Int): T = newInstance(value * scalar)
-    operator fun div(other: T): T = newInstance(value / other.value)
+    operator fun div(other: T): T = value / other.value
     operator fun div(scalar: Double): T = newInstance(value / scalar)
     operator fun div(scalar: Int): T = newInstance(value / scalar)
     operator fun unaryPlus(): T = newInstance(value)
