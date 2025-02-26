@@ -1,6 +1,6 @@
 package com.rowanmcalpin.nextftc.core.units
 
-data class Angle(override val value: Double): Quantity<Angle>() {
+data class Angle private constructor(override val value: Double): Quantity<Angle>() {
     companion object {
         private const val DEGREES_TO_RADIANS = Math.PI / 180
         private const val REVOLUTIONS_TO_RADIANS = 2 * Math.PI

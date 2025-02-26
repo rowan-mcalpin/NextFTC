@@ -5,7 +5,7 @@ package com.rowanmcalpin.nextftc.core.units
  * @param value the value in milliseconds
  * @author BeepBot99
  */
-data class TimeSpan(override val value: Double): Quantity<TimeSpan>() {
+data class TimeSpan private constructor(override val value: Double): Quantity<TimeSpan>() {
     companion object {
         private const val MILLISECONDS_TO_MICROSECONDS = 1e+3
         private const val SECONDS_TO_MICROSECONDS = 1e+6

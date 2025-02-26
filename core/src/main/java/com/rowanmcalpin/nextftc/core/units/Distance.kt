@@ -5,7 +5,7 @@ package com.rowanmcalpin.nextftc.core.units
  * @param value the distance in millimeters
  * @author BeepBot99
  */
-data class Distance(override val value: Double): Quantity<Distance>() {
+data class Distance private constructor(override val value: Double): Quantity<Distance>() {
     companion object {
         private const val CENTIMETERS_TO_MILLIMETERS = 10.0
         private const val METERS_TO_MILLIMETERS = 1000.0
