@@ -19,6 +19,7 @@ NextFTC: a user-friendly control library for FIRST Tech Challenge
 package com.rowanmcalpin.nextftc.core.command
 
 import com.rowanmcalpin.nextftc.core.Subsystem
+import com.rowanmcalpin.nextftc.core.command.groups.ParallelDeadlineGroup
 import com.rowanmcalpin.nextftc.core.command.groups.ParallelGroup
 import com.rowanmcalpin.nextftc.core.command.groups.ParallelRaceGroup
 import com.rowanmcalpin.nextftc.core.command.groups.SequentialGroup
@@ -78,7 +79,7 @@ abstract class Command {
     }
 
     /**
-     * Returns a [ParallelRaceGroup] with the command and a [Delay] of [time]
+     * Returns a [ParallelRaceGroup] with this command and a [Delay] of [time]
      * @param time the time-span for the [Delay]
      */
     fun endAfter(time: TimeSpan) = ParallelRaceGroup(
@@ -87,19 +88,19 @@ abstract class Command {
     )
 
     /**
-     * Returns a [ParallelRaceGroup] with the command and a [Delay] of [time]
+     * Returns a [ParallelRaceGroup] with this command and a [Delay] of [time]
      * @param time the time-span for the [Delay], in seconds
      */
     fun endAfter(time: Double) = endAfter(time.sec)
 
     /**
-     * Returns a [ParallelRaceGroup] with the command and a [Delay] of [time]
+     * Returns a [ParallelRaceGroup] with this command and a [Delay] of [time]
      * @param time the time-span for the [Delay], in seconds
      */
     fun endAfter(time: Int) = endAfter(time.sec)
 
     /**
-     * Returns a [SequentialGroup] with the command and an arbitrary number of other commands
+     * Returns a [SequentialGroup] with this command and an arbitrary number of other commands
      * @param commands the other commands to create a [SequentialGroup] with
      */
     fun then(vararg commands: Command) = SequentialGroup(
@@ -108,7 +109,7 @@ abstract class Command {
     )
 
     /**
-     * Returns a [ParallelGroup] with the command and an arbitrary number of other commands
+     * Returns a [ParallelGroup] with this command and an arbitrary number of other commands
      * @param commands the other commands to create a [ParallelGroup] with
      */
     fun and(vararg commands: Command) = ParallelGroup(
@@ -117,7 +118,7 @@ abstract class Command {
     )
 
     /**
-     * Returns a [ParallelRaceGroup] with the command and an arbitrary number of other commands
+     * Returns a [ParallelRaceGroup] with this command and an arbitrary number of other commands
      * @param commands the other commands to create a [ParallelRaceGroup] with
      */
     fun raceWith(vararg commands: Command) = ParallelRaceGroup(
@@ -126,12 +127,12 @@ abstract class Command {
     )
 
     /**
-     * Returns a [PerpetualCommand] that wraps the command
+     * Returns a [PerpetualCommand] that wraps this command
      */
     fun perpetually() = PerpetualCommand(this)
 
     /**
-     * Returns a [SequentialGroup] with a [Delay] and then the command
+     * Returns a [SequentialGroup] with a [Delay] and then this command
      * @param time the time-span for the [Delay]
      */
     fun afterTime(time: TimeSpan) = SequentialGroup(
@@ -140,19 +141,19 @@ abstract class Command {
     )
 
     /**
-     * Returns a [SequentialGroup] with a [Delay] and then the command
+     * Returns a [SequentialGroup] with a [Delay] and then this command
      * @param time the time-span for the [Delay], in seconds
      */
     fun afterTime(time: Double) = afterTime(time.sec)
 
     /**
-     * Returns a [SequentialGroup] with a [Delay] and then the command
+     * Returns a [SequentialGroup] with a [Delay] and then this command
      * @param time the time-span for the [Delay], in seconds
      */
     fun afterTime(time: Int) = afterTime(time.sec)
 
     /**
-     * Returns a [SequentialGroup] with the command and then a [Delay]
+     * Returns a [SequentialGroup] with this command and then a [Delay]
      * @param time the time-span for the [Delay]
      */
     fun thenWait(time: TimeSpan) = SequentialGroup(
@@ -161,14 +162,32 @@ abstract class Command {
     )
 
     /**
-     * Returns a [SequentialGroup] with the command and then a [Delay]
+     * Returns a [SequentialGroup] with this command and then a [Delay]
      * @param time the time-span for the [Delay], in seconds
      */
     fun thenWait(time: Double) = thenWait(time.sec)
 
     /**
-     * Returns a [SequentialGroup] with the command and then a [Delay]
+     * Returns a [SequentialGroup] with this command and then a [Delay]
      * @param time the time-span for the [Delay]
      */
     fun thenWait(time: Int) = thenWait(time.sec)
+
+    /**
+     * Returns a [ParallelDeadlineGroup] with this command and the passed command as the deadline
+     * @param deadline the [Command] to use as the deadline
+     */
+    fun withDeadline(deadline: Command) = ParallelDeadlineGroup(
+        deadline,
+        this
+    )
+
+    /**
+     * Returns a [ParallelDeadlineGroup] with this command as the deadline
+     * @param commands the other commands to create a [ParallelDeadlineGroup] with
+     */
+    fun asDeadline(vararg commands: Command) = ParallelDeadlineGroup(
+        this,
+        *commands
+    )
 }
