@@ -39,7 +39,7 @@ open class PIDFController
  */ @JvmOverloads constructor(
     var kP: Double,
     var kI: Double,
-    val kD: Double,
+    var kD: Double,
     private val kF: Feedforward = StaticFeedforward(0.0),
     override var setPointTolerance: Double = 10.0
 ) : Controller {
