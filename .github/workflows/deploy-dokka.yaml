@@ -1,9 +1,8 @@
 name: Deploy Dokka Documentation
 
 on:
-  push:
-    branches:
-      - main
+  release:
+    types: [published]
 
 jobs:
   build_and_deploy:
